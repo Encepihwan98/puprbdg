@@ -7,6 +7,12 @@
   pointer-events: none;
 }
 
+.myBg{
+  background: #F7F9FB;
+  width: 1440px;
+  height: 1765px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
