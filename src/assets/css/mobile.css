@@ -1,0 +1,28 @@
+@media screen and (max-width: 1000px){
+    .navbar-size {
+        width: 1440px !important;
+    }
+    .row1, .row2, .row3, .row4, .row5 {
+        width: 1340px !important;
+    }
+    
+    .myBg{
+        width: 1440px !important;
+        height: 1765px !important;
+    }
+}
+    
+@media screen and (max-width: 1400px){
+    .navbar-size {
+        width: 1440px !important;
+    }
+    .row1, .row2, .row3, .row4, .row5 {
+        width: 1340px !important;
+    }
+    
+    .myBg{
+        width: 1440px !important;
+        height: 1765px !important;
+    }
+}
+    
