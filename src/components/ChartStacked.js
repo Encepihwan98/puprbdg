@@ -26,7 +26,7 @@ const ChartStacked = ({ className, width, data }) => {
       enabled: false,
     },
     credits: {
-      enabled: false, // Menyembunyikan kredit
+      enabled: false, // Menyembunyikan kreditttt
     },
     plotOptions: {
       series: {
