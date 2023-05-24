@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import BoxCard from "../../components/BoxCard";
 import React,{useState, useEffect} from "react";
 import axios  from "axios";
+import BarchartStacked from "../../components/BarchartStacked";
 
 import ChartStacked from "../../components/ChartStacked";
 // import { async } from "q";
@@ -12,7 +13,12 @@ const FixDashboard = () => {
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
   const [data, setData] = useState(null);
-  const dataChart = [[20],[70]];
+  const dataChart = [[24957460787],[128123934]];
+  const dataChartPbgAtas = [[358],[3701]];
+  const dataChartPbgBawah = [[393739],[197670]];
+  const dataChartVerif = [[9270733484],[15686727303]];
+  const dataChartSudahVerif = [[5210596075],[4060137409]];
+  const dataChartBelumVerif = [[10778885200],[4907842103]];
 
   useEffect(() => {
     fetchData();
@@ -166,10 +172,10 @@ const FixDashboard = () => {
               </div>
             </div>
             <div className="container-colom mlf-15 mtp-10">
-              <ChartStacked data={dataChart} width="285px"></ChartStacked>
+              <ChartStacked data={dataChartPbgAtas} width="285px"></ChartStacked>
             </div>
             <div className="container-colom mlf-15 ">
-              <ChartStacked data={dataChart} width="285px"></ChartStacked>
+              <ChartStacked data={dataChartPbgBawah} width="285px"></ChartStacked>
             </div>
           </div>
           <div className="colom2 card">
@@ -194,7 +200,7 @@ const FixDashboard = () => {
               </div>
             </div>
             <div className="container-colom mtp-25 mlf-35">
-              <ChartStacked data={dataChart} width="935px" ></ChartStacked>
+              <ChartStacked data={dataChartVerif} width="935px" ></ChartStacked>
             </div>
           </div>
         </div>
@@ -246,7 +252,7 @@ const FixDashboard = () => {
               </div>
             </div>
             <div className="mlf-35 mtp-10">
-              <ChartStacked data={dataChart} width="600px"/>
+              <ChartStacked data={dataChartSudahVerif} width="600px"/>
             </div>
           </div>
           <div className="colom2 card">
@@ -268,7 +274,8 @@ const FixDashboard = () => {
               </div>
             </div>
             <div className="mlf-35 mtp-10">
-              <ChartStacked data={dataChart} width="600px" />
+            <ChartStacked data={dataChartBelumVerif} width="600px"></ChartStacked>
+              {/* <ChartStacked data={dataChartBelumVerif} width="600px" /> */}
             </div>
           </div>
         </div>

@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HC_rounded from "highcharts-rounded-corners";
+HC_rounded(Highcharts);
 
-const ChartStacked = ({ className, width, data }) => {
+const BarchartStacked = ({ className, width, data }) => {
   const options = {
     chart: {
       type: "bar",
-      height: 40,
+      height: 80,
       spacing: [0, 0, 0, 0],
-      marginRight: 0,
     },
     title: {
       text: null,
@@ -24,7 +25,7 @@ const ChartStacked = ({ className, width, data }) => {
       enabled: false,
     },
     credits: {
-      enabled: false, // Menyembunyikan kreditttt
+      enabled: false,
     },
     plotOptions: {
       series: {
@@ -38,19 +39,13 @@ const ChartStacked = ({ className, width, data }) => {
             textOutline: "none",
           },
         },
-        // borderRadius: 10,
-        pointPadding: 0,
-        groupPadding: 0,
       },
-    },
-    exporting: {
-      enabled: false,
     },
     series: [
       {
+        data: data[1],
         showInLegend: false,
         color: "#c62c11",
-        data: data[1],
         borderRadiusTopLeft: "30%",
         borderRadiusTopRight: "30%",
       },
@@ -63,7 +58,6 @@ const ChartStacked = ({ className, width, data }) => {
       },
     ],
   };
-
   const chartStyle = {
     width: width ? width : 200,
   };
@@ -73,10 +67,10 @@ const ChartStacked = ({ className, width, data }) => {
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
-        className={{ className }}
+        className="chart-container"
       />
     </div>
   );
 };
 
-export default ChartStacked;
+export default BarchartStacked;

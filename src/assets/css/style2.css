@@ -232,6 +232,7 @@
   margin-top: 36px;
   margin-bottom: 36px;
   border-radius: 10px;
+  border: none;
 }
 
 .row2 {
@@ -304,7 +305,7 @@
   color: #ffffff;
   font-size: 18px;
   text-align: left;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   
 }
 
