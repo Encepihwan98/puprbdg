@@ -10,7 +10,7 @@
 .myBg{
   background: #F7F9FB;
   width: 100%;
-  min-height: 100vh;
+  min-height: 110vh;
 }
 
 @media (prefers-reduced-motion: no-preference) {

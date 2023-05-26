@@ -3,18 +3,22 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 const ChartStacked = ({ className, width, data }) => {
+const total = data[0] + data[1]
+// console.log(data);
   const options = {
     chart: {
       type: "bar",
       height: 40,
       spacing: [0, 0, 0, 0],
       marginRight: 0,
+      marginTop: 0,
     },
     title: {
       text: null,
     },
     xAxis: {
       visible: false,
+      
     },
     yAxis: {
       visible: false,
@@ -42,6 +46,7 @@ const ChartStacked = ({ className, width, data }) => {
         pointPadding: 0,
         groupPadding: 0,
       },
+     
     },
     exporting: {
       enabled: false,
@@ -53,6 +58,7 @@ const ChartStacked = ({ className, width, data }) => {
         data: data[1],
         borderRadiusTopLeft: "30%",
         borderRadiusTopRight: "30%",
+        marginLeft: -500,
       },
       {
         showInLegend: false,
