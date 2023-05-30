@@ -3,7 +3,6 @@ import { Card } from "react-bootstrap";
 import BoxCard from "../../components/BoxCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import BarchartStacked from "../../components/BarchartStacked";
 
 import ChartStacked from "../../components/ChartStacked";
 // import { async } from "q";
@@ -15,7 +14,6 @@ const FixDashboard = () => {
   const [data, setData] = useState(null);
 
   const dataChart = [[24957460787], [128123934]];
-  const dataChartPbgAtas = [[358], [3701]];
   const dataChartPbgBawah = [[393739], [197670]];
   const dataChartVerif = [[9270733484], [15686727303]];
   const dataChartSudahVerif = [[5210596075], [4060137409]];
@@ -23,6 +21,12 @@ const FixDashboard = () => {
 
   useEffect(() => {
     fetchData();
+
+    const interval = setInterval(() => {
+      fetchData(); // Mendapatkan data setiap 24 jam
+    }, 24 * 60 * 60 * 1000); // Mengulang pemanggilan setiap 24 jam
+
+    return () => clearInterval(interval); // Membersihkan interval saat komponen tidak lagi digunakan
   }, []);
 
   const fetchData = async () => {
@@ -146,7 +150,11 @@ const FixDashboard = () => {
                 </div>
                 <div className="container-colom mtp-10">
                   <div className="clm-6 mlf-35">
-                    {data && (<span className="inter-20 ts-left fw-500">{Math.round(data.total_berkas_now_perc)}%</span>)}
+                    {data && (
+                      <span className="inter-20 ts-left fw-500">
+                        {Math.round(data.total_berkas_now_perc)}%
+                      </span>
+                    )}
                   </div>
                   <div className="clm-6 ">
                     <div className="ts-right mrg-35 fs-20 fw-500">10%</div>
@@ -247,7 +255,11 @@ const FixDashboard = () => {
                   </span>
                   <div className="container-colom">
                     <Card className="mt-2 bg-purple card-tt-tolak2">
-                      {data && (<span className="total-value">{data.berkas_terbit_pbg}</span>)}
+                      {data && (
+                        <span className="total-value">
+                          {data.berkas_terbit_pbg}
+                        </span>
+                      )}
                       <span className="total-text">Telah Terbit / Ditolak</span>
                     </Card>
                     <div className="end">
@@ -259,7 +271,11 @@ const FixDashboard = () => {
                   <span className="inter f-500 ">Proses Penerbitan:</span>
                   <br />
                   <div>
-                    {data && (<span className="fs-50 fc-red f-500 mtp-10">{data.proses_penerbitan}</span>)}
+                    {data && (
+                      <span className="fs-50 fc-red f-500 mtp-10">
+                        {data.proses_penerbitan}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -268,10 +284,18 @@ const FixDashboard = () => {
               </div>
               <div className="container-colom mtp-10">
                 <div className="clm-6 mlf-35">
-                  {data && (<span className="inter-20 ts-left fw-500">{Math.round(data.berkas_terbit_pbg_perc)}%</span>)}
+                  {data && (
+                    <span className="inter-20 ts-left fw-500">
+                      {Math.round(data.berkas_terbit_pbg_perc)}%
+                    </span>
+                  )}
                 </div>
                 <div className="clm-6 ">
-                  {data && (<div className="ts-right mrg-35 fs-20 fw-500">{Math.round(data.proses_penerbitan_perc)} %</div>)}
+                  {data && (
+                    <div className="ts-right mrg-35 fs-20 fw-500">
+                      {Math.round(data.proses_penerbitan_perc)} %
+                    </div>
+                  )}
                 </div>
               </div>
               <br></br>
@@ -334,10 +358,18 @@ const FixDashboard = () => {
               </div>
               <div className="container-colom mtp-10">
                 <div className="clm-6 mlf-35">
-                  {data && (<span className="inter-20 ts-left fw-500">{Math.round(data.terproses_di_ptsp_perc)}%</span>)}
+                  {data && (
+                    <span className="inter-20 ts-left fw-500">
+                      {Math.round(data.terproses_di_ptsp_perc)}%
+                    </span>
+                  )}
                 </div>
                 <div className="clm-6 ">
-                  {data && (<div className="ts-right mrg-35 fs-20 fw-500">{Math.round(data.terproses_di_dputr_perc)}%</div>)}
+                  {data && (
+                    <div className="ts-right mrg-35 fs-20 fw-500">
+                      {Math.round(data.terproses_di_dputr_perc)}%
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -354,12 +386,20 @@ const FixDashboard = () => {
                 <div className="clm-6 ts-left ">
                   <span className="inter-25 fw-500">Potensi Besar:</span>
                   <br />
-                  {data && (<span className="text-actual-verif">{data.potensi_besar}</span>)}
+                  {data && (
+                    <span className="text-actual-verif">
+                      {data.potensi_besar}
+                    </span>
+                  )}
                 </div>
                 <div className="clm-6 ts-right">
                   <span className="inter-25 fw-500">Potensi Kecil:</span>
                   <br />
-                  {data && (<span className="text-blm-actual-verif">{data.potensi_kecil}</span>)}
+                  {data && (
+                    <span className="text-blm-actual-verif">
+                      {data.potensi_kecil}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="mlf-35 mtp-10">
@@ -370,10 +410,18 @@ const FixDashboard = () => {
               </div>
               <div className="container-colom mtp-10">
                 <div className="clm-6 mlf-35">
-                  {data && (<span className="inter-20 ts-left fw-500">{Math.round(data.potensi_besar_perc)} %</span>)}
+                  {data && (
+                    <span className="inter-20 ts-left fw-500">
+                      {Math.round(data.potensi_besar_perc)} %
+                    </span>
+                  )}
                 </div>
                 <div className="clm-6 ">
-                  {data && (<div className="ts-right mrg-35 fs-20 fw-500">{Math.round(data.potensi_kecil_perc)} %</div>)}
+                  {data && (
+                    <div className="ts-right mrg-35 fs-20 fw-500">
+                      {Math.round(data.potensi_kecil_perc)} %
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

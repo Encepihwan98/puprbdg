@@ -3,8 +3,8 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 const ChartStacked = ({ className, width, data }) => {
-const total = data[0] + data[1]
-// console.log(data);
+// const total = data[0] + data[1]
+// const max = Math.max(...data)
   const options = {
     chart: {
       type: "bar",
