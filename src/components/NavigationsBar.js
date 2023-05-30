@@ -22,7 +22,7 @@ const Navbar2 = () => {
         <Navbar.Brand className="user-menu ms-auto mrg-50">
           <Navbar.Text className="inter">Jhon Doe</Navbar.Text>
           <Navbar.Brand>
-            <img src={User} width="56" height="76" className="navbarUser" />
+            <img alt="PUPR Logo" src={User} width="56" height="76" className="navbarUser" />
           </Navbar.Brand>
         </Navbar.Brand>
       </Navbar>
