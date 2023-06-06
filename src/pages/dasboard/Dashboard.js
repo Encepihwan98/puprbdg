@@ -29,14 +29,15 @@ const FixDashboard = () => {
     return () => clearInterval(interval); // Membersihkan interval saat komponen tidak lagi digunakan
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/monitoring");
-      setData(response.data.data);
-      // console.log(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const fetchData = () => {
+    axios.get("https://api.sibedaspbgbdgkab.my.id/simbg/coba")
+      .then(response => {
+        setData(response.data.data);
+        // console.log(response.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -55,11 +56,11 @@ const FixDashboard = () => {
         </div>
         <div className="row2 mtp-25 flex-x-center">
           <div className="colom1 card">
-            <span className="inter-20 fw-500 mtp-25">
+            <span className="inter-20 fw-bold mtp-25">
               Rekapitulasi Proses Persetujuan Bangunan Gedung (PBG)
             </span>
             <BoxCard className="box-card bg-blue">
-              <p className="pgb-value">2450</p>
+              {data && <p className="pgb-value">{data.total_berkas}</p>}
               <p className="pgb-text">Jumlah Permohonan</p>
             </BoxCard>
             <BoxCard className="box-card bg-green">
@@ -67,17 +68,21 @@ const FixDashboard = () => {
               <p className="pgb-text">Dinas Teknis</p>
             </BoxCard>
             <BoxCard className="box-card bg-red">
-              <p className="pgb-value">76</p>
-              <p className="pgb-text">Dinas Peizinan</p>
+              {data && <p className="pgb-value">{data.terproses_di_ptsp}</p>}
+              <p className="pgb-text">Dinas Perizinan</p>
             </BoxCard>
             <BoxCard className="box-card bg-purple">
-              <p className="pgb-value">816/0</p>
+              {data && (
+                <p className="pgb-value">
+                  {data.berkas_terbit_pbg + data.berkas_terbit_last}
+                </p>
+              )}
               <p className="pgb-text">Telah Terbit / Ditolak</p>
             </BoxCard>
           </div>
           <div className="colom2">
             <div className="c2-b1 card">
-              <span className="inter-25 fw-500 mtp-25 ts-center">
+              <span className="inter-25 fw-bold mtp-25 ts-center">
                 Total Berkas:
               </span>
               <div className="center mtp-10">
@@ -99,7 +104,7 @@ const FixDashboard = () => {
             </div>
             <div className="container-colom2">
               <div className="card c2-b2-c1">
-                <p className="inter-25 fw-500 mtp-50">
+                <p className="inter-25 fw-bold ts-center mtp-50">
                   Berkas Terbit PBG {lastYear}:
                 </p>
                 <div className="bg-purple card-tt-tolak">
@@ -133,13 +138,15 @@ const FixDashboard = () => {
                     )}
                   </div>
                   <div className="clm-3"></div>
-                  <div className="clm-4 mt-4 ts-right">
-                    <div className="mrg-35">
-                      <span className="fw-500 inter-25">
+                  <div className="clm-4 mt-4">
+                    <div className=" ts-center">
+                      <span className="fw-500  inter-25">
                         Deviasi Target Dengan Potensi Total Berkas:
                       </span>
                       <br />
-                      <span className="fs-50 fc-red fw-500">18</span>
+                      <div className="ts-right mrg-35">
+                        <span className="fs-50 fc-red fw-500">18</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -199,9 +206,11 @@ const FixDashboard = () => {
                 </span>
                 <br />
                 {data && (
-                  <span className="text-blm-actual-verif">
-                    {data.berkas_aktual_belum_terverifikasi}
-                  </span>
+                  <div className="ts-right">
+                    <span className="text-blm-actual-verif">
+                      {data.berkas_aktual_belum_terverifikasi}
+                    </span>
+                  </div>
                 )}
               </div>
             </div>
@@ -214,7 +223,7 @@ const FixDashboard = () => {
                   <span className="inter-20 ts-left fw-500">
                     {Math.round(
                       data.berkas_aktual_terverifikasi_dinas_teknis_perc
-                    )}
+                    )} %
                   </span>
                 )}
               </div>
@@ -229,7 +238,10 @@ const FixDashboard = () => {
           </div>
         </div>
         <div className="row4 flex-x-center">
-          <div className="separator1-row4 card">
+          <div className="separator1-row4-col1">
+            
+          </div>
+          <div className="separator1-row4-col2 card">
             <div className="center mt-2">
               <div className="triangle triangle-bottoms"></div>
             </div>
@@ -262,9 +274,9 @@ const FixDashboard = () => {
                       )}
                       <span className="total-text">Telah Terbit / Ditolak</span>
                     </Card>
-                    <div className="end">
+                    {/* <div className="end">
                       <div className="triangle triangle-left"></div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="clm-6 ts-right">
@@ -303,7 +315,7 @@ const FixDashboard = () => {
             <div className="container-colom">
               <div className="separator1-row5">
                 <div className="center mt-3">
-                  <div className="triangle triangle-bottoms"></div>
+                  <div className="triangle triangle-top"></div>
                 </div>
               </div>
               <div className="separator2-row5">
@@ -318,20 +330,25 @@ const FixDashboard = () => {
               </div>
               <div className="container-colom mtp-10">
                 <div className="clm-6">
-                  <div className="mlf-15">
-                    <span className="inter-23 fw-500 text-right">
-                      Terposes di PTSP:
-                    </span>
-                    <div className="bg-red mt-3 box-dinas-perizinan text-left">
-                      {data && (
-                        <span className="total-value-pbg me-3">
-                          {data.terproses_di_ptsp}
-                        </span>
-                      )}
-                      <br />
-                      <span className="total-text-pbg me-3 mb-1">
-                        Dinas Perizinan
+                  <div className="container-colom">
+                    <div className="mlf-15">
+                      <span className="inter-23 fw-500 text-right">
+                        Terproses di PTSP:
                       </span>
+                      <div className="bg-red mt-3 box-dinas-perizinan text-left">
+                        {data && (
+                          <span className="total-value-pbg me-3">
+                            {data.terproses_di_ptsp}
+                          </span>
+                        )}
+                        <br />
+                        <span className="total-text-pbg me-3 mb-1">
+                          Dinas Perizinan
+                        </span>
+                      </div>
+                    </div>
+                    <div className="end">
+                      <div className="triangle triangle-left mtp-35"></div>
                     </div>
                   </div>
                 </div>

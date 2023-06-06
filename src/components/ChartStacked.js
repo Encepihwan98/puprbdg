@@ -1,10 +1,12 @@
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HC_rounded from "highcharts-rounded-corners";
+HC_rounded(Highcharts);
 
 const ChartStacked = ({ className, width, data }) => {
-// const total = data[0] + data[1]
-// const max = Math.max(...data)
+  // const total = data[0] + data[1]
+  // const max = Math.max(...data)
   const options = {
     chart: {
       type: "bar",
@@ -18,11 +20,15 @@ const ChartStacked = ({ className, width, data }) => {
     },
     xAxis: {
       visible: false,
-      
     },
     yAxis: {
       visible: false,
       max: null,
+      labels: {
+        formatter: function () {
+          return "Rp " + this.value.toLocaleString(); // Menambahkan "Rp" pada label sumbu nilai
+        },
+      },
     },
     legend: {
       enabled: false,
@@ -42,11 +48,11 @@ const ChartStacked = ({ className, width, data }) => {
             textOutline: "none",
           },
         },
-        // borderRadius: 10,
+
+        borderRadius: 10,
         pointPadding: 0,
         groupPadding: 0,
       },
-     
     },
     exporting: {
       enabled: false,
