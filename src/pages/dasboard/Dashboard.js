@@ -30,12 +30,13 @@ const FixDashboard = () => {
   }, []);
 
   const fetchData = () => {
-    axios.get("https://api.sibedaspbgbdgkab.my.id/simbg/coba")
-      .then(response => {
+    axios
+      .get("https://api.sibedaspbgbdgkab.my.id/simbg/coba")
+      .then((response) => {
         setData(response.data.data);
         // console.log(response.data.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -223,7 +224,8 @@ const FixDashboard = () => {
                   <span className="inter-20 ts-left fw-500">
                     {Math.round(
                       data.berkas_aktual_terverifikasi_dinas_teknis_perc
-                    )} %
+                    )}{" "}
+                    %
                   </span>
                 )}
               </div>
@@ -238,9 +240,7 @@ const FixDashboard = () => {
           </div>
         </div>
         <div className="row4 flex-x-center">
-          <div className="separator1-row4-col1">
-            
-          </div>
+          <div className="separator1-row4-col1"></div>
           <div className="separator1-row4-col2 card">
             <div className="center mt-2">
               <div className="triangle triangle-bottoms"></div>
@@ -266,17 +266,18 @@ const FixDashboard = () => {
                     Berkas Terbit PBG:
                   </span>
                   <div className="container-colom">
-                    <Card className="mt-2 bg-purple card-tt-tolak2">
-                      {data && (
-                        <span className="total-value">
-                          {data.berkas_terbit_pbg}
+                    <div className="card-luar bg-purple">
+                      <Card className="bg-purple card-tt-tolak2">
+                        {data && (
+                          <span className="total-value">
+                            {data.berkas_terbit_pbg}
+                          </span>
+                        )}
+                        <span className="total-text">
+                          Telah Terbit / Ditolak
                         </span>
-                      )}
-                      <span className="total-text">Telah Terbit / Ditolak</span>
-                    </Card>
-                    {/* <div className="end">
-                      <div className="triangle triangle-left"></div>
-                    </div> */}
+                      </Card>
+                    </div>
                   </div>
                 </div>
                 <div className="clm-6 ts-right">
@@ -335,16 +336,20 @@ const FixDashboard = () => {
                       <span className="inter-23 fw-500 text-right">
                         Terproses di PTSP:
                       </span>
-                      <div className="bg-red mt-3 box-dinas-perizinan text-left">
-                        {data && (
-                          <span className="total-value-pbg me-3">
-                            {data.terproses_di_ptsp}
-                          </span>
-                        )}
-                        <br />
-                        <span className="total-text-pbg me-3 mb-1">
-                          Dinas Perizinan
-                        </span>
+                      <div>
+                        <div className="luar-box bg-red mt-3">
+                          <div className="bg-red box-dinas-perizinan text-left">
+                            {data && (
+                              <span className="total-value-pbg me-3">
+                                {data.terproses_di_ptsp}
+                              </span>
+                            )}
+                            <br />
+                            <span className="total-text-pbg me-3 mb-1">
+                              Dinas Perizinan
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className="end">
