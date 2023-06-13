@@ -4,9 +4,10 @@ import HighchartsReact from "highcharts-react-official";
 import HC_rounded from "highcharts-rounded-corners";
 HC_rounded(Highcharts);
 
-const ChartStacked = ({ className, width, data }) => {
+const ChartStacked = ({ className, width, data, color }) => {
   // const total = data[0] + data[1]
   // const max = Math.max(...data)
+  console.log(color[1]);
   const options = {
     chart: {
       type: "bar",
@@ -60,7 +61,7 @@ const ChartStacked = ({ className, width, data }) => {
     series: [
       {
         showInLegend: false,
-        color: "#c62c11",
+        color: color[1],
         data: data[1],
         borderRadiusTopLeft: "30%",
         borderRadiusTopRight: "30%",
@@ -68,7 +69,7 @@ const ChartStacked = ({ className, width, data }) => {
       },
       {
         showInLegend: false,
-        color: "#00917c",
+        color: color[0],
         data: data[0],
         borderRadiusBottomLeft: "30%",
         borderRadiusBottomRight: "30%",

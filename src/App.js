@@ -4,6 +4,7 @@ import './App.css';
 import './assets/css/style2.css';
 import './assets/css/mobile.css';
 import Dashboard from "./pages/dasboard/Dashboard";
+import Dashboard2 from "./pages/dasboard/Dashboard2";
 import Office from "./pages/office/Office";
 
 
@@ -14,6 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard/>}></Route>
           <Route path="/office" element={<Office/>}></Route>
+          <Route path="/dashboard2" element={<Dashboard2/>}></Route>
+
         </Routes>
       </Router>
     </div>

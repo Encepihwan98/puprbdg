@@ -7,6 +7,7 @@
   margin: 40px;
 }
 
+
 .container-35 {
   display: flex;
   align-items: stretch;
@@ -77,6 +78,13 @@
   background-color: #ffff;
   border: none;
   border-radius: 0;
+
+}
+
+.boxCard {
+  background-color: #ffff;
+  border: none;
+  border-radius: 0;
 }
 
 /* start margin */
@@ -92,6 +100,10 @@
 
 .bg-red {
   background-color: #c62c11;
+}
+
+.bg-red-heart{
+  background-color: #7E0B02;
 }
 
 .bg-purple {
@@ -111,6 +123,10 @@
   margin-top: 10px;
 }
 
+.mtp-15 {
+  margin-top: 15px;
+}
+
 .mtp-20 {
   margin-top: 20px;
 }
@@ -125,6 +141,14 @@
 
 .mtp-50 {
   margin-top: 50px;
+}
+
+.mtp-75 {
+  margin-top: 75px;
+}
+
+.mlf-10 {
+  margin-left: 10px;
 }
 
 .mlf-15 {
@@ -146,6 +170,19 @@
   margin-right: 50px;
 }
 
+.mbt-10{
+  margin-bottom: 10px;
+}
+.mbt-15{
+  margin-bottom: 15px;
+}
+.mbt-20{
+  margin-bottom: 20px;
+}
+.mbt-25{
+  margin-bottom: 25px;
+}
+
 /* end margin */
 
 .menu2 {
@@ -161,11 +198,22 @@
   align-items: center;
   margin-left: auto; /* Tambahkan margin kiri otomatis */
 }
+.br-10{
+  border-radius: 10px;
+}
 /* padding start */
 .pd-5 {
   padding: 5px;
 }
 /* padding end */
+
+.widht-278{
+  width: 278px;
+}
+
+.width-794{
+  width: 794px;
+}
 
 /* start font */
 
@@ -189,9 +237,16 @@
 
 .inter-30 {
   font-family: "inter";
-  font-size: 25px;
+  font-size: 30px;
   color: black;
 }
+
+.inter-50 {
+  font-family: "inter";
+  font-size: 50px;
+  color: black;
+}
+
 
 .fw-500 {
   font-weight: 500;
@@ -275,7 +330,7 @@
 
 .row2 .colom1 {
   width: 268px;
-  height: 664px;
+  height: 1858px;
   box-shadow: -4px -4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0;
   border: none;
@@ -375,6 +430,7 @@
   border: none;
   border-radius: 0;
   border-right: 3px solid #dfe2e6;
+  box-shadow:  0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .row2 .colom2 .c2-b2-c2 {
@@ -392,6 +448,28 @@
   /* text-align: center; */
 }
 
+.col2-kosong{
+  width: 278px;
+  height: 411px;
+  border: none;
+}
+
+.col2-berkas-total{
+  height: 411px;
+  width: 794px;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+.col2-berkas{
+  margin-top: -25px;
+  height: 366px;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: -4px 0 4px rgba(0, 0, 0, 0.1), 4px 0 4px rgba(0, 0, 0, 0.1),  0 -4px 4px rgba(0, 0, 0, 0.1);
+}
+
 .card-tt-tolak {
   margin-top: 10px;
   width: 208px;
@@ -401,20 +479,96 @@
   margin-left: 35px;
 }
 
-.row5 .card-luar {
+.boxColom1{
+  width: 548px;
+}
+
+.berkas-terbit{
+  width: 278px;
+  height: 380px;
+  border: none;
+  border-radius: 0;
+  /* background-color: #ffffff; */
+  border-right:3px solid #dfe2e6 ;
+  border-bottom: 3px solid #dfe2e6;
+}
+
+.text-dputr {
+  color: #00917c;
+  font-size: 50px;
+  font-family: 'inter';
+  font-weight: 500;
+}
+
+
+.proses-penerbitan{
+  width: 270px;
+  height: 380px;
+  border-right:3px solid #dfe2e6 ;
+  background-color: #ffff;
+}
+
+.separator-berkas1{
+  width: 278px;
+  height: 45px;
+  border-right:3px solid #dfe2e6 ;
+}
+
+.separator-berkas2{
+  width: 270px;
+  height: 45px;
+  border-right:3px solid #dfe2e6;
+  border-bottom: 3px solid #dfe2e6;
+}
+
+.card-ptsp{
+  width: 278px;
+  height: 350px;
+  background-color: #ffffff;
+  border-right: 3px solid #dfe2e6;
+}
+
+.card-dputr{
+  width: 270px;
+  height: 350px;
+  background-color: #ffffff;
+  border-right: 3px solid #dfe2e6;
+}
+
+.separator-dputr{
+  width: 45px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.belum-verif{
+  width: 542px;
+  height: 777px;
+  background-color: #ffffff;
+  box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-luar {
   margin-top: 10px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 228px;
-  height: 124px;
+  width: 150px;
+  height: 145px;
   border-radius: 10px;
 }
 
-.row5 .card-tt-tolak2 {
-  width: 213px;
-  height: 109px;
+.row2 .card-tt-tolak2 {
+  width: 145px;
+  height: 134px;
   border: none;
   border-radius: 10px;
   border: 5px solid #ffffff;
@@ -423,6 +577,7 @@
 .row2 .colom2-separator1 {
   width: 275px;
   height: 44px;
+  
 }
 .row2 .colom2-separator2 {
   width: 427px;
@@ -430,8 +585,8 @@
   border-radius: 0;
   border: none;
   border-bottom: 3px solid #dfe2e6;
-  border-left: 3px solid #dfe2e6;
 }
+
 
 .row3 {
   display: flex;
@@ -463,6 +618,7 @@
   font-weight: 500;
   font-size: 50px;
   color: #00917c;
+  margin-top: 10px;
 }
 
 .text-blm-actual-verif {
@@ -470,6 +626,7 @@
   font-weight: 500;
   font-size: 50px;
   color: #c62c11;
+  margin-top: 10px;
 }
 
 .row4 {
@@ -488,21 +645,21 @@
   border-bottom: 3px solid #dfe2e6; */
 }
 
-.row4 .separator1-row4-col2 {
+.separator1-row2-col2 {
   border: none;
   border-radius: 0;
-  width: 335px;
-  height: 48px;
-  box-shadow: -4px 0px 6px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  height: 45px;
   border-right: 3px solid #dfe2e6;
   border-bottom: 3px solid #dfe2e6;
+  box-shadow: -4px 0px 6px rgba(0, 0, 0, 0.1);
 }
 
-.row4 .separator2-row4 {
+.separator2-row2 {
   border: none;
   border-radius: 0;
-  width: 670px;
-  height: 48px;
+  width: 545px;
+  height: 45px;
   border-bottom: 3px solid #dfe2e6;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
@@ -548,7 +705,7 @@
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
 
-.row5 .luar-box {
+.row2 .luar-box {
   height: 124px;
   width: 181px;
   border-radius: 10px;
@@ -557,7 +714,8 @@
   flex-direction: column;
   align-items: center;
 }
-.row5 .box-dinas-perizinan {
+
+.box-dinas-perizinan {
   width: 166px;
   height: 109px;
   border-radius: 10px;
@@ -576,7 +734,7 @@
 .triangle-bottoms {
   width: 30px;
   height: 15px;
-  border-top: solid 14px rgb(202, 202, 202);
+  border-top: solid 14px #000;
   border-left: solid 15px transparent;
   border-right: solid 15px transparent;
 }
@@ -584,7 +742,7 @@
 .triangle-top {
   width: 30px;
   height: 15px;
-  border-bottom: solid 15px rgb(202, 202, 202);
+  border-bottom: solid 15px rgb(0, 0, 0);
   border-left: solid 15px transparent;
   border-right: solid 15px transparent;
 }
@@ -592,7 +750,7 @@
 .triangle-left {
   width: 30px;
   height: 15px;
-  border-right: solid 15px rgb(202, 202, 202);
+  border-right: solid 15px rgb(0, 0, 0);
   border-bottom: solid 15px transparent;
   border-top: solid 15px transparent;
 }

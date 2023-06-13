@@ -37,7 +37,8 @@ const FixDashboard = () => {
         // console.log(response.data.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error
+          );
       });
   };
 

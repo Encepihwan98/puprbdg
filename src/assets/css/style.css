@@ -236,9 +236,6 @@
   font-family: 'inter';
   font-size: 20px;
   color: black;
-  text-align: center;
-  display: flex;
-  justify-content: flex-start;
 }
 
 .inter-30 {
@@ -306,40 +303,10 @@
   vertical-align: middle;
 }
 
-.triangle-bottoms {
-  width: 30px;
-  height: 15px;
-  border-top: solid 14px rgb(202, 202, 202);
-  border-left: solid 15px transparent;
-  border-right: solid 15px transparent;
-}
-
-.triangle-top {
-  width: 30px;
-  height: 15px;
-  border-bottom: solid 15px rgb(202, 202, 202);
-  border-left: solid 15px transparent;
-  border-right: solid 15px transparent;
-}
-
-.triangle-left {
-  width: 30px;
-  height: 15px;
-  border-right: solid 15px rgb(202, 202, 202);
-  border-bottom: solid 15px transparent;
-  border-top: solid 15px transparent;
-}
-
 .text-right {
   text-align: right;
 }
 
-.text-dputr {
-  color: #c62c11;
-  font-size: 50px;
-  font-family: 'inter';
-  font-weight: 500;
-}
 
 .text-actual-verif {
   text-align: left;
