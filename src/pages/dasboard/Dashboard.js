@@ -13,6 +13,8 @@ const FixDashboard = () => {
   const lastYear = currentYear - 1;
   const [data, setData] = useState(null);
 
+  const color = ["#00917c","#c62c11"];
+  const color2 = ["#7E0B02","#c62c11"];
   const dataChart = [[24957460787], [128123934]];
   const dataChartPbgBawah = [[393739], [197670]];
   const dataChartVerif = [[9270733484], [15686727303]];
@@ -37,8 +39,7 @@ const FixDashboard = () => {
         // console.log(response.data.data);
       })
       .catch((error) => {
-        console.log(error
-          );
+        console.log(error);
       });
   };
 
@@ -58,9 +59,11 @@ const FixDashboard = () => {
         </div>
         <div className="row2 mtp-25 flex-x-center">
           <div className="colom1 card">
-            <span className="inter-20 fw-bold mtp-25">
-              Rekapitulasi Proses Persetujuan Bangunan Gedung (PBG)
-            </span>
+            <div className="ts-center mtp-25">
+              <span className="inter-20 fw-bold ">
+                Rekapitulasi Proses Persetujuan Bangunan Gedung (PBG)
+              </span>
+            </div>
             <BoxCard className="box-card bg-blue">
               {data && <p className="pgb-value">{data.total_berkas}</p>}
               <p className="pgb-text">Jumlah Permohonan</p>
@@ -126,6 +129,7 @@ const FixDashboard = () => {
                   </div>
                 </div>
               </div>
+
               <div className="card c2-b2-c2">
                 <div className="container-colom">
                   <div className="clm-4 mt-5">
@@ -154,7 +158,7 @@ const FixDashboard = () => {
                 </div>
                 <div className="container-colom">
                   <div className="ms-4 bg-blue">
-                    <ChartStacked data={dataChart} width="734px"></ChartStacked>
+                    <ChartStacked data={dataChart} color={color} width="734px"></ChartStacked>
                   </div>
                 </div>
                 <div className="container-colom mtp-10">
@@ -180,161 +184,175 @@ const FixDashboard = () => {
               </div>
               <div className="colom2-separator3"></div>
             </div>
-          </div>
-        </div>
-        <div className="row3 flex-x-center">
-          <div className="colom card">
-            <div className="ts-center mtp-25">
-              <span className="inter-30 fw-700">
-                Total Berkas {currentYear}:
-              </span>
-            </div>
+
             <div className="container-colom">
-              <div className="clm-35 mlf-35">
-                <span className="inter-25 fw-500">
-                  Berkas Aktual Terverifikasi Dinas Teknis:
-                </span>
-                <br />
-                {data && (
-                  <span className="text-actual-verif">
-                    {data.berkas_aktual_terverifikasi_dinas_teknis}
-                  </span>
-                )}
-              </div>
-              <div className="clm-30"></div>
-              <div className="clm-25 mlf-27">
-                <span className="inter-25 fw-500">
-                  Berkas Aktual Belum Terverifikasi:
-                </span>
-                <br />
-                {data && (
-                  <div className="ts-right">
-                    <span className="text-blm-actual-verif">
-                      {data.berkas_aktual_belum_terverifikasi}
+              <div className="col2-kosong"></div>
+              <div className="col2-berkas-total">
+                <div className="col2-berkas">
+                  <div className="ts-center mtp-25">
+                  <br></br>
+                    <span className="inter-30 fw-700">
+                      Total Berkas {currentYear}:
                     </span>
                   </div>
-                )}
-              </div>
-            </div>
-            <div className="container-colom mtp-25 mlf-35">
-              <ChartStacked data={dataChartVerif} width="1270px"></ChartStacked>
-            </div>
-            <div className="container-colom mtp-10">
-              <div className="clm-6 mlf-35">
-                {data && (
-                  <span className="inter-20 ts-left fw-500">
-                    {Math.round(
-                      data.berkas_aktual_terverifikasi_dinas_teknis_perc
-                    )}{" "}
-                    %
-                  </span>
-                )}
-              </div>
-              <div className="clm-6 ">
-                {data && (
-                  <div className="ts-right mrg-35 fs-20 fw-500">
-                    {Math.round(data.berkas_aktual_belum_terverifikasi_perc)} %
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row4 flex-x-center">
-          <div className="separator1-row4-col1"></div>
-          <div className="separator1-row4-col2 card">
-            <div className="center mt-2">
-              <div className="triangle triangle-bottoms"></div>
-            </div>
-          </div>
-          <div className="separator2-row4 card">
-            <div className="center mt-3">
-              <div className="triangle triangle-bottoms"></div>
-            </div>
-          </div>
-        </div>
-        <div className="row5 flex-x-center">
-          <div className="colom1 card">
-            <div className="">
-              <div className="ts-center mtp-20">
-                <span className="inter-30 fw-700">
-                  Berkas Aktual Terverifikasi Dinas Teknis
-                </span>
-              </div>
-              <div className="container-35 mtp-20">
-                <div className="clm-6">
-                  <span className="inter-25 fw-500 mtp-10">
-                    Berkas Terbit PBG:
-                  </span>
-                  <div className="container-colom">
-                    <div className="card-luar bg-purple">
-                      <Card className="bg-purple card-tt-tolak2">
-                        {data && (
-                          <span className="total-value">
-                            {data.berkas_terbit_pbg}
-                          </span>
-                        )}
-                        <span className="total-text">
-                          Telah Terbit / Ditolak
+                  <div className="container-colom mtp-10">
+                    <div className="clm-6 mlf-35 fw-500">
+                      <div className="ts-center">
+                        <span className="inter-25 ">
+                          Berkas Aktual Terverifikasi Dinas Teknis:
                         </span>
-                      </Card>
+                      </div>
+                      <br />
+                      {data && (
+                        <span className="text-actual-verif">
+                          {data.berkas_aktual_terverifikasi_dinas_teknis}
+                        </span>
+                      )}
+                    </div>
+                    <div className="clm-6 mlf-27">
+                      <div className="ts-center">
+                        <span className="inter-25 fw-500 ">
+                          Berkas Aktual Belum Terverifikasi:
+                        </span>
+                      </div>
+                      <br />
+                      {data && (
+                        <div className="ts-right mrg-35">
+                          <span className="text-blm-actual-verif ">
+                            {data.berkas_aktual_belum_terverifikasi}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="container-colom mtp-25 mlf-35">
+                    <ChartStacked
+                      data={dataChartVerif}
+                      width="1270px"
+                      color={color}
+                    ></ChartStacked>
+                  </div>
+                  <div className="container-colom mtp-10">
+                    <div className="clm-6 mlf-35">
+                      {data && (
+                        <span className="inter-20 ts-left fw-500">
+                          {Math.round(
+                            data.berkas_aktual_terverifikasi_dinas_teknis_perc
+                          )}{" "}
+                          %
+                        </span>
+                      )}
+                    </div>
+                    <div className="clm-6 ">
+                      {data && (
+                        <div className="ts-right mrg-35 fs-20 fw-500">
+                          {Math.round(
+                            data.berkas_aktual_belum_terverifikasi_perc
+                          )}{" "}
+                          %
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="clm-6 ts-right">
-                  <span className="inter f-500 ">Proses Penerbitan:</span>
-                  <br />
-                  <div>
-                    {data && (
-                      <span className="fs-50 fc-red f-500 mtp-10">
-                        {data.proses_penerbitan}
-                      </span>
-                    )}
+                <div className="container-colom">
+                  <div className="separator1-row2-col2 boxCard">
+                    <div className="center mt-2">
+                      <div className="triangle triangle-bottoms"></div>
+                    </div>
+                  </div>
+                  <div className="separator2-row2 boxCard">
+                    <div className="center mt-3">
+                      <div className="triangle triangle-bottoms"></div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="mlf-35 mtp-10">
-                <ChartStacked data={dataChartSudahVerif} width="600px" />
-              </div>
-              <div className="container-colom mtp-10">
-                <div className="clm-6 mlf-35">
-                  {data && (
-                    <span className="inter-20 ts-left fw-500">
-                      {Math.round(data.berkas_terbit_pbg_perc)}%
-                    </span>
-                  )}
-                </div>
-                <div className="clm-6 ">
-                  {data && (
-                    <div className="ts-right mrg-35 fs-20 fw-500">
-                      {Math.round(data.proses_penerbitan_perc)} %
-                    </div>
-                  )}
-                </div>
-              </div>
-              <br></br>
             </div>
+
             <div className="container-colom">
-              <div className="separator1-row5">
-                <div className="center mt-3">
-                  <div className="triangle triangle-top"></div>
+              <div className="boxColom1">
+                <div className="container-colom boxCard">
+                  <div className="berkas-terbit">
+                    <br></br>
+                    <div className="ts-center">
+                      <span className="mlf-10 inter-30 fw-500">
+                        Berkas Terbit PBG:
+                      </span>
+                    </div>
+                    <div className="container-colom mlf-35">
+                      <div className="card-luar bg-purple">
+                        <Card className="bg-purple card-tt-tolak2">
+                          {data && (
+                            <span className="total-value">
+                              {data.berkas_terbit_pbg}
+                            </span>
+                          )}
+                          <span className="total-text">
+                            Telah Terbit / Ditolak
+                          </span>
+                        </Card>
+                      </div>
+                    </div>
+                    <div className="mlf-35 mtp-15">
+                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                        Rp. 5.210.596.075
+                      </span>
+                    </div>
+                    <div className="mlf-35 mtp-10">
+                      {data && (
+                        <span className="inter-20 ts-left fw-500">
+                          {Math.round(data.berkas_terbit_pbg_perc)}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="proses-penerbitan">
+                    <br></br>
+                    <div className="ts-center">
+                      <span className="mlf-10 inter-30 fw-500">
+                        Proses Penerbitan:
+                      </span>
+                    </div>
+                    <div className="ts-center mtp-20 mbt-25">
+                      {data && (
+                        <span className="fs-50 fc-green f-500 ">
+                          {data.proses_penerbitan}
+                        </span>
+                      )}
+                    </div>
+                    <div className="mlf-35 mtp-75">
+                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                        Rp. 5.210.596.075
+                      </span>
+                    </div>
+                    <div className="ts-right">
+                      {data && (
+                        <div className=" mrg-35 fs-20 fw-500">
+                          {Math.round(data.proses_penerbitan_perc)} %
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="separator2-row5">
-                <div className="center mt-3">
-                  <div className="triangle triangle-bottoms"></div>
+                {/* triangle */}
+                <div className="container-colom">
+                  <div className="separator-berkas1 boxCard">
+                    <div className="center">
+                      <div className="triangle triangle-top"></div>
+                    </div>
+                  </div>
+                  <div className="separator-berkas2 boxCard">
+                    <div className="center">
+                      <div className="triangle triangle-bottoms"></div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div>
-              <div className="ts-center mtp-10">
-                <span className="inter-30 fw-700">Berkas Terbit PBG:</span>
-              </div>
-              <div className="container-colom mtp-10">
-                <div className="clm-6">
-                  <div className="container-colom">
-                    <div className="mlf-15">
-                      <span className="inter-23 fw-500 text-right">
+                {/* end triangle */}
+                <div className="container-colom">
+                  <div className="card-ptsp">
+                    <div className="mlf-35">
+                      <span className="inter-30 fw-500 text-right">
                         Terproses di PTSP:
                       </span>
                       <div>
@@ -352,99 +370,103 @@ const FixDashboard = () => {
                           </div>
                         </div>
                       </div>
+                      <div className="mtp-20">
+                        <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                          Rp. 358.939.739
+                        </span>
+                      </div>
+                      <div className="mtp-15">
+                        {data && (
+                          <span className="inter-25 ts-left fw-500">
+                            {Math.round(data.terproses_di_ptsp_perc)}%
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <div className="end">
-                      <div className="triangle triangle-left mtp-35"></div>
+                  </div>
+                  <div className="card-dputr">
+                    <div className="container-colom">
+                      <div className="separator-dputr">
+                        <div className="triangle triangle-left"></div>
+                      </div>
+                      <div className="clm-12 ts-center">
+                        <span className="inter-30 fw-500 me-3">
+                          Terproses di DPUTR:
+                        </span>
+                        <div className="mtp-35">
+                          {data && (
+                            <span className="text-dputr  me-3 f-500">
+                              {data.terproses_di_dputr}
+                            </span>
+                          )}
+                        </div>
+                        <div className="mtp-50">
+                          <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                            Rp. 358.939.739
+                          </span>
+                        </div>
+                        <div className="mtp-10">
+                          {data && (
+                            <div className="ts-right mrg-35 inter-25 fw-500">
+                              {Math.round(data.terproses_di_dputr_perc)}%
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="clm-6 text-right">
-                  <span className="inter-23 fw-500 me-3">
-                    Terproses di DPUTR:
-                  </span>
-                  <div className="mt-3 border-0">
-                    {data && (
-                      <span className="text-dputr  me-3 f-500">
-                        {data.terproses_di_dputr}
-                      </span>
-                    )}
+              </div>
+              <div className="belum-verif">
+                <div className="">
+                  <div className="ts-center mtp-20">
+                    <span className="inter-30 fw-700">
+                      Berkas Aktual Belum Terverifikasi
+                    </span>
                   </div>
-                </div>
-              </div>
-              <div className="container-colom mtp-10">
-                <div className="clm-12 mlf-15 ">
-                  <ChartStacked
-                    data={dataChartPbgBawah}
-                    width="600px"
-                  ></ChartStacked>
-                </div>
-              </div>
-              <div className="container-colom mtp-10">
-                <div className="clm-6 mlf-35">
-                  {data && (
-                    <span className="inter-20 ts-left fw-500">
-                      {Math.round(data.terproses_di_ptsp_perc)}%
-                    </span>
-                  )}
-                </div>
-                <div className="clm-6 ">
-                  {data && (
-                    <div className="ts-right mrg-35 fs-20 fw-500">
-                      {Math.round(data.terproses_di_dputr_perc)}%
+                  <div className="container-35 mtp-35">
+                    <div className="clm-6 ts-left ">
+                      <span className="inter-25 fw-500">Potensi Besar:</span>
+                      <br />
+                      {data && (
+                        <span className="text-actual-verif mtp-15">
+                          {data.potensi_besar}
+                        </span>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="colom2 card">
-            <div className="centered-content">
-              <div className="ts-center mtp-20">
-                <span className="inter-30 fw-700">
-                  Berkas Aktual Belum Terverifikasi
-                </span>
-              </div>
-              <div className="container-35 mtp-20">
-                <div className="clm-6 ts-left ">
-                  <span className="inter-25 fw-500">Potensi Besar:</span>
-                  <br />
-                  {data && (
-                    <span className="text-actual-verif">
-                      {data.potensi_besar}
-                    </span>
-                  )}
-                </div>
-                <div className="clm-6 ts-right">
-                  <span className="inter-25 fw-500">Potensi Kecil:</span>
-                  <br />
-                  {data && (
-                    <span className="text-blm-actual-verif">
-                      {data.potensi_kecil}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="mlf-35 mtp-10">
-                <ChartStacked
-                  data={dataChartBelumVerif}
-                  width="600px"
-                ></ChartStacked>
-              </div>
-              <div className="container-colom mtp-10">
-                <div className="clm-6 mlf-35">
-                  {data && (
-                    <span className="inter-20 ts-left fw-500">
-                      {Math.round(data.potensi_besar_perc)} %
-                    </span>
-                  )}
-                </div>
-                <div className="clm-6 ">
-                  {data && (
-                    <div className="ts-right mrg-35 fs-20 fw-500">
-                      {Math.round(data.potensi_kecil_perc)} %
+                    <div className="clm-6 ts-right">
+                      <span className="inter-25 fw-500">Potensi Kecil:</span>
+                      <br />
+                      {data && (
+                        <span className="text-blm-actual-verif mtp-15">
+                          {data.potensi_kecil}
+                        </span>
+                      )}
                     </div>
-                  )}
+                  </div>
+                  <div className="mlf-35 mtp-50">
+                    <ChartStacked
+                      data={dataChartBelumVerif}
+                      width="472px"
+                      color={color2}
+                    ></ChartStacked>
+                  </div>
+                  <div className="container-colom mtp-15">
+                    <div className="clm-6 mlf-35">
+                      {data && (
+                        <span className="inter-20 ts-left fw-500">
+                          {Math.round(data.potensi_besar_perc)} %
+                        </span>
+                      )}
+                    </div>
+                    <div className="clm-6 ">
+                      {data && (
+                        <div className="ts-right mrg-35 fs-20 fw-500">
+                          {Math.round(data.potensi_kecil_perc)} %
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
