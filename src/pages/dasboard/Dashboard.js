@@ -12,14 +12,8 @@ const FixDashboard = () => {
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
   const [data, setData] = useState(null);
-
-  const color = ["#00917c","#c62c11"];
-  const color2 = ["#7E0B02","#c62c11"];
-  const dataChart = [[24957460787], [128123934]];
-  const dataChartPbgBawah = [[393739], [197670]];
-  const dataChartVerif = [[9270733484], [15686727303]];
-  const dataChartSudahVerif = [[5210596075], [4060137409]];
-  const dataChartBelumVerif = [[10778885200], [4907842103]];
+  const color = ["#00917c", "#c62c11"];
+  const color2 = ["#7E0B02", "#c62c11"];
 
   useEffect(() => {
     fetchData();
@@ -36,13 +30,18 @@ const FixDashboard = () => {
       .get("https://api.sibedaspbgbdgkab.my.id/simbg/coba")
       .then((response) => {
         setData(response.data.data);
-        // console.log(response.data.data);
+        console.log(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  const dataChart = [[23772727494], [6901294751]];
+  // const dataChartPbgBawah = [[393739], [197670]];
+  const dataChartVerif = [[13114122977], [10658604517]];
+  // const dataChartSudahVerif = [[5210596075], [4060137409]];
+  const dataChartBelumVerif = [[5101660400], [5556944117]];
   return (
     <div>
       <NavigationBar />
@@ -100,7 +99,11 @@ const FixDashboard = () => {
               </div>
               <div className="center">
                 <div className="card-tb-value bg-blue bg-blue">
-                  <span className="inter-20 pd-5 f-500">Rp 33.171.612.765</span>
+                  {data && (
+                    <span className="inter-20 pd-5 f-500">
+                      Rp {data.total_berkas_rp}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="center mtp-20">
@@ -123,9 +126,14 @@ const FixDashboard = () => {
                 </div>
                 <div className="mlf-35">
                   <div className="card-tb-value bg-blue mt-2">
-                    <span className="inter-20 pd-5 f-500">
-                      Rp 8.214.151.978
-                    </span>
+                    {data && (
+                      <span className="inter-20 pd-5 f-500">
+                        Rp{" "}
+                        {data.berkas_terbit_last_year_rp.toLocaleString(
+                          "id-ID"
+                        )}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -151,14 +159,18 @@ const FixDashboard = () => {
                       </span>
                       <br />
                       <div className="ts-right mrg-35">
-                        <span className="fs-50 fc-red fw-500">18</span>
+                        <span className="fs-50 fc-red fw-500"></span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="container-colom">
                   <div className="ms-4 bg-blue">
-                    <ChartStacked data={dataChart} color={color} width="734px"></ChartStacked>
+                    <ChartStacked
+                      data={dataChart}
+                      color={color}
+                      width="734px"
+                    ></ChartStacked>
                   </div>
                 </div>
                 <div className="container-colom mtp-10">
@@ -170,7 +182,11 @@ const FixDashboard = () => {
                     )}
                   </div>
                   <div className="clm-6 ">
-                    <div className="ts-right mrg-35 fs-20 fw-500">10%</div>
+                    {data && (
+                      <div className="ts-right mrg-35 fs-20 fw-500">
+                        {data.deviasi_target_potensi_perc}%
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -190,7 +206,7 @@ const FixDashboard = () => {
               <div className="col2-berkas-total">
                 <div className="col2-berkas">
                   <div className="ts-center mtp-25">
-                  <br></br>
+                    <br></br>
                     <span className="inter-30 fw-700">
                       Total Berkas {currentYear}:
                     </span>
@@ -295,9 +311,9 @@ const FixDashboard = () => {
                       </div>
                     </div>
                     <div className="mlf-35 mtp-15">
-                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                        Rp. 5.210.596.075
-                      </span>
+                      {data && ( <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                        Rp. {(data.berkas_terbit_pbg_rp).toLocaleString('id-ID')}
+                      </span> )}
                     </div>
                     <div className="mlf-35 mtp-10">
                       {data && (
@@ -322,9 +338,9 @@ const FixDashboard = () => {
                       )}
                     </div>
                     <div className="mlf-35 mtp-75">
-                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                        Rp. 5.210.596.075
-                      </span>
+                      {data  && (<span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                        Rp. {(data.proses_penerbitan_rp).toLocaleString('id-ID')}
+                      </span> )}
                     </div>
                     <div className="ts-right">
                       {data && (
@@ -371,9 +387,9 @@ const FixDashboard = () => {
                         </div>
                       </div>
                       <div className="mtp-20">
-                        <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                          Rp. 358.939.739
-                        </span>
+                        {data && (<span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                          Rp. {(data.terproses_di_ptsp_rp).toLocaleString('id-ID')}
+                        </span> )}
                       </div>
                       <div className="mtp-15">
                         {data && (
@@ -401,9 +417,9 @@ const FixDashboard = () => {
                           )}
                         </div>
                         <div className="mtp-50">
-                          <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                            Rp. 358.939.739
-                          </span>
+                          {data && (<span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                            Rp. {(data.terproses_di_dputr_rp).toLocaleString('id-ID')}
+                          </span>)}
                         </div>
                         <div className="mtp-10">
                           {data && (
