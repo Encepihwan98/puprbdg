@@ -73,7 +73,7 @@ const FixDashboard = () => {
             </BoxCard>
             <BoxCard className="box-card bg-red">
               {data && <p className="pgb-value">{data.terproses_di_ptsp}</p>}
-              <p className="pgb-text">Dinas Perizinan</p>
+              <p className="pgb-text">DPMTSP</p>
             </BoxCard>
             <BoxCard className="box-card bg-purple">
               {data && (
@@ -315,9 +315,9 @@ const FixDashboard = () => {
                         Rp. {(data.berkas_terbit_pbg_rp).toLocaleString('id-ID')}
                       </span> )}
                     </div>
-                    <div className="mlf-35 mtp-10">
+                    <div className="mlf-35 mtp-10 color-white">
                       {data && (
-                        <span className="inter-20 ts-left fw-500">
+                        <span className="inter-20 ts-left fw-500 bg-green br-10 pd-5" style={{color : "#ffffff"}}>
                           {Math.round(data.berkas_terbit_pbg_perc)}%
                         </span>
                       )}
@@ -381,7 +381,7 @@ const FixDashboard = () => {
                             )}
                             <br />
                             <span className="total-text-pbg me-3 mb-1">
-                              Dinas Perizinan
+                              DPMTSP
                             </span>
                           </div>
                         </div>
