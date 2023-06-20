@@ -27,7 +27,8 @@ const FixDashboard = () => {
 
   const fetchData = () => {
     axios
-      .get("https://api.sibedaspbgbdgkab.my.id/simbg/coba")
+      .get("http://10.90.174.79:443/simbg/coba")
+      // .get("https://api.sibedaspbgbdgkab.my.id/simbg/coba")
       .then((response) => {
         setData(response.data.data);
         console.log(response.data.data);
