@@ -11,7 +11,7 @@ const ChartStacked = ({ className, width, data, color }) => {
   const options = {
     chart: {
       type: "bar",
-      height: 40,
+      height: 81,
       spacing: [0, 0, 0, 0],
       marginRight: 0,
       marginTop: 0,

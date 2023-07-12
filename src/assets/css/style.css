@@ -7,6 +7,9 @@
   margin: 40px;
 }
 
+.width-262{
+  width: 262px;
+}
 
 
 .box-card {
@@ -84,12 +87,12 @@
   height: 339px;
 }
 
-.card-tt-tolak {
+/* .card-tt-tolak {
   margin-top: 10px;
   width: 208px;
   height: 104px;
   border: none;
-}
+} */
 
 .card-berkas-terbit {
   height: 375px;
@@ -129,7 +132,7 @@
   margin-top: -8px;
 }
 
-.total-value {
+/* .total-value {
   font-family: 'inter';
   font-weight: 500;
   font-style: normal;
@@ -137,7 +140,7 @@
   font-size: 50px;
   text-align: left;
   margin-left: 10px;
-}
+} */
 
 .total-text {
   font-family: 'inter';
@@ -235,7 +238,7 @@
 .inter-20 {
   font-family: 'inter';
   font-size: 20px;
-  color: black;
+  
 }
 
 .inter-30 {
@@ -308,16 +311,9 @@
 }
 
 
-.text-actual-verif {
-  text-align: left;
-  font-weight: 500;
-  font-size: 50px;
-  color: #00917c;
-}
-
-.text-blm-actual-verif {
+/* .text-blm-actual-verif {
   text-align: right;
   font-weight: 500;
   font-size: 50px;
   color: #c62c11;
-}
+} */
