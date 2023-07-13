@@ -18,10 +18,7 @@ const FixDashboard = () => {
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
   const dataPotensi = 24537326696;
-  // const dataChart = [[24957460787], [128123934]];
-  // const dataChartPbgBawah = [[393739], [197670]];
   const dataChartVerif = [[9270733484], [15686727303]];
-  // const dataChartSudahVerif = [[5210596075], [4060137409]];
   const dataChartBelumVerif = [[10778885200], [4907842103]];
 
   useEffect(() => {
