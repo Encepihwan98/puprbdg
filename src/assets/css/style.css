@@ -12,14 +12,7 @@
 }
 
 
-.box-card {
-  width: 203px;
-  height: 110px;
-  border-radius: 10px;
-  padding: 5px, 10px, 5px, 10px;
-  border: none;
-  margin-top: 21px;
-}
+
 
 .card-box {
   margin: 0 auto; /* Mengatur margin kiri dan kanan menjadi "auto" */
