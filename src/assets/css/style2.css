@@ -629,7 +629,7 @@
 
 .belum-verif {
   width: 545px;
-  height: 398px;
+  height: 402px;
   background-color: #ffffff;
   border-top: 3px solid #dfe2e6;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
@@ -743,7 +743,7 @@
   border: none;
   border-radius: 0;
   width: 560px;
-  height: 52px;
+  height: 53px;
   border-bottom: 3px solid #dfe2e6;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
