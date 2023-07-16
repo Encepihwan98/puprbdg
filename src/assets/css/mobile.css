@@ -2,7 +2,7 @@
     .navbar-size {
         width: 1440px !important;
     }
-    .row1, .row2, .row3, .row4, .row5 {
+    .row1, .row2, .row3, .row4, .row5 .date-today {
         width: 1340px !important;
     }
     
@@ -16,7 +16,7 @@
     .navbar-size {
         width: 1440px !important;
     }
-    .row1, .row2, .row3, .row4, .row5 {
+    .row1, .row2, .row3, .row4, .row5  .date-today {
         width: 1340px !important;
     }
     

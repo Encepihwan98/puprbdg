@@ -320,6 +320,72 @@ const FixDashboard = () => {
             </div>
 
             <div className="container-colom">
+              <div className="card-dputr">
+                <div className="container-colom">
+                  
+                  <div className="clm-12 ts-center">
+                    <span className="inter-30 fw-500 me-3">
+                      Terproses di DPUTR:
+                    </span>
+                    <div className="mtp-35">
+                      {data && (
+                        <span className="text-dputr  me-3 f-500">
+                          {data.terproses_di_dputr}
+                        </span>
+                      )}
+                    </div>
+                    <div className="mtp-50">
+                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                        Rp. 358.939.739
+                      </span>
+                    </div>
+                    <div className="mtp-10">
+                      {data && (
+                        <div className="ts-right mrg-35 inter-25 fw-500">
+                          {Math.round(data.terproses_di_dputr_perc)}%
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="separator-dputr">
+                    <div className="triangle triangle-right"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card-ptsp">
+                <div className="mlf-35">
+                  <span className="inter-30 fw-500 text-right">
+                    Terproses di PTSP:
+                  </span>
+                  <div>
+                    <div className="luar-box bg-red mt-3">
+                      <div className="bg-red box-dinas-perizinan text-left">
+                        {data && (
+                          <span className="total-value-pbg me-3">
+                            {Math.round(data.terproses_di_ptsp_perc)}%
+                          </span>
+                        )}
+                        <br />
+                        <span className="total-text-pbg me-3 mb-1">DPMTSP</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mtp-20">
+                    <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                      Rp. 358.939.739
+                    </span>
+                  </div>
+                  <div className="mtp-15">
+                    {data && (
+                      <span className="inter-25 ts-left fw-500">
+                        {data.terproses_di_ptsp}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
               <div className="belum-verif">
                 <div className="">
                   <div className="ts-center mtp-20">
@@ -367,71 +433,6 @@ const FixDashboard = () => {
                         <span className="inter-20 ts-left fw-500">
                           {data.potensi_besar}
                         </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="card-ptsp">
-                <div className="mlf-35">
-                  <span className="inter-30 fw-500 text-right">
-                    Terproses di PTSP:
-                  </span>
-                  <div>
-                    <div className="luar-box bg-red mt-3">
-                      <div className="bg-red box-dinas-perizinan text-left">
-                        {data && (
-                          <span className="total-value-pbg me-3">
-                            {Math.round(data.terproses_di_ptsp_perc)}%
-                          </span>
-                        )}
-                        <br />
-                        <span className="total-text-pbg me-3 mb-1">DPMTSP</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mtp-20">
-                    <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                      Rp. 358.939.739
-                    </span>
-                  </div>
-                  <div className="mtp-15">
-                    {data && (
-                      <span className="inter-25 ts-left fw-500">
-                        {data.terproses_di_ptsp}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="card-dputr">
-                <div className="container-colom">
-                  <div className="separator-dputr">
-                    <div className="triangle triangle-left"></div>
-                  </div>
-                  <div className="clm-12 ts-center">
-                    <span className="inter-30 fw-500 me-3">
-                      Terproses di DPUTR:
-                    </span>
-                    <div className="mtp-35">
-                      {data && (
-                        <span className="text-dputr  me-3 f-500">
-                          {data.terproses_di_dputr}
-                        </span>
-                      )}
-                    </div>
-                    <div className="mtp-50">
-                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                        Rp. 358.939.739
-                      </span>
-                    </div>
-                    <div className="mtp-10">
-                      {data && (
-                        <div className="ts-right mrg-35 inter-25 fw-500">
-                          {Math.round(data.terproses_di_dputr_perc)}%
-                        </div>
                       )}
                     </div>
                   </div>
