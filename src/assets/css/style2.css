@@ -174,11 +174,19 @@
   margin-left: 35px;
 }
 
+.mlf-28 {
+  margin-left: 25%;
+}
+
 .mrg-35 {
   margin-right: 35px;
 }
 .mrg-50 {
   margin-right: 50px;
+}
+
+.mrg-15 {
+  margin-right: 15px;
 }
 
 .mbt-10 {
@@ -215,6 +223,10 @@
 /* padding start */
 .pd-5 {
   padding: 5px;
+}
+
+.pd-10 {
+  padding: 10px;
 }
 /* padding end */
 
@@ -366,12 +378,49 @@
   width: 100%;
 }
 
+.baris {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
 .date-today {
-  width: 1370px;
+  width: 1351px;
   background-color: #ffff;
-  border-bottom: 3px solid #dfe2e6;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1), -4px 4px 6px rgba(0, 0, 0, 0.1),
     4px -4px 6px rgba(0, 0, 0, 0.1), -4px -4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #dfe2e6;
+}
+
+
+.date-today p{
+  padding: 5px;
+  margin-left: 850px;
+}
+
+.date-today ul {
+  list-style-type: none;
+  margin: 5px;
+  padding: 0;
+  overflow: hidden;
+  padding: 5px;
+  /* background-color: #333; */
+}
+
+.date-today ul li {
+  float: left;
+  margin: 3px;
+}
+
+.date-today ul li a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 5px 15px;
+  text-decoration: none;
+  background-color: #81c0ff;
+  border-radius: 10px;
+  font-size: 25px;
 }
 
 .row2 {
@@ -382,7 +431,7 @@
 
 .row2 .colom1 {
   width: 262px;
-  height: 1470px;
+  height: 1346px;
   box-shadow: -4px -4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0;
   border: none;
@@ -398,6 +447,16 @@
   border: none;
   margin-top: 21px;
   margin-left: 21px;
+}
+
+.card-rupiah {
+  width: 181px;
+  height: 86px;
+  background-color: #81c0ff;
+  font-size: 25px;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .card-tb-permohonan {
@@ -430,6 +489,7 @@
   border: none;
   width: auto;
   display: inline-block;
+  padding: 5px;
 }
 
 .total-value {
@@ -473,7 +533,7 @@
 }
 
 .row2 .colom2 {
-  width: 1108px;
+  /* width: 1108px; */
   border: none;
 }
 
@@ -492,13 +552,13 @@
 .row2 .colom2 .potensi-card {
   border-radius: 0;
   border: none;
-  height: 258px;
+  height: 428px;
+  width: 557px;
   background-color: white;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
 
 .row2 .colom1 .c2-b2-c1 {
-  
   height: 337px;
   border: none;
   border-radius: 0;
@@ -527,11 +587,13 @@
 
 .col2-berkas-total {
   height: 462px;
-  width: 796px;
+  width: 816px;
   border: none;
   border-radius: 0;
   margin: 0;
   /* margin-top: -25px; */
+  border-top: 3px solid #dfe2e6;
+  box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
 
 .col2-berkas {
@@ -561,13 +623,12 @@
 }
 
 .berkas-terbit {
-  width: 1108px;
-  height: 297px;
+  width: 528px;
+  height: 428px;
   border: none;
   border-radius: 0;
   background-color: #ffffff;
-  /* border-right: 3px solid #dfe2e6; */
-  border-top: 3px solid #dfe2e6;
+  border-right: 3px solid #dfe2e6;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -579,9 +640,10 @@
 }
 
 .proses-penerbitan {
-  width: 270px;
-  height: 463px;
-  /* border-right: 3px solid #dfe2e6; */
+  width: 274px;
+  height: 410px;
+  border-right: 3px solid #dfe2e6;
+  border-top: 3px solid #dfe2e6;
   background-color: #ffff;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
@@ -601,19 +663,30 @@
 
 .card-ptsp {
   /* margin-top: -2px; */
-  width: 270px;
-  height: 402px;
+  width: 267px;
+  height: 462px;
   background-color: #ffffff;
   border-right: 3px solid #dfe2e6;
   border-top: 3px solid #dfe2e6;
 }
 
+.card-ptsp-atas {
+  height: 409px;
+  width: 100%;
+}
+
+.card-ptsp-bawah {
+  border-top: 3px solid #dfe2e6;
+  height: 53px;
+  width: 100%;
+}
+
 .card-dputr {
   /* margin-top: -2px; */
-  width: 299px;
-  height: 358px;
+  width: 267px;
+  height: 410px;
   background-color: #ffffff;
-  border-top: 3px solid #dfe2e6;
+  /* border-top: 3px solid #dfe2e6; */
   border-right: 3px solid #dfe2e6;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
@@ -628,8 +701,8 @@
 }
 
 .belum-verif {
-  width: 545px;
-  height: 402px;
+  width: 543px;
+  height: 410px;
   background-color: #ffffff;
   border-top: 3px solid #dfe2e6;
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
@@ -660,15 +733,25 @@
 }
 
 .row2 .colom2-separator1 {
-  width: 269px;
-  height: 44px;
-}
-.row2 .colom2-separator2 {
-  width: 546px;
+  width: 264px;
   height: 44px;
   border-radius: 0;
   border: none;
-  border-bottom: 3px solid #dfe2e6;
+}
+.row2 .colom2-separator2 {
+  width: 264px;
+  height: 44px;
+  border-radius: 0;
+  border: none;
+  /* border-bottom: 3px solid #dfe2e6; */
+}
+
+.row2 .colom2-separator3 {
+  width: 557px;
+  height: 44px;
+  border-radius: 0;
+  border: none;
+  box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
 
 .row3 {
@@ -697,6 +780,7 @@
 }
 
 .text-actual-verif {
+  margin-right: 25px;
   text-align: right;
   font-weight: 500;
   font-size: 50px;
@@ -739,12 +823,22 @@
   /* box-shadow: -4px 0px 6px rgba(0, 0, 0, 0.1); */
 }
 
+.separator1-row2 {
+  border: none;
+  border-radius: 0;
+  width: 274px;
+  height: 53px;
+  border-right: 3px solid #dfe2e6;
+  /* border-left: 3px solid #dfe2e6; */
+  box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
+}
+
 .separator2-row2 {
   border: none;
   border-radius: 0;
-  width: 560px;
+  width: 545px;
   height: 53px;
-  border-bottom: 3px solid #dfe2e6;
+  /* border-bottom: 3px solid #dfe2e6; */
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -866,3 +960,88 @@
   display: flex;
   justify-content: flex-start;
 }
+
+/* table */
+
+/* YourComponent.module.css */
+.table-container {
+  overflow: auto;
+  max-height: 700px;
+}
+
+.horizontal-scroll {
+  overflow-x: auto;
+}
+
+.row-tab {
+  width: 1347px;
+  background-color: white;
+  border-top: 3px solid #dfe2e6;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1), -4px 4px 6px rgba(0, 0, 0, 0.1),
+    4px -4px 6px rgba(0, 0, 0, 0.1), -4px -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* YourComponent.css */
+.datatab {
+  margin: 25px;
+  border-collapse: collapse; /* Membuat batas antar sel tabel menjadi satu untuk menghasilkan garis tepi yang rapi */
+  width: 100%; /* Lebar tabel */
+}
+
+.datatab th,
+.datatab td {
+  border: 1px solid rgb(226, 223, 223); /* Menambahkan garis tepi pada sel header dan sel data */
+  padding: 8px; /* Padding pada sel */
+  text-align: left; /* Posisi teks pada sel menjadi kiri */
+}
+
+.datatab th {
+  background-color: #f2f2f2; /* Warna latar belakang header */
+  font-weight: bold; /* Tebalkan teks header */
+}
+
+.datatab tr:nth-child(even) {
+  background-color: rgba(
+    0,
+    145,
+    124,
+    0.35
+  ); /* Warna latar belakang untuk baris genap dengan transparansi 35% */
+}
+
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #f2f2f2;
+}
+
+.pagination .active {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.pagination button.active {
+  background-color: #007bff; /* Warna latar belakang tombol aktif */
+  color: #fff; /* Warna teks pada tombol aktif */
+  border: 1px solid #007bff; /* Garis tepi pada tombol aktif */
+}
+
+.serch {
+  width: 1299px;
+  border-radius: 10px;
+}
+
+/* end tabel */

@@ -1,5 +1,7 @@
 import NavigationBar from "../../components/NavigationsBar";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 import BoxCard from "../../components/BoxCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -18,8 +20,23 @@ const FixDashboard = () => {
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
   const dataPotensi = 24537326696;
+  // const dataChart = [[24957460787], [128123934]];
+  // const dataChartPbgBawah = [[393739], [197670]];
   const dataChartVerif = [[9270733484], [15686727303]];
+  // const dataChartSudahVerif = [[5210596075], [4060137409]];
   const dataChartBelumVerif = [[10778885200], [4907842103]];
+
+  const menuLinks = document.querySelectorAll(".date-today ul li a");
+
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      // Remove "active" class from all menu links
+      menuLinks.forEach((link) => link.classList.remove("active"));
+
+      // Add "active" class to the clicked menu link
+      link.classList.add("active");
+    });
+  });
 
   useEffect(() => {
     fetchData();
@@ -74,10 +91,26 @@ const FixDashboard = () => {
 
         {/* row tanggal  */}
         <div className="row-tgl mtp-25 flex-x-center">
-          <div className="date-today">
-            <p className="inter-25 fw-500 m-10">
-              {date} {month} {currentYear}
-            </p>
+          <div className="date-today container-colom">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <ul>
+                <li>
+                  <Link to="/" type="button">
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/Tabel" type="button">
+                    Tabel
+                  </Link>
+                </li>
+              </ul>
+              <div className="cobacoba">
+                <p className="inter-25 fw-500 m-10">
+                  {date} {month} {currentYear}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -159,44 +192,121 @@ const FixDashboard = () => {
 
           {/* ini buat potensi */}
           <div className="colom2">
-            <div className="potensi-card">
-              <div className="ts-center">
-                <br />
-                <span className="inter-20 fw-500 mtp-10">
-                  Total Berkas {currentYear}
-                </span>
-              </div>
-              <div className="ts-center">
-                {data && (
-                  <span className="fs-67 ts-center fc-green fw-500">
-                    {Math.round(data.total_berkas_now_perc)}%
-                  </span>
-                )}
-              </div>
-              <div className="ts-center mtp-10">
-                <span className="fs-30">Potensi: </span>
-                <div className="card-potensi bg-green fc-white fs-30">
-                  <span className="m-15">Rp. {dataPotensi}</span>
+            <div className="container-colom2">
+              <div className="berkas-terbit">
+                <div className="ts-center mtp-10">
+                  <span className=" inter-25 fw-500">Berkas Terbit PBG:</span>
                 </div>
-                {data && (
-                  <span className="fs-30 f-500 mlf-10">
-                    {data.total_berkas_now}
+                <div className="container-colom center">
+                  <div className="card-luar bg-purple">
+                    <Card className="bg-purple card-tt-tolak2">
+                      {data && (
+                        <span className="fs-60 mlf-10 fc-white">
+                          {Math.round(data.berkas_terbit_pbg_perc)}%
+                        </span>
+                      )}
+                      <span className="total-text">Telah Terbit / Ditolak</span>
+                    </Card>
+                  </div>
+                </div>
+                <div className="mtp-25 mlf-28">
+                  <div className="fs-30 fw-500">Realisasi : </div>
+                  <span className="bg-blue inter-30 br-10 mtp-10 pd-10 fw-500">
+                    Rp. 5.210.596.075
+                  </span>{" "}
+                  <br />
+                  {data && (
+                    <span className="inter-30 mtp-10 ts-left fw-500">
+                      {data.berkas_terbit_pbg}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="potensi-card">
+                <div className="ts-center">
+                  <br />
+                  <span className="inter-20 fw-500 mtp-10">
+                    Total Berkas {currentYear}
                   </span>
-                )}
+                </div>
+                <div className="ts-center mtp-10">
+                  {data && (
+                    <span className="fs-67 ts-center fc-green fw-500">
+                      {Math.round(data.total_berkas_now_perc)}%
+                    </span>
+                  )}
+                </div>
+                <div className="mlf-28 mtp-25">
+                  <div className="fs-30">Potensi: </div>
+                  <div className="card-potensi mtp-10 bg-green fc-white fs-30">
+                    <span className="m-15">Rp. {dataPotensi}</span>
+                  </div>
+                  {data && (
+                    <div className="fs-30 mtp-10 f-500 mlf-10">
+                      {data.total_berkas_now}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-
             <div className="container-colom2">
-              <div className="colom2-separator1"></div>
-              <div className="colom2-separator2 card">
+              <div className="colom2-separator1 card">
+                <div className="center mt-2">
+                  <div className="triangle triangle-top"></div>
+                </div>
+              </div>
+              <div className="colom2-separator2"></div>
+              <div className="colom2-separator3 card">
                 <div className="center mt-2">
                   <div className="triangle triangle-bottoms"></div>
                 </div>
               </div>
-              <div className="colom2-separator3"></div>
             </div>
 
             <div className="container-colom2">
+              {/* proses ptsp */}
+              <div className="card-ptsp">
+                <div className="mlf-35 card-ptsp-atas">
+                  <span className="inter-30 fw-500 text-right">
+                    Terproses di PTSP:
+                  </span>
+                  <div>
+                    <div className="luar-box bg-red mt-3">
+                      <div className="bg-red box-dinas-perizinan text-left">
+                        {data && (
+                          <span className="total-value-pbg me-3">
+                            {Math.round(data.terproses_di_ptsp_perc)}%
+                          </span>
+                        )}
+                        <br />
+                        <span className="total-text-pbg me-3 mb-1">DPMTSP</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mtp-20">
+                    <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                      Rp. 358.939.739
+                    </span>
+                  </div>
+                  <div className="mtp-15">
+                    {data && (
+                      <span className="inter-25 ts-left fw-500">
+                        {data.terproses_di_ptsp}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="card-ptsp-bawah">
+                  <div className="separator-ptsp boxCard">
+                    <div className="center">
+                      <div className="triangle triangle-top"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* end */}
               <div className="col2-berkas-total">
                 <div className="col2-berkas">
                   <div className="">
@@ -234,7 +344,7 @@ const FixDashboard = () => {
                       <br />
                       {data && (
                         <div className="ts-right">
-                          <span className="text-actual-verif mlf-35">
+                          <span className="text-actual-verif ">
                             {Math.round(
                               data.berkas_aktual_terverifikasi_dinas_teknis_perc
                             )}{" "}
@@ -270,59 +380,30 @@ const FixDashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="separator2-row2 boxCard">
-                  <div className="center">
-                    <div className="triangle triangle-bottoms"></div>
+                <div className="container-colom2">
+                  <div className="separator1-row2 boxCard">
+                    <div className="center">
+                      <div className="triangle triangle-bottoms"></div>
+                    </div>
+                  </div>
+                  <div className="separator2-row2 boxCard">
+                    <div className="center">
+                      <div className="triangle triangle-bottoms"></div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="col-triangle center">
+              {/* <div className="col-triangle center">
                 <div className="flex-align-item-center mlf-15">
                   <div className="triangle triangle-right"></div>
                 </div>
-              </div>
-
-              <div className="proses-penerbitan">
-                <br></br>
-                <div className="ts-center">
-                  <span className="mlf-10 inter-25 fw-500">
-                    Proses <br /> Penerbitan:
-                  </span>
-                </div>
-                <div className="ts-center mtp-20 mbt-25">
-                  {data && (
-                    <div className="fs-50 fc-green f-500">
-                      {Math.round(data.proses_penerbitan_perc)} %
-                    </div>
-                  )}
-                </div>
-                <div className="mlf-35 mtp-75">
-                  <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                    Rp. 5.210.596.075
-                  </span>
-                </div>
-                <div className="ts-right mtp-10">
-                  {data && (
-                    <span className="mrg-35  fs-20 fw-500">
-                      {data.proses_penerbitan}
-                    </span>
-                  )}
-                </div>
-                <br />
-                <br />
-                <br />
-
-                <div className="center">
-                  <div className="triangle triangle-bottoms"></div>
-                </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="container-colom">
               <div className="card-dputr">
                 <div className="container-colom">
-                  
                   <div className="clm-12 ts-center">
                     <span className="inter-30 fw-500 me-3">
                       Terproses di DPUTR:
@@ -334,10 +415,10 @@ const FixDashboard = () => {
                         </span>
                       )}
                     </div>
-                    <div className="mtp-50">
-                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                        Rp. 358.939.739
-                      </span>
+                    <div className="card-rupiah mlf-35 mtp-15">
+                      Rp. 5.210.596
+                      <br />
+                      075
                     </div>
                     <div className="mtp-10">
                       {data && (
@@ -347,44 +428,50 @@ const FixDashboard = () => {
                       )}
                     </div>
                   </div>
-                  <div className="separator-dputr">
-                    <div className="triangle triangle-right"></div>
-                  </div>
                 </div>
               </div>
 
-              <div className="card-ptsp">
-                <div className="mlf-35">
-                  <span className="inter-30 fw-500 text-right">
-                    Terproses di PTSP:
-                  </span>
+              {/* proses penerbitan */}
+              <div className="proses-penerbitan">
+                <div className="container-colom">
+                  <div className="separator-dputr">
+                    <div className="triangle triangle-left"></div>
+                  </div>
                   <div>
-                    <div className="luar-box bg-red mt-3">
-                      <div className="bg-red box-dinas-perizinan text-left">
-                        {data && (
-                          <span className="total-value-pbg me-3">
-                            {Math.round(data.terproses_di_ptsp_perc)}%
-                          </span>
-                        )}
-                        <br />
-                        <span className="total-text-pbg me-3 mb-1">DPMTSP</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mtp-20">
-                    <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                      Rp. 358.939.739
-                    </span>
-                  </div>
-                  <div className="mtp-15">
-                    {data && (
-                      <span className="inter-25 ts-left fw-500">
-                        {data.terproses_di_ptsp}
+                    <div className="ts-center">
+                      <span className="mlf-10 inter-25 fw-500">
+                        Proses <br /> Penerbitan:
                       </span>
-                    )}
+                    </div>
+                    <div className="ts-center mtp-20 mbt-25">
+                      {data && (
+                        <div className="fs-50 fc-green f-500">
+                          {Math.round(data.proses_penerbitan_perc)} %
+                        </div>
+                      )}
+                    </div>
+                    {/* <div className="mlf-35 mtp-75">
+                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                        Rp. 5.210.596 <br/>
+                        075
+                      </span>
+                    </div> */}
+                    <div className="card-rupiah mtp-35">
+                      Rp. 5.210.596
+                      <br />
+                      075
+                    </div>
+                    <div className="ts-right mtp-10">
+                      {data && (
+                        <span className="mrg-35  fs-20 fw-500">
+                          {data.proses_penerbitan}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
+              {/* end */}
 
               <div className="belum-verif">
                 <div className="">
@@ -428,45 +515,14 @@ const FixDashboard = () => {
                         </span>
                       )}
                     </div>
-                    <div className="clm-6 ">
+                    <div className="clm-6 ts-right">
                       {data && (
-                        <span className="inter-20 ts-left fw-500">
+                        <span className="inter-20 mrg-35 fw-500">
                           {data.potensi_besar}
                         </span>
                       )}
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="container-colom">
-              <div className="berkas-terbit">
-                <div className="ts-center mtp-10">
-                  <span className=" inter-25 fw-500">Berkas Terbit PBG:</span>
-                </div>
-                <div className="container-colom center">
-                  <div className="card-luar bg-purple">
-                    <Card className="bg-purple card-tt-tolak2">
-                      {data && (
-                        <span className="fs-60 mlf-10 fc-white">
-                          {Math.round(data.berkas_terbit_pbg_perc)}%
-                        </span>
-                      )}
-                      <span className="total-text">Telah Terbit / Ditolak</span>
-                    </Card>
-                  </div>
-                </div>
-                <div className="center mtp-15">
-                  <span className="fs-30 fw-500">Realisasi : </span>
-                  <span className="bg-blue inter-30 br-10 pd-5 fw-500">
-                    Rp. 5.210.596.075
-                  </span>{" "}
-                  {data && (
-                    <span className="inter-30 mlf-10 ts-left fw-500">
-                      {data.berkas_terbit_pbg}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
