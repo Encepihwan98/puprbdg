@@ -99,11 +99,11 @@ const FixDashboard = () => {
                     Dashboard
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/Tabel" type="button">
                     Tabel
                   </Link>
-                </li>
+                </li> */}
               </ul>
               <div className="cobacoba">
                 <p className="inter-25 fw-500 m-10">
