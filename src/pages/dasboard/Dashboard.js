@@ -38,6 +38,12 @@ const FixDashboard = () => {
     });
   });
 
+  let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
+  let sheetName = encodeURIComponent("Bagan 2023");
+  let apiKey = "AIzaSyB2WHCLlhqILOtiAih_xam8y7-znaT829s";
+
+  let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+
   useEffect(() => {
     fetchData();
 
@@ -50,9 +56,86 @@ const FixDashboard = () => {
 
   const fetchData = () => {
     axios
-      .get("https://sibedaspbg.bandungkab.go.id/api/simbg/coba")
+      // .get("https://sibedaspbg.bandungkab.go.id/api/simbg/coba")
+      .get(sheetUrl)
       .then((response) => {
-        setData(response.data.data);
+        let datas = response.data.values;
+
+        let total_berkas = datas[2][10];
+        let total_berkas_rp = datas[2][11];
+        let total_berkas_now = datas[3][10];
+        let total_berkas_now_perc = parseInt(datas[3][12]);
+        let total_berkas_this_year_rp = datas[3][11];
+        let deviasi_target_potensi_rp = datas[4][11];
+        let deviasi_target_potensi_perc = parseInt(datas[4][12]);
+        let berkas_aktual_belum_terverifikasi = datas[29][10];
+        let berkas_aktual_belum_terverifikasi_perc = parseInt(datas[29][13]);
+        let berkas_aktual_belum_terverifikasi_rp = datas[29][11];
+
+        let potensi_besar = datas[31][10];
+        let potensi_besar_perc = parseInt(datas[31][12]);
+        let potensi_besar_rp = datas[31][11];
+        let potensi_kecil = datas[30][10];
+        let potensi_kecil_perc = parseInt(datas[30][12]);
+        let potensi_kecil_rp = datas[30][11];
+        let berkas_aktual_terverifikasi_dinas_teknis = datas[13][10];
+        let berkas_aktual_terverifikasi_dinas_teknis_perc = parseInt(datas[13][13]);
+        let berkas_aktual_terverifikasi_dinas_teknis_rp = datas[13][11];
+        let berkas_terbit_pbg = datas[15][10];
+        let berkas_terbit_pbg_perc = parseInt(datas[15][13]);
+        let berkas_terbit_pbg_rp = datas[15][11];
+        let proses_penerbitan = datas[16][10];
+        let proses_penerbitan_perc = parseInt(datas[16][13]);
+        let proses_penerbitan_rp = datas[16][11];
+        let terproses_di_ptsp = datas[19][10];
+        let terproses_di_ptsp_perc = parseInt(datas[19][13]);
+        let terproses_di_ptsp_rp = datas[19][11];
+        let terproses_di_dputr = datas[20][10];
+        let terproses_di_dputr_perc = parseInt(datas[20][13]);
+        let terproses_di_dputr_rp = datas[20][11];
+        let berkas_terbit_last = datas[14][10];
+        let berkas_terbit_last_year_rp = [14][11];
+
+        setData({
+          total_berkas: total_berkas,
+          total_berkas_rp: total_berkas_rp,
+          total_berkas_now: total_berkas_now,
+          total_berkas_now_perc: total_berkas_now_perc,
+          total_berkas_this_year_rp: total_berkas_this_year_rp,
+          deviasi_target_potensi_rp: deviasi_target_potensi_rp,
+          deviasi_target_potensi_perc: deviasi_target_potensi_perc,
+          berkas_aktual_belum_terverifikasi: berkas_aktual_belum_terverifikasi,
+          berkas_aktual_belum_terverifikasi_perc:
+          berkas_aktual_belum_terverifikasi_perc,
+          berkas_aktual_belum_terverifikasi_rp:
+          berkas_aktual_belum_terverifikasi_rp,
+          potensi_besar: potensi_besar,
+          potensi_besar_perc: potensi_besar_perc,
+          potensi_besar_rp: potensi_besar_rp,
+          potensi_kecil: potensi_kecil,
+          potensi_kecil_perc: potensi_kecil_perc,
+          potensi_kecil_rp: potensi_kecil_rp,
+          berkas_aktual_terverifikasi_dinas_teknis:
+          berkas_aktual_terverifikasi_dinas_teknis,
+          berkas_aktual_terverifikasi_dinas_teknis_perc:
+          berkas_aktual_terverifikasi_dinas_teknis_perc,
+          berkas_aktual_terverifikasi_dinas_teknis_rp:
+          berkas_aktual_terverifikasi_dinas_teknis_rp,
+          berkas_terbit_pbg: berkas_terbit_pbg,
+          berkas_terbit_pbg_perc: berkas_terbit_pbg_perc,
+          berkas_terbit_pbg_rp: berkas_terbit_pbg_rp,
+          proses_penerbitan: proses_penerbitan,
+          proses_penerbitan_perc: proses_penerbitan_perc,
+          proses_penerbitan_rp: proses_penerbitan_rp,
+          terproses_di_ptsp: terproses_di_ptsp,
+          terproses_di_ptsp_perc: terproses_di_ptsp_perc,
+          terproses_di_ptsp_rp: terproses_di_ptsp_rp,
+          terproses_di_dputr: terproses_di_dputr,
+          terproses_di_dputr_perc: terproses_di_dputr_perc,
+          terproses_di_dputr_rp: terproses_di_dputr_rp,
+          berkas_terbit_last: berkas_terbit_last,
+          berkas_terbit_last_year_rp: berkas_terbit_last_year_rp,
+        });
         // console.log(response.data.data);
       })
       .catch((error) => {
@@ -81,9 +164,9 @@ const FixDashboard = () => {
                 Deviasi Target dengan Potensi Total Berkas:
               </span>
               <div className="card bg-red  card-pad">
-                <span className="inter-20 fc-white fw-500 pd-5">
-                  Rp 7.665.893.953,-
-                </span>
+                {data && (<span className="inter-20 fc-white fw-500 pd-5">
+                  Rp {data.deviasi_target_potensi_rp},-
+                </span>)}
               </div>
             </div>
           </div>
@@ -122,9 +205,9 @@ const FixDashboard = () => {
               </div>
               <div className="center mtp-10">
                 <div className="card-tb-permohonan1 bg-blue">
-                  <span className="m-10 fs-38 fc-white pd-5 f-500">
-                    Rp 33.171. 612.765
-                  </span>
+                  {data && (<span className="m-10 fs-38 fc-white pd-5 f-500">
+                    Rp{data.total_berkas_rp}
+                  </span>)}
                   <p className="total-text">Jumlah Permohonan</p>
                 </div>
               </div>
@@ -144,9 +227,9 @@ const FixDashboard = () => {
                 Berkas Terbit PBG {lastYear}:
               </p>
               <div className="bg-purple card-tt-tolak">
-                <span className="fs-38 fc-white pd-5 f-500">
+                {data &&(<span className="fs-38 fc-white pd-5 f-500">
                   Rp 8.214. 151.978
-                </span>
+                </span>)}
                 <br />
                 <span className="total-text">Telah Terbit / Ditolak</span>
               </div>
@@ -211,9 +294,9 @@ const FixDashboard = () => {
                 </div>
                 <div className="mtp-25 mlf-28">
                   <div className="fs-30 fw-500">Realisasi : </div>
-                  <span className="bg-blue inter-30 br-10 mtp-10 pd-10 fw-500">
-                    Rp. 5.210.596.075
-                  </span>{" "}
+                  {data &&(<span className="bg-blue inter-30 br-10 mtp-10 pd-10 fw-500">
+                    Rp. {data.berkas_terbit_pbg_rp}
+                  </span>)}{" "}
                   <br />
                   {data && (
                     <span className="inter-30 mtp-10 ts-left fw-500">
@@ -285,9 +368,9 @@ const FixDashboard = () => {
                     </div>
                   </div>
                   <div className="mtp-20">
-                    <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                      Rp. 358.939.739
-                    </span>
+                    {data &&(<span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                      Rp. {data.terproses_di_ptsp_rp}
+                    </span>)}
                   </div>
                   <div className="mtp-15">
                     {data && (
@@ -415,11 +498,9 @@ const FixDashboard = () => {
                         </span>
                       )}
                     </div>
-                    <div className="card-rupiah mlf-35 mtp-15">
-                      Rp. 5.210.596
-                      <br />
-                      075
-                    </div>
+                    {data && (<div className="card-rupiah mlf-35 mtp-15">
+                      Rp. {data.terproses_di_dputr_rp}
+                    </div>)}
                     <div className="mtp-10">
                       {data && (
                         <div className="ts-right mrg-35 inter-25 fw-500">
@@ -450,17 +531,9 @@ const FixDashboard = () => {
                         </div>
                       )}
                     </div>
-                    {/* <div className="mlf-35 mtp-75">
-                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                        Rp. 5.210.596 <br/>
-                        075
-                      </span>
-                    </div> */}
-                    <div className="card-rupiah mtp-35">
-                      Rp. 5.210.596
-                      <br />
-                      075
-                    </div>
+                    {data &&(<div className="card-rupiah mtp-35">
+                      Rp. {data.proses_penerbitan_rp}
+                    </div>)}
                     <div className="ts-right mtp-10">
                       {data && (
                         <span className="mrg-35  fs-20 fw-500">
