@@ -287,6 +287,11 @@
   font-family: "inter";
 }
 
+.fs-25 {
+  font-size: 25px;
+  font-family: "inter";
+}
+
 .fs-17 {
   font-size: 15px;
   font-family: "inter";
@@ -294,6 +299,11 @@
 
 .fs-30 {
   font-size: 30px;
+  font-family: "inter";
+}
+
+.fs-35 {
+  font-size: 35px;
   font-family: "inter";
 }
 
@@ -389,11 +399,10 @@
   background-color: #ffff;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1), -4px 4px 6px rgba(0, 0, 0, 0.1),
     4px -4px 6px rgba(0, 0, 0, 0.1), -4px -4px 6px rgba(0, 0, 0, 0.1);
-    border-bottom: 3px solid #dfe2e6;
+  border-bottom: 3px solid #dfe2e6;
 }
 
-
-.date-today p{
+.date-today p {
   padding: 5px;
   margin-left: 850px;
 }
@@ -453,8 +462,8 @@
   width: 181px;
   height: 86px;
   background-color: #81c0ff;
-  font-size: 25px;
-  font-weight: 500;
+  /* font-size: 25px;
+  font-weight: 500; */
   border-radius: 10px;
   padding: 10px;
 }

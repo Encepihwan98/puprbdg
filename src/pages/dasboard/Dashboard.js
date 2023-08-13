@@ -16,16 +16,18 @@ const FixDashboard = () => {
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
   const [data, setData] = useState(null);
+  const [dataChartVerifChart, setDataChartVerifChart] = useState(null);
+  const [dataChartBelumVerif, setdataChartBelumVerif] = useState(null);
 
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
-  const dataPotensi = 24537326696;
+  // const dataPotensi = 24537326696;
   // const dataChart = [[24957460787], [128123934]];
   // const dataChartPbgBawah = [[393739], [197670]];
-  const dataChartVerif = [[9270733484], [15686727303]];
+  // const dataChartVerifChart = [[9270733484], [15686727303]];
   // const dataChartSudahVerif = [[5210596075], [4060137409]];
-  const dataChartBelumVerif = [[10778885200], [4907842103]];
-
+  // const dataChartBelumVerif = [[10778885200], [4907842103]];
+  console.log(dataChartBelumVerif);
   const menuLinks = document.querySelectorAll(".date-today ul li a");
 
   menuLinks.forEach((link) => {
@@ -46,13 +48,12 @@ const FixDashboard = () => {
 
   useEffect(() => {
     fetchData();
-
     const interval = setInterval(() => {
-      fetchData(); // Mendapatkan data setiap 24 jam
-    }, 24 * 60 * 60 * 1000); // Mengulang pemanggilan setiap 24 jam
+      fetchData(); 
+    }, 24 * 60 * 60 * 1000); 
 
-    return () => clearInterval(interval); // Membersihkan interval saat komponen tidak lagi digunakan
-  }, []);
+    return () => clearInterval(interval); 
+  },[]);
 
   const fetchData = () => {
     axios
@@ -62,7 +63,12 @@ const FixDashboard = () => {
         let datas = response.data.values;
 
         let total_berkas = datas[2][10];
+
         let total_berkas_rp = datas[2][11];
+        var totalBerkasrpString = total_berkas_rp.toString();
+        var total_berkas_rp1 = totalBerkasrpString.substring(0, 6);
+        var total_berkas_rp2 = totalBerkasrpString.substring(6);
+
         let total_berkas_now = datas[3][10];
         let total_berkas_now_perc = parseInt(datas[3][12]);
         let total_berkas_this_year_rp = datas[3][11];
@@ -71,34 +77,54 @@ const FixDashboard = () => {
         let berkas_aktual_belum_terverifikasi = datas[29][10];
         let berkas_aktual_belum_terverifikasi_perc = parseInt(datas[29][13]);
         let berkas_aktual_belum_terverifikasi_rp = datas[29][11];
-
+        let aktual_belum_varif = parseInt(
+          berkas_aktual_belum_terverifikasi_rp.replace(/\./g, "")
+        );
         let potensi_besar = datas[31][10];
-        let potensi_besar_perc = parseInt(datas[31][12]);
+        let potensi_besar_perc = parseInt(datas[31][13]);
         let potensi_besar_rp = datas[31][11];
+        let potensi_besarChart = parseInt(potensi_besar_rp.replace(/\./g, ""));
         let potensi_kecil = datas[30][10];
-        let potensi_kecil_perc = parseInt(datas[30][12]);
+        let potensi_kecil_perc = parseInt(datas[30][13]);
         let potensi_kecil_rp = datas[30][11];
+        let potensi_kecilChart = parseInt(potensi_kecil_rp.replace(/\./g, ""));
         let berkas_aktual_terverifikasi_dinas_teknis = datas[13][10];
-        let berkas_aktual_terverifikasi_dinas_teknis_perc = parseInt(datas[13][13]);
+        let berkas_aktual_terverifikasi_dinas_teknis_perc = parseInt(
+          datas[13][13]
+        );
         let berkas_aktual_terverifikasi_dinas_teknis_rp = datas[13][11];
+        let dataChartVerif = parseInt(
+          berkas_aktual_terverifikasi_dinas_teknis_rp.replace(/\./g, "")
+        );
+
         let berkas_terbit_pbg = datas[15][10];
-        let berkas_terbit_pbg_perc = parseInt(datas[15][13]);
+        let berkas_terbit_pbg_perc = parseInt(datas[15][12]);
         let berkas_terbit_pbg_rp = datas[15][11];
         let proses_penerbitan = datas[16][10];
         let proses_penerbitan_perc = parseInt(datas[16][13]);
         let proses_penerbitan_rp = datas[16][11];
+        let proses_penerbitan_rp1 = proses_penerbitan_rp.substring(0, 9);
+        let proses_penerbitan_rp2 = proses_penerbitan_rp.substring(9);
         let terproses_di_ptsp = datas[19][10];
         let terproses_di_ptsp_perc = parseInt(datas[19][13]);
         let terproses_di_ptsp_rp = datas[19][11];
         let terproses_di_dputr = datas[20][10];
         let terproses_di_dputr_perc = parseInt(datas[20][13]);
         let terproses_di_dputr_rp = datas[20][11];
+        let terproses_di_dputr_substring = terproses_di_dputr_rp.toString();
+        let terproses_di_dputr_rp1 = terproses_di_dputr_substring.substring(
+          0,
+          9
+        );
+        let terproses_di_dputr_rp2 = terproses_di_dputr_substring.substring(9);
         let berkas_terbit_last = datas[14][10];
         let berkas_terbit_last_year_rp = [14][11];
 
         setData({
           total_berkas: total_berkas,
           total_berkas_rp: total_berkas_rp,
+          total_berkas_rp1: total_berkas_rp1,
+          total_berkas_rp2: total_berkas_rp2,
           total_berkas_now: total_berkas_now,
           total_berkas_now_perc: total_berkas_now_perc,
           total_berkas_this_year_rp: total_berkas_this_year_rp,
@@ -106,9 +132,9 @@ const FixDashboard = () => {
           deviasi_target_potensi_perc: deviasi_target_potensi_perc,
           berkas_aktual_belum_terverifikasi: berkas_aktual_belum_terverifikasi,
           berkas_aktual_belum_terverifikasi_perc:
-          berkas_aktual_belum_terverifikasi_perc,
+            berkas_aktual_belum_terverifikasi_perc,
           berkas_aktual_belum_terverifikasi_rp:
-          berkas_aktual_belum_terverifikasi_rp,
+            berkas_aktual_belum_terverifikasi_rp,
           potensi_besar: potensi_besar,
           potensi_besar_perc: potensi_besar_perc,
           potensi_besar_rp: potensi_besar_rp,
@@ -116,11 +142,11 @@ const FixDashboard = () => {
           potensi_kecil_perc: potensi_kecil_perc,
           potensi_kecil_rp: potensi_kecil_rp,
           berkas_aktual_terverifikasi_dinas_teknis:
-          berkas_aktual_terverifikasi_dinas_teknis,
+            berkas_aktual_terverifikasi_dinas_teknis,
           berkas_aktual_terverifikasi_dinas_teknis_perc:
-          berkas_aktual_terverifikasi_dinas_teknis_perc,
+            berkas_aktual_terverifikasi_dinas_teknis_perc,
           berkas_aktual_terverifikasi_dinas_teknis_rp:
-          berkas_aktual_terverifikasi_dinas_teknis_rp,
+            berkas_aktual_terverifikasi_dinas_teknis_rp,
           berkas_terbit_pbg: berkas_terbit_pbg,
           berkas_terbit_pbg_perc: berkas_terbit_pbg_perc,
           berkas_terbit_pbg_rp: berkas_terbit_pbg_rp,
@@ -135,8 +161,17 @@ const FixDashboard = () => {
           terproses_di_dputr_rp: terproses_di_dputr_rp,
           berkas_terbit_last: berkas_terbit_last,
           berkas_terbit_last_year_rp: berkas_terbit_last_year_rp,
+          dataChartVerif: dataChartVerif,
+          aktual_belum_varif: aktual_belum_varif,
+          potensi_kecilChart: potensi_kecilChart,
+          potensi_besarChart: potensi_besarChart,
+          terproses_di_dputr_rp1: terproses_di_dputr_rp1,
+          terproses_di_dputr_rp2: terproses_di_dputr_rp2,
+          proses_penerbitan_rp1: proses_penerbitan_rp1,
+          proses_penerbitan_rp2: proses_penerbitan_rp2,
         });
-        // console.log(response.data.data);
+        setDataChartVerifChart([[aktual_belum_varif], [dataChartVerif]]);
+        setdataChartBelumVerif([[potensi_kecilChart], [potensi_besarChart]]);
       })
       .catch((error) => {
         console.log(error);
@@ -164,9 +199,11 @@ const FixDashboard = () => {
                 Deviasi Target dengan Potensi Total Berkas:
               </span>
               <div className="card bg-red  card-pad">
-                {data && (<span className="inter-20 fc-white fw-500 pd-5">
-                  Rp {data.deviasi_target_potensi_rp},-
-                </span>)}
+                {data && (
+                  <span className="inter-20 fc-white fw-500 pd-5">
+                    Rp {data.deviasi_target_potensi_rp},-
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -204,12 +241,18 @@ const FixDashboard = () => {
                 <span className="inter-25 fw-bold mtp-25">Total Berkas:</span>
               </div>
               <div className="center mtp-10">
-                <div className="card-tb-permohonan1 bg-blue">
-                  {data && (<span className="m-10 fs-38 fc-white pd-5 f-500">
-                    Rp{data.total_berkas_rp}
-                  </span>)}
-                  <p className="total-text">Jumlah Permohonan</p>
-                </div>
+                {data && (
+                  <div className="card-tb-permohonan1 pd-5 bg-blue">
+                    <span className="m-10 fs-35 fc-white f-500">
+                      Rp{data.total_berkas_rp1}
+                    </span>
+                    <span className="m-10 fs-35 fc-white f-500">
+                      {data.total_berkas_rp2}
+                    </span>
+
+                    <p className="total-text">Jumlah Permohonan</p>
+                  </div>
+                )}
               </div>
               <div className="mlf-25">
                 <div className="card-tb-value bg-blue">
@@ -227,9 +270,11 @@ const FixDashboard = () => {
                 Berkas Terbit PBG {lastYear}:
               </p>
               <div className="bg-purple card-tt-tolak">
-                {data &&(<span className="fs-38 fc-white pd-5 f-500">
-                  Rp 8.214. 151.978
-                </span>)}
+                {data && (
+                  <span className="fs-38 fc-white pd-5 f-500">
+                    Rp 8.214. 151.978
+                  </span>
+                )}
                 <br />
                 <span className="total-text">Telah Terbit / Ditolak</span>
               </div>
@@ -265,7 +310,8 @@ const FixDashboard = () => {
               <BoxCard className="box-card bg-purple">
                 {data && (
                   <p className="pgb-value">
-                    {data.berkas_terbit_pbg + data.berkas_terbit_last}
+                    {parseInt(data.berkas_terbit_pbg) +
+                      parseInt(data.berkas_terbit_last)}
                   </p>
                 )}
                 <p className="pgb-text">Telah Terbit / Ditolak</p>
@@ -294,9 +340,11 @@ const FixDashboard = () => {
                 </div>
                 <div className="mtp-25 mlf-28">
                   <div className="fs-30 fw-500">Realisasi : </div>
-                  {data &&(<span className="bg-blue inter-30 br-10 mtp-10 pd-10 fw-500">
-                    Rp. {data.berkas_terbit_pbg_rp}
-                  </span>)}{" "}
+                  {data && (
+                    <span className="bg-blue inter-30 br-10 mtp-10 pd-10 fw-500">
+                      Rp. {data.berkas_terbit_pbg_rp}
+                    </span>
+                  )}{" "}
                   <br />
                   {data && (
                     <span className="inter-30 mtp-10 ts-left fw-500">
@@ -323,7 +371,11 @@ const FixDashboard = () => {
                 <div className="mlf-28 mtp-25">
                   <div className="fs-30">Potensi: </div>
                   <div className="card-potensi mtp-10 bg-green fc-white fs-30">
-                    <span className="m-15">Rp. {dataPotensi}</span>
+                    {data && (
+                      <span className="m-15">
+                        Rp {data.total_berkas_this_year_rp}
+                      </span>
+                    )}
                   </div>
                   {data && (
                     <div className="fs-30 mtp-10 f-500 mlf-10">
@@ -368,9 +420,11 @@ const FixDashboard = () => {
                     </div>
                   </div>
                   <div className="mtp-20">
-                    {data &&(<span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                      Rp. {data.terproses_di_ptsp_rp}
-                    </span>)}
+                    {data && (
+                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                        Rp. {data.terproses_di_ptsp_rp}
+                      </span>
+                    )}
                   </div>
                   <div className="mtp-15">
                     {data && (
@@ -438,11 +492,13 @@ const FixDashboard = () => {
                     </div>
                   </div>
                   <div className="container-colom mtp-15 mlf-35">
-                    <ChartStacked
-                      data={dataChartVerif}
-                      width="741px"
-                      color={color}
-                    ></ChartStacked>
+                    {dataChartVerifChart && (
+                      <ChartStacked
+                        data={dataChartVerifChart}
+                        width="741px"
+                        color={color}
+                      ></ChartStacked>
+                    )}
                   </div>
                   <div className="container-colom mtp-10">
                     <div className="clm-6 mlf-35">
@@ -494,17 +550,25 @@ const FixDashboard = () => {
                     <div className="mtp-35">
                       {data && (
                         <span className="text-dputr  me-3 f-500">
-                          {data.terproses_di_dputr}
+                          {Math.round(data.terproses_di_dputr_perc)}%
                         </span>
                       )}
                     </div>
-                    {data && (<div className="card-rupiah mlf-35 mtp-15">
-                      Rp. {data.terproses_di_dputr_rp}
-                    </div>)}
+                    {data && (
+                      <div className="card-rupiah mlf-35 mtp-15 ts-left">
+                        <span className="pd-5 fs-25 fw-500">
+                          Rp{data.terproses_di_dputr_rp1}
+                        </span>
+                        <br />
+                        <span className="pd-5 fs-25 fw-500">
+                          {data.terproses_di_dputr_rp2}
+                        </span>
+                      </div>
+                    )}
                     <div className="mtp-10">
                       {data && (
                         <div className="ts-right mrg-35 inter-25 fw-500">
-                          {Math.round(data.terproses_di_dputr_perc)}%
+                          {data.terproses_di_dputr}
                         </div>
                       )}
                     </div>
@@ -531,9 +595,18 @@ const FixDashboard = () => {
                         </div>
                       )}
                     </div>
-                    {data &&(<div className="card-rupiah mtp-35">
-                      Rp. {data.proses_penerbitan_rp}
-                    </div>)}
+
+                    {data && (
+                      <div className="card-rupiah mtp-35 ts-left">
+                        <span className="pd-5 fs-25 fw-500">
+                          Rp{data.proses_penerbitan_rp1}
+                        </span>
+                        <br />
+                        <span className="pd-5 fs-25 fw-500">
+                          {data.proses_penerbitan_rp2}
+                        </span>
+                      </div>
+                    )}
                     <div className="ts-right mtp-10">
                       {data && (
                         <span className="mrg-35  fs-20 fw-500">
@@ -574,11 +647,13 @@ const FixDashboard = () => {
                     </div>
                   </div>
                   <div className="mlf-35 mtp-10">
-                    <ChartStacked
-                      data={dataChartBelumVerif}
-                      width="472px"
-                      color={color2}
-                    ></ChartStacked>
+                    {dataChartBelumVerif && (
+                      <ChartStacked
+                        data={dataChartBelumVerif}
+                        width="472px"
+                        color={color2}
+                      ></ChartStacked>
+                    )}
                   </div>
                   <div className="container-colom mtp-15">
                     <div className="clm-6 mlf-35">
