@@ -49,11 +49,11 @@ const FixDashboard = () => {
   useEffect(() => {
     fetchData();
     const interval = setInterval(() => {
-      fetchData(); 
-    }, 24 * 60 * 60 * 1000); 
+      fetchData();
+    }, 24 * 60 * 60 * 1000);
 
-    return () => clearInterval(interval); 
-  },[]);
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchData = () => {
     axios
@@ -170,7 +170,7 @@ const FixDashboard = () => {
           proses_penerbitan_rp1: proses_penerbitan_rp1,
           proses_penerbitan_rp2: proses_penerbitan_rp2,
         });
-        setDataChartVerifChart([[aktual_belum_varif], [dataChartVerif]]);
+        setDataChartVerifChart([[dataChartVerif], [aktual_belum_varif]]);
         setdataChartBelumVerif([[potensi_kecilChart], [potensi_besarChart]]);
       })
       .catch((error) => {
@@ -454,6 +454,25 @@ const FixDashboard = () => {
                     </div>
                   </div>
                   <div className="container-colom mtp-10">
+                    <div className="clm-25 fw-500">
+                      <div className="ts-center">
+                        <span className="inter-25 ">
+                          Berkas Aktual Terverifikasi Dinas Teknis:
+                        </span>
+                      </div>
+                      <br />
+                      {data && (
+                        <div className="ts-right">
+                          <span className="text-actual-ptnsi-verif">
+                            {Math.round(
+                              data.berkas_aktual_terverifikasi_dinas_teknis_perc
+                            )}{" "}
+                            %
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="clm-4  fw-500"></div>
                     <div className="clm-35 fw-500">
                       <div className="ts-center">
                         <span className="inter-25 mlf-10 fw-500 ">
@@ -468,25 +487,6 @@ const FixDashboard = () => {
                             data.berkas_aktual_belum_terverifikasi_perc
                           )}{" "}
                           %
-                        </div>
-                      )}
-                    </div>
-                    <div className="clm-4  fw-500"></div>
-                    <div className="clm-25 fw-500">
-                      <div className="ts-center">
-                        <span className="inter-25 ">
-                          Berkas Aktual Terverifikasi Dinas Teknis:
-                        </span>
-                      </div>
-                      <br />
-                      {data && (
-                        <div className="ts-right">
-                          <span className="text-actual-verif ">
-                            {Math.round(
-                              data.berkas_aktual_terverifikasi_dinas_teknis_perc
-                            )}{" "}
-                            %
-                          </span>
                         </div>
                       )}
                     </div>
@@ -631,7 +631,7 @@ const FixDashboard = () => {
                       <span className="inter-25 fw-500">Potensi Kecil:</span>
                       <br />
                       {data && (
-                        <div className="fs-50 fc-red fw-500 mtp-15">
+                        <div className="fs-50 fc-red-heart fw-500 mtp-15">
                           {Math.round(data.potensi_kecil_perc)} %
                         </div>
                       )}

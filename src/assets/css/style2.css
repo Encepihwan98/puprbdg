@@ -331,6 +331,10 @@
   color: #c62c11;
 }
 
+.fc-red-heart {
+  color:  #7e0b02;
+}
+
 .fc-green {
   color: #00917c;
 }
@@ -793,6 +797,15 @@
   text-align: right;
   font-weight: 500;
   font-size: 50px;
+  color:#c62c11;
+  margin-top: 10px;
+}
+
+.text-actual-ptnsi-verif {
+  margin-right: 25px;
+  text-align: right;
+  font-weight: 500;
+  font-size: 50px;
   color: #00917c;
   margin-top: 10px;
 }
@@ -805,6 +818,8 @@
   margin-top: 15px;
   margin-left: 35px;
 }
+
+
 
 .row4 {
   display: flex;
