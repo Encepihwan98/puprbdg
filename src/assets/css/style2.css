@@ -988,10 +988,10 @@
 /* table */
 
 /* YourComponent.module.css */
-.table-container {
+/* .table-container {
   overflow: auto;
   max-height: 700px;
-}
+} */
 
 .horizontal-scroll {
   overflow-x: auto;
@@ -1009,7 +1009,7 @@
 .datatab {
   margin: 25px;
   border-collapse: collapse; /* Membuat batas antar sel tabel menjadi satu untuk menghasilkan garis tepi yang rapi */
-  width: 100%; /* Lebar tabel */
+  width: 1299px; /* Lebar tabel */
 }
 
 .datatab th,
@@ -1033,34 +1033,24 @@
   ); /* Warna latar belakang untuk baris genap dengan transparansi 35% */
 }
 
+
 .pagination {
-  margin-top: 10px;
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .pagination button {
-  margin: 0 5px;
   padding: 5px 10px;
+  margin: 0 5px;
   border: 1px solid #ccc;
-  background-color: #fff;
   cursor: pointer;
 }
 
-.pagination button:hover {
-  background-color: #f2f2f2;
-}
-
-.pagination .active {
-  background-color: #007bff;
-  color: #fff;
-  border: 1px solid #007bff;
-}
-
 .pagination button.active {
-  background-color: #007bff; /* Warna latar belakang tombol aktif */
-  color: #fff; /* Warna teks pada tombol aktif */
-  border: 1px solid #007bff; /* Garis tepi pada tombol aktif */
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
 }
 
 .serch {

@@ -18,15 +18,8 @@ const FixDashboard = () => {
   const [data, setData] = useState(null);
   const [dataChartVerifChart, setDataChartVerifChart] = useState(null);
   const [dataChartBelumVerif, setdataChartBelumVerif] = useState(null);
-
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
-  // const dataPotensi = 24537326696;
-  // const dataChart = [[24957460787], [128123934]];
-  // const dataChartPbgBawah = [[393739], [197670]];
-  // const dataChartVerifChart = [[9270733484], [15686727303]];
-  // const dataChartSudahVerif = [[5210596075], [4060137409]];
-  // const dataChartBelumVerif = [[10778885200], [4907842103]];
   console.log(dataChartBelumVerif);
   const menuLinks = document.querySelectorAll(".date-today ul li a");
 
@@ -42,7 +35,7 @@ const FixDashboard = () => {
 
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
   let sheetName = encodeURIComponent("Bagan 2023");
-  let apiKey = "AIzaSyB2WHCLlhqILOtiAih_xam8y7-znaT829s";
+  let apiKey = "AIzaSyA8bz--_nRrVAoCmttaoIA1WpYp8Xn7Wp8";
 
   let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
 
@@ -219,11 +212,11 @@ const FixDashboard = () => {
                     Dashboard
                   </Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link to="/Tabel" type="button">
                     Tabel
                   </Link>
-                </li> */}
+                </li>
               </ul>
               <div className="cobacoba">
                 <p className="inter-25 fw-500 m-10">
