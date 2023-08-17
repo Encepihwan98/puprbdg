@@ -332,7 +332,7 @@
 }
 
 .fc-red-heart {
-  color:  #7e0b02;
+  color: #7e0b02;
 }
 
 .fc-green {
@@ -797,7 +797,7 @@
   text-align: right;
   font-weight: 500;
   font-size: 50px;
-  color:#c62c11;
+  color: #c62c11;
   margin-top: 10px;
 }
 
@@ -818,8 +818,6 @@
   margin-top: 15px;
   margin-left: 35px;
 }
-
-
 
 .row4 {
   display: flex;
@@ -1033,11 +1031,10 @@
   ); /* Warna latar belakang untuk baris genap dengan transparansi 35% */
 }
 
-
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 20px;  
 }
 
 .pagination button {
@@ -1045,17 +1042,30 @@
   margin: 0 5px;
   border: 1px solid #ccc;
   cursor: pointer;
+  font-size: 17px;
+  font-family: "inter";
 }
 
 .pagination button.active {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+  background-color: rgba(0, 145, 124, 0.35);
+  color: rgb(0, 0, 0);
+  border-color: rgba(0, 145, 124, 0.35);
 }
 
 .serch {
   width: 1299px;
   border-radius: 10px;
+  padding: 10px;
+  border: 1px solid grey;
+  font-size: 17px;
+  font-family: "inter";
 }
 
+.selectOptionst {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid grey;
+  font-size: 17px;
+  font-family: "inter";
+}
 /* end tabel */

@@ -150,12 +150,12 @@ const FixDashboard = () => {
               />
             </div>
             <div className="container-colom2 mlf-15 mtp-10">
-              <select className="mlf-10">
+              <select className="mlf-10 selectOptionst">
                 <option>Tahun</option>
                 {tahunOptions}
               </select>
               <select
-                className="mlf-10"
+                className="mlf-10 selectOptionst"
                 value={selectedStatus}
                 onChange={handleStatusChange}
               >
@@ -165,7 +165,7 @@ const FixDashboard = () => {
                 <option value={"Verifikasi Ulang"}>Verifikasi Ulang</option>
               </select>
               <select
-                className="mlf-10"
+                className="mlf-10 selectOptionst"
                 value={selectedPotensi}
                 onChange={handlePotensiChange}
               >
@@ -247,6 +247,7 @@ const FixDashboard = () => {
                     Next
                   </button>
                 </div>
+                <br/><br/>
               </div>
             </div>
           </div>
