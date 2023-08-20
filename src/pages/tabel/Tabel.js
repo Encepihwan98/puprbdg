@@ -42,8 +42,8 @@ const FixDashboard = () => {
   };
 
   const filteredData = data.filter((row) => {
-    const potensiValueString = row[34] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
-    const potensiValue = parseInt(potensiValueString.replace("Rp", "").replace(".", "").replace(".", ""));
+    const potensiValueString = row[35] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
+    const potensiValue = parseInt(potensiValueString.replace("Rp", "").replace(".", "").replace(".", "").replace(".", ""));
     console.log(row[2], potensiValue);
     const meetsSearchTerm = row.some((cell) =>
         cell.toLowerCase().includes(searchTerm.toLowerCase())
