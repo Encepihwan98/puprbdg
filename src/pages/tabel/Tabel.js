@@ -17,9 +17,10 @@ const FixDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedPotensi, setSelectedPotensi] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
 
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
-  let sheetName = encodeURIComponent("Data");
+  let sheetName = encodeURIComponent("logbook");
   let apiKey = "AIzaSyB2WHCLlhqILOtiAih_xam8y7-znaT829s";
 
   let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
@@ -41,24 +42,45 @@ const FixDashboard = () => {
       });
   };
 
+  const links = document.querySelectorAll(".date-today ul li a");
+
+  // Loop melalui tautan dan tambahkan event listener
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      // Hapus kelas "active" dari semua tautan sebelumnya
+      links.forEach((link) => link.classList.remove("active"));
+
+      // Tambahkan kelas "active" ke tautan yang sedang aktif
+      link.classList.add("active");
+    });
+  });
+
   const filteredData = data.filter((row) => {
-    const potensiValueString = row[35] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
-    const potensiValue = parseInt(potensiValueString.replace("Rp", "").replace(".", "").replace(".", "").replace(".", ""));
-    console.log(row[2], potensiValue);
+    const potensiValueString = row[31] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
+    const potensiValue = parseInt(
+      potensiValueString
+        .replace("Rp", "")
+        .replace(".", "")
+        .replace(".", "")
+        .replace(".", "")
+    );
+    // console.log(row[2], potensiValue);
     const meetsSearchTerm = row.some((cell) =>
-        cell.toLowerCase().includes(searchTerm.toLowerCase())
+      cell.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const meetsStatusCriteria = selectedStatus === "" || row[8]?.toLowerCase() === selectedStatus.toLowerCase();
+    const meetsStatusCriteria =
+      selectedStatus === "" ||
+      row[7]?.toLowerCase() === selectedStatus.toLowerCase();
+
+    const meetsYearCriteria = selectedYear === "" || row[37]?.toLowerCase() === selectedYear.toLowerCase();
 
     const meetsPotensiCriteria =
-        selectedPotensi === "" ||
-        (selectedPotensi === "Besar" && potensiValue > 50000000) || // Lebih dari 50 juta
-        (selectedPotensi === "Kecil" && potensiValue <= 50000000); // Kurang dari atau sama dengan 50 juta
-
-    return meetsSearchTerm && meetsStatusCriteria && meetsPotensiCriteria;
-});
-
+      selectedPotensi === "" ||
+      (selectedPotensi === "Besar" && potensiValue > 50000000) || // Lebih dari 50 juta
+      (selectedPotensi === "Kecil" && potensiValue <= 50000000); // Kurang dari atau sama dengan 50 juta
+    return meetsSearchTerm && meetsStatusCriteria && meetsPotensiCriteria && meetsYearCriteria;
+  });
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -86,6 +108,10 @@ const FixDashboard = () => {
   };
   const handlePotensiChange = (event) => {
     setSelectedPotensi(event.target.value);
+  };
+  const handleYearChange = (event) => {
+    console.log(event);
+    setSelectedYear(event.target.value);
   };
 
   return (
@@ -150,8 +176,9 @@ const FixDashboard = () => {
               />
             </div>
             <div className="container-colom2 mlf-15 mtp-10">
-              <select className="mlf-10 selectOptionst">
-                <option>Tahun</option>
+              <select className="mlf-10 selectOptionst" value={selectedYear}
+                onChange={handleYearChange}>
+                <option value={""}>Tahun</option>
                 {tahunOptions}
               </select>
               <select
@@ -159,7 +186,7 @@ const FixDashboard = () => {
                 value={selectedStatus}
                 onChange={handleStatusChange}
               >
-                <option>Status</option>
+                <option value={""}>Status</option>
                 <option value={"Perbaikan Ulang"}>Perbaikan Ulang</option>
                 <option value={"Selesai Verifikasi"}>Selesai Verifikasi</option>
                 <option value={"Verifikasi Ulang"}>Verifikasi Ulang</option>
@@ -169,7 +196,7 @@ const FixDashboard = () => {
                 value={selectedPotensi}
                 onChange={handlePotensiChange}
               >
-                <option>Potensi</option>
+                <option value={""}>Potensi</option>
                 <option value={"Kecil"}>Kecil</option>
                 <option value={"Besar"}>Besar</option>
               </select>
@@ -194,6 +221,7 @@ const FixDashboard = () => {
                     {currentData.length > 0 ? (
                       currentData.map((row, index) => (
                         <tr key={index}>
+                          <td>{row[0]}</td>
                           <td>{row[1]}</td>
                           <td>{row[2]}</td>
                           <td>{row[3]}</td>
@@ -201,8 +229,7 @@ const FixDashboard = () => {
                           <td>{row[5]}</td>
                           <td>{row[6]}</td>
                           <td>{row[7]}</td>
-                          <td>{row[8]}</td>
-                          <td>{row[9]}</td>
+                          <td>{row[38]}</td>
                         </tr>
                       ))
                     ) : (
@@ -247,7 +274,8 @@ const FixDashboard = () => {
                     Next
                   </button>
                 </div>
-                <br/><br/>
+                <br />
+                <br />
               </div>
             </div>
           </div>

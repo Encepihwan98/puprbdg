@@ -415,9 +415,8 @@
   list-style-type: none;
   margin: 5px;
   padding: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 5px;
-  /* background-color: #333; */
 }
 
 .date-today ul li {
@@ -425,15 +424,23 @@
   margin: 3px;
 }
 
-.date-today ul li a {
+.date-today ul li a:link,
+.date-today ul li a:visited,
+.date-today ul li a:focus,
+.date-today ul li a:hover {
   display: inline-block;
-  color: white;
+  color: black;
   text-align: center;
   padding: 5px 15px;
   text-decoration: none;
-  background-color: #81c0ff;
+  /* background-color: #81c0ff; */
   border-radius: 10px;
   font-size: 25px;
+}
+
+.date-today ul li a:active {
+  background-color: #81c0ff;
+  color: white;
 }
 
 .row2 {
