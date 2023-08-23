@@ -214,7 +214,42 @@ const FixDashboard = () => {
                       <th>Nama Bangungan</th>
                       <th>Tgl Permohonan</th>
                       <th>Status</th>
+                      <th>Alamat Pemilik</th>
+                      <th>No Hp</th>
+                      <th>Kode WA</th>
+                      <th>Tanggal</th>
+                      <th>Catatan Kekurangan Dokumen</th>
+                      <th>2/8</th>
+                      <th>BA TPA/TPT</th>
+                      <th>Gambar</th>
+                      <th>KRK/KKPR</th>
+                      <th>LH</th>
+                      <th>SKA</th>
+                      <th>Keterangan</th>
+                      <th>Validasi Dinas</th>
+                      <th>PTSP</th>
+                      <th>Selesai Terbit</th>
+                      <th>TTD KADIS</th>
+                      <th>Penerimaan PAD</th>
+                      <th>Tahun Terbit</th>
+                      <th>Tahun Berjalan</th>
+                      {/* <th></th> */}
+                      <th>Kecamatan</th>
+                      <th>LB</th>
+                      <th>TB</th>
+                      <th>JLB</th>
+                      <th>SKRD</th>
+                      <th>Usulan Retribusi</th>
+                      <th>Nilai Retribusi</th>
+                      {/* <th></th> */}
+                      <th>Latitude</th>
+                      <th>Longtitude</th>
+                      <th>Penelusuran</th>
+                      <th>Berkas Sudah TTD KADIS</th>
+                      <th>Tahun</th>
                       <th>Verivikasi</th>
+                      <th>Tanggal Log</th>
+                      <th>Keterangan</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -229,7 +264,42 @@ const FixDashboard = () => {
                           <td>{row[5]}</td>
                           <td>{row[6]}</td>
                           <td>{row[7]}</td>
+                          <td>{row[8]}</td>
+                          <td>{row[9]}</td>
+                          <td>{row[10]}</td>
+                          <td>{row[11]}</td>
+                          <td>{row[12]}</td>
+                          <td>{row[13]}</td>
+                          <td>{row[14]}</td>
+                          <td>{row[15]}</td>
+                          <td>{row[16]}</td>
+                          <td>{row[17]}</td>
+                          <td>{row[18]}</td>
+                          <td>{row[19]}</td>
+                          <td>{row[20]}</td>
+                          <td>{row[21]}</td>
+                          <td>{row[22]}</td>
+                          <td>{row[23]}</td>
+                          <td>{row[24]}</td>
+                          <td>{row[25]}</td>
+                          <td>{row[26]}</td>
+                          {/* <td>{row[27]}</td> */}
+                          <td>{row[28]}</td>
+                          <td>{row[29]}</td>
+                          <td>{row[30]}</td>
+                          <td>{row[31]}</td>
+                          <td>{row[32]}</td>
+                          <td>{row[33]}</td>
+                          <td>{row[34]}</td>
+                          {/* <td>{row[35]}</td> */}
+                          <td>{row[36]}</td>
+                          <td>{row[37]}</td>
                           <td>{row[38]}</td>
+                          <td>{row[39]}</td>
+                          <td>{row[40]}</td>
+                          <td>{row[41]}</td>
+                          <td>{row[42]}</td>
+                          <td>{row[43]}</td>
                         </tr>
                       ))
                     ) : (

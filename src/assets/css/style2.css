@@ -1014,7 +1014,7 @@
 .datatab {
   margin: 25px;
   border-collapse: collapse; /* Membuat batas antar sel tabel menjadi satu untuk menghasilkan garis tepi yang rapi */
-  width: 1299px; /* Lebar tabel */
+  width: 1299px;
 }
 
 .datatab th,
