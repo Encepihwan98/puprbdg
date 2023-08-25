@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
 const FixDashboard = () => {
@@ -18,6 +20,8 @@ const FixDashboard = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedPotensi, setSelectedPotensi] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectRowData, setSelectRowData] = useState('');
 
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
   let sheetName = encodeURIComponent("logbook");
@@ -73,13 +77,20 @@ const FixDashboard = () => {
       selectedStatus === "" ||
       row[7]?.toLowerCase() === selectedStatus.toLowerCase();
 
-    const meetsYearCriteria = selectedYear === "" || row[37]?.toLowerCase() === selectedYear.toLowerCase();
+    const meetsYearCriteria =
+      selectedYear === "" ||
+      row[37]?.toLowerCase() === selectedYear.toLowerCase();
 
     const meetsPotensiCriteria =
       selectedPotensi === "" ||
       (selectedPotensi === "Besar" && potensiValue > 50000000) || // Lebih dari 50 juta
       (selectedPotensi === "Kecil" && potensiValue <= 50000000); // Kurang dari atau sama dengan 50 juta
-    return meetsSearchTerm && meetsStatusCriteria && meetsPotensiCriteria && meetsYearCriteria;
+    return (
+      meetsSearchTerm &&
+      meetsStatusCriteria &&
+      meetsPotensiCriteria &&
+      meetsYearCriteria
+    );
   });
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -112,6 +123,22 @@ const FixDashboard = () => {
   const handleYearChange = (event) => {
     console.log(event);
     setSelectedYear(event.target.value);
+  };
+
+  const openDialog = (rowData) => {
+    setIsDialogOpen(true);
+    setSelectRowData(rowData);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+    setSelectRowData('');
+  };
+
+  const handleOverlayClick = (event) => {
+    if (event.target.classList.contains('dialog-overlay')) {
+      closeDialog();
+    }
   };
 
   return (
@@ -176,8 +203,11 @@ const FixDashboard = () => {
               />
             </div>
             <div className="container-colom2 mlf-15 mtp-10">
-              <select className="mlf-10 selectOptionst" value={selectedYear}
-                onChange={handleYearChange}>
+              <select
+                className="mlf-10 selectOptionst"
+                value={selectedYear}
+                onChange={handleYearChange}
+              >
                 <option value={""}>Tahun</option>
                 {tahunOptions}
               </select>
@@ -205,51 +235,41 @@ const FixDashboard = () => {
               <div className="horizontal-scroll">
                 <table className="datatab">
                   <thead>
-                    <tr>
-                      <th>Jenis Konsultasi</th>
+                    <tr className="bg-grey">
                       <th>No Registrasi</th>
                       <th>Nama Pemilik</th>
                       <th>Lokasi BG</th>
-                      <th>Fungsi BG</th>
-                      <th>Nama Bangungan</th>
                       <th>Tgl Permohonan</th>
                       <th>Status</th>
-                      <th>Alamat Pemilik</th>
-                      <th>No Hp</th>
-                      <th>Kode WA</th>
-                      <th>Tanggal</th>
                       <th>Catatan Kekurangan Dokumen</th>
-                      <th>2/8</th>
                       <th>BA TPA/TPT</th>
                       <th>Gambar</th>
                       <th>KRK/KKPR</th>
                       <th>LH</th>
                       <th>SKA</th>
-                      <th>Keterangan</th>
                       <th>Validasi Dinas</th>
                       <th>PTSP</th>
                       <th>Selesai Terbit</th>
-                      <th>TTD KADIS</th>
+                      <th>Tanggal Pembayaran</th>
                       <th>Penerimaan PAD</th>
-                      <th>Tahun Terbit</th>
-                      <th>Tahun Berjalan</th>
-                      {/* <th></th> */}
-                      <th>Kecamatan</th>
-                      <th>LB</th>
-                      <th>TB</th>
-                      <th>JLB</th>
                       <th>SKRD</th>
                       <th>Usulan Retribusi</th>
                       <th>Nilai Retribusi</th>
-                      {/* <th></th> */}
-                      <th>Latitude</th>
-                      <th>Longtitude</th>
-                      <th>Penelusuran</th>
-                      <th>Berkas Sudah TTD KADIS</th>
+                      <th>Nama Bangungan</th>
+                      <th>Alamat Pemilik</th>
+                      <th>No Hp</th>
+                      <th>Kode WA</th>
+                      <th>2/8</th>
+                      <th>Keterangan Kontrak</th>
+                      <th>TTD KADIS</th>
+                      <th>Tahun Terbit</th>
+                      <th>Tahun Berjalan</th>
                       <th>Tahun</th>
+                      <th className="bg-green">Jenis Konsultasi</th>
+                      <th className="bg-green">Fungsi BG</th>
                       <th>Verivikasi</th>
                       <th>Tanggal Log</th>
-                      <th>Keterangan</th>
+                      <th>Keterangan Log</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -261,7 +281,16 @@ const FixDashboard = () => {
                           <td>{row[2]}</td>
                           <td>{row[3]}</td>
                           <td>{row[4]}</td>
-                          <td>{row[5]}</td>
+                          <td>
+                            <div className="center">
+                              <button
+                                className="buttonIcon bg-green"
+                                onClick={() => openDialog(row[5])}
+                              >
+                                <FontAwesomeIcon icon={faUser} />
+                              </button>
+                            </div>
+                          </td>
                           <td>{row[6]}</td>
                           <td>{row[7]}</td>
                           <td>{row[8]}</td>
@@ -283,20 +312,20 @@ const FixDashboard = () => {
                           <td>{row[24]}</td>
                           <td>{row[25]}</td>
                           <td>{row[26]}</td>
-                          {/* <td>{row[27]}</td> */}
-                          <td>{row[28]}</td>
+                          <td>{row[27]}</td>
+                          {/* <td>{row[28]}</td> */}
                           <td>{row[29]}</td>
-                          <td>{row[30]}</td>
-                          <td>{row[31]}</td>
-                          <td>{row[32]}</td>
+                          <td className="bg-green">{row[30]}</td>
+                          <td className="bg-green">{row[31]}</td>
+                          {/* <td>{row[32]}</td>
                           <td>{row[33]}</td>
-                          <td>{row[34]}</td>
+                          <td>{row[34]}</td> */}
                           {/* <td>{row[35]}</td> */}
-                          <td>{row[36]}</td>
+                          {/* <td>{row[36]}</td>
                           <td>{row[37]}</td>
                           <td>{row[38]}</td>
                           <td>{row[39]}</td>
-                          <td>{row[40]}</td>
+                          <td>{row[40]}</td> */}
                           <td>{row[41]}</td>
                           <td>{row[42]}</td>
                           <td>{row[43]}</td>
@@ -351,6 +380,15 @@ const FixDashboard = () => {
           </div>
         </div>
       </div>
+      {isDialogOpen && (
+        <div className="dialog-overlay" onClick={handleOverlayClick}>
+          <dialog open className="dialog">
+            <h4>Catatan Kekurangan</h4>
+            <p>{selectRowData}</p>
+            {/* <button className="close-dialog" onClick={closeDialog}>Tutup</button> */}
+          </dialog>
+        </div>
+      )}
     </div>
   );
 };
