@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { faList, faTimes, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faList,
+  faTimes,
+  faExclamationCircle,
+  faGreaterThan
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
@@ -24,6 +29,8 @@ const FixDashboard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogOpenInformasi, setIsDialogOpenInformasi] = useState(false);
   const [selectRowData, setSelectRowData] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
   // let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
   // let sheetName = encodeURIComponent("Data");
@@ -113,6 +120,16 @@ const FixDashboard = () => {
       meetsYearCriteria
     );
   });
+
+  const handleMouseEnter = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopup(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowPopup(false);
+  };
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -259,9 +276,55 @@ const FixDashboard = () => {
                 <option value={"Kecil"}>Kecil</option>
                 <option value={"Besar"}>Besar</option>
               </select>
-              <div className="legend">
-                <FontAwesomeIcon className="iconLegend" icon={faExclamationCircle} />
+              <div
+                className="legend"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{ cursor: "pointer" }}
+              >
+                <FontAwesomeIcon
+                  className="iconLegend"
+                  icon={faExclamationCircle}
+                />
               </div>
+              {showPopup && (
+                <div
+                  className="popupLegend"
+                  style={{
+                    position: "absolute",
+                    top: "480px",
+                    left: "1020px",
+                  }}
+                >
+                  <div>
+                    <p className="notePopup">Note</p>
+                  </div>
+                  
+                    <div className="clm-12">
+                      <div className="container-colom">
+                        <div className="lengkap"></div>
+                        <div className="icon-grather-container">
+                          <FontAwesomeIcon className="icon-grather" icon={faGreaterThan}></FontAwesomeIcon>
+                        </div>
+                        <div className="legend-ket">
+                          <p>Lengkap</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="clm-12">
+                      <div className="container-colom">
+                        <div className="tidak-lengkap"></div>
+                        <div className="icon-grather-container">
+                          <FontAwesomeIcon className="icon-grather" icon={faGreaterThan}></FontAwesomeIcon>
+                        </div>
+                        <div className="legend-ket">
+                          <p>Tidak Lengkap</p>
+                        </div>
+                      </div>
+                    </div>
+                  
+                </div>
+              )}
             </div>
             <div className="table-container ">
               <div className="horizontal-scroll">
