@@ -18,9 +18,24 @@ const FixDashboard = () => {
   const [data, setData] = useState(null);
   const [dataChartVerifChart, setDataChartVerifChart] = useState(null);
   const [dataChartBelumVerif, setdataChartBelumVerif] = useState(null);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupPotensiYear, setShowPopupPotensiYear] = useState(false);
+  const [showPopupPermohonan1, setShowPopupPermohonan1] = useState(false);
+  const [showPopupPTSP, setShowPopupPTSP] = useState(false);
+  const [showPopupTerverifikasi, setShowPopupTerverifikasi] = useState(false);
+  const [showPopupBelumverifikasi, setShowPopupBelumverifikasi] =
+    useState(false);
+  const [showPopupDPUTR, setShowPopupDPUTR] = useState(false);
+  const [showPopupPotensiKecil, setShowPopupPotensiKecil] = useState(false);
+  const [showPopupPotensiBesar, setShowPopupPotensiBesar] = useState(false);
+  const [showPopupProsesPenerbitan, setShowPopupProsesPenerbitan] =
+    useState(false);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
-  console.log(dataChartBelumVerif);
+  // console.log(dataChartBelumVerif);
   const menuLinks = document.querySelectorAll(".date-today ul li a");
 
   menuLinks.forEach((link) => {
@@ -32,6 +47,105 @@ const FixDashboard = () => {
       link.classList.add("active");
     });
   });
+
+  const handleMouseEnter = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopup(true);
+  };
+
+  const handleMouseEnterPotensiKecil = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupPotensiKecil(true);
+  };
+  
+  const handleMouseEnterPotensiBesar = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupPotensiBesar(true);
+  };
+
+  const handleMouseEnterProsesPenerbitan = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupProsesPenerbitan(true);
+  };
+
+  const handleMouseEnterPotensiYear = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupPotensiYear(true);
+  };
+
+  const handleMouseEnterPTSP = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupPTSP(true);
+  };
+  const handleMouseEnterTerverifikasi = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupTerverifikasi(true);
+  };
+
+  const handleMouseEnterBelumverifikasi = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupBelumverifikasi(true);
+  };
+
+  const handleMouseEnterDPUTR = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupDPUTR(true);
+  };
+
+  const handleMouseEnterPermohonan1 = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupPermohonan1(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowPopup(false);
+  };
+
+  const handleMouseLeavePotensiBesar = () => {
+    setShowPopupPotensiBesar(false);
+  };
+  
+  const handleMouseLeavePotensiKecil = () => {
+    setShowPopupPotensiKecil(false);
+  };
+
+  const handleMouseLeaveProsesPenerbitan = () => {
+    setShowPopupProsesPenerbitan(false);
+  };
+
+  const handleMouseLeaveDPUTR = () => {
+    setShowPopupDPUTR(false);
+  };
+
+  const handleMouseLeaveBelumverifikasi = () => {
+    setShowPopupBelumverifikasi(false);
+  };
+
+  const handleMouseLeaveTerverifikasi = () => {
+    setShowPopupTerverifikasi(false);
+  };
+
+  const handleMouseLeavePotensiYear = () => {
+    setShowPopupPotensiYear(false);
+  };
+
+  const handleMouseLeavePermohonan1 = () => {
+    setShowPopupPermohonan1(false);
+  };
+
+  const handleMouseLeavePTSP = () => {
+    setShowPopupPTSP(false);
+  };
 
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
   let sheetName = encodeURIComponent("Bagan 2023");
@@ -229,7 +343,13 @@ const FixDashboard = () => {
 
         <div className="row2 flex-x-center">
           <div className="colom1 card">
-            <div className="c2-b1">
+            {/* total berkas */}
+            <div
+              className="c2-b1"
+              onMouseEnter={handleMouseEnterPermohonan1}
+              onMouseLeave={handleMouseLeavePermohonan1}
+              style={{ cursor: "pointer" }}
+            >
               <div className="ts-center mtp-10">
                 <span className="inter-25 fw-bold mtp-25">Total Berkas:</span>
               </div>
@@ -256,6 +376,24 @@ const FixDashboard = () => {
                   )}
                 </div>
               </div>
+              {showPopupPermohonan1 && (
+                <div
+                  className="popup"
+                  style={{
+                    position: "absolute",
+                    top: popupPosition.top + "px",
+                    left: popupPosition.left + "px",
+                  }}
+                >
+                  <div>
+                    <p className="notePopup">Note</p>
+                  </div>
+                  <div className="noteIsi">
+                    Total keseluruhan berkas yang diterima sampai dengan tahun
+                    ini
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="card c2-b2-c1">
@@ -315,7 +453,12 @@ const FixDashboard = () => {
           {/* ini buat potensi */}
           <div className="colom2">
             <div className="container-colom2">
-              <div className="berkas-terbit">
+              <div
+                className="berkas-terbit"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="ts-center mtp-10">
                   <span className=" inter-25 fw-500">Berkas Terbit PBG:</span>
                 </div>
@@ -345,9 +488,31 @@ const FixDashboard = () => {
                     </span>
                   )}
                 </div>
+                {showPopup && (
+                  <div
+                    className="popup"
+                    style={{
+                      position: "absolute",
+                      top: popupPosition.top + "px",
+                      left: popupPosition.left + "px",
+                    }}
+                  >
+                    <div>
+                      <p className="notePopup">Note</p>
+                    </div>
+                    <div className="noteIsi">
+                      Total keseluruhan berkas yang terbit tahun ini
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <div className="potensi-card">
+              <div
+                className="potensi-card"
+                onMouseEnter={handleMouseEnterPotensiYear}
+                onMouseLeave={handleMouseLeavePotensiYear}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="ts-center">
                   <br />
                   <span className="inter-20 fw-500 mtp-10">
@@ -376,6 +541,23 @@ const FixDashboard = () => {
                     </div>
                   )}
                 </div>
+                {showPopupPotensiYear && (
+                  <div
+                    className="popup"
+                    style={{
+                      position: "absolute",
+                      top: popupPosition.top + "px",
+                      left: popupPosition.left + "px",
+                    }}
+                  >
+                    <div>
+                      <p className="notePopup">Note</p>
+                    </div>
+                    <div className="noteIsi">
+                      Total keseluruhan berkas yang diterima tahun 2023
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="container-colom2">
@@ -394,10 +576,15 @@ const FixDashboard = () => {
 
             <div className="container-colom2">
               {/* proses ptsp */}
-              <div className="card-ptsp">
+              <div
+                className="card-ptsp"
+                onMouseEnter={handleMouseEnterPTSP}
+                onMouseLeave={handleMouseLeavePTSP}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="mlf-35 card-ptsp-atas">
                   <span className="inter-30 fw-500 text-right">
-                    Terproses di PTSP:
+                    Berproses Izin PBG di DPMTSP:
                   </span>
                   <div>
                     <div className="luar-box bg-red mt-3">
@@ -434,6 +621,23 @@ const FixDashboard = () => {
                     </div>
                   </div>
                 </div>
+                {showPopupPTSP && (
+                  <div
+                    className="popup"
+                    style={{
+                      position: "absolute",
+                      top: popupPosition.top + "px",
+                      left: popupPosition.left + "px",
+                    }}
+                  >
+                    <div>
+                      <p className="notePopup">Note</p>
+                    </div>
+                    <div className="noteIsi">
+                      "Proses Penerbitan" - "Sudah Selesai Rekomtek PBG"
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* end */}
@@ -447,7 +651,12 @@ const FixDashboard = () => {
                     </div>
                   </div>
                   <div className="container-colom mtp-10">
-                    <div className="clm-25 fw-500">
+                    <div
+                      className="clm-25 fw-500"
+                      onMouseEnter={handleMouseEnterTerverifikasi}
+                      onMouseLeave={handleMouseLeaveTerverifikasi}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div className="ts-center">
                         <span className="inter-25 ">
                           Berkas Aktual Terverifikasi Dinas Teknis:
@@ -464,9 +673,32 @@ const FixDashboard = () => {
                           </span>
                         </div>
                       )}
+                      {showPopupTerverifikasi && (
+                        <div
+                          className="popup"
+                          style={{
+                            position: "absolute",
+                            top: popupPosition.top + "px",
+                            left: popupPosition.left + "px",
+                          }}
+                        >
+                          <div>
+                            <p className="notePopup">Note</p>
+                          </div>
+                          <div className="noteIsi">
+                            Total keseluruhan berkas diterima tahun{" "}
+                            {currentYear} yang sudah melengkapi persyaratan
+                          </div>
+                        </div>
+                      )}
                     </div>
                     <div className="clm-4  fw-500"></div>
-                    <div className="clm-35 fw-500">
+                    <div
+                      className="clm-35 fw-500"
+                      onMouseEnter={handleMouseEnterBelumverifikasi}
+                      onMouseLeave={handleMouseLeaveBelumverifikasi}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div className="ts-center">
                         <span className="inter-25 mlf-10 fw-500 ">
                           Berkas Aktual Belum Terverifikasi:
@@ -480,6 +712,24 @@ const FixDashboard = () => {
                             data.berkas_aktual_belum_terverifikasi_perc
                           )}{" "}
                           %
+                        </div>
+                      )}
+                      {showPopupBelumverifikasi && (
+                        <div
+                          className="popup"
+                          style={{
+                            position: "absolute",
+                            top: popupPosition.top + "px",
+                            left: popupPosition.left + "px",
+                          }}
+                        >
+                          <div>
+                            <p className="notePopup">Note</p>
+                          </div>
+                          <div className="noteIsi">
+                            Total keseluruhan berkas diterima tahun{" "}
+                            {currentYear} yang belum melengkapi persyaratan
+                          </div>
                         </div>
                       )}
                     </div>
@@ -534,16 +784,21 @@ const FixDashboard = () => {
             </div>
 
             <div className="container-colom">
-              <div className="card-dputr">
+              <div
+                className="card-dputr"
+                onMouseEnter={handleMouseEnterDPUTR}
+                onMouseLeave={handleMouseLeaveDPUTR}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="container-colom">
                   <div className="clm-12 ts-center">
                     <span className="inter-30 fw-500 me-3">
-                      Terproses di DPUTR:
+                      Sudah selesai Rekomtex PBG:
                     </span>
                     <div className="mtp-35">
                       {data && (
                         <span className="text-dputr  me-3 f-500">
-                          {Math.round(data.terproses_di_dputr_perc)}%
+                          {/* {Math.round(data.terproses_di_dputr_perc)}% */}
                         </span>
                       )}
                     </div>
@@ -567,10 +822,33 @@ const FixDashboard = () => {
                     </div>
                   </div>
                 </div>
+                {showPopupDPUTR && (
+                  <div
+                    className="popup"
+                    style={{
+                      position: "absolute",
+                      top: popupPosition.top + "px",
+                      left: popupPosition.left + "px",
+                    }}
+                  >
+                    <div>
+                      <p className="notePopup">Note</p>
+                    </div>
+                    <div className="noteIsi">
+                      Total berkas yang sedang menunggu pembayaran dan validasi
+                      retribusi
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* proses penerbitan */}
-              <div className="proses-penerbitan">
+              <div
+                className="proses-penerbitan"
+                onMouseEnter={handleMouseEnterProsesPenerbitan}
+                onMouseLeave={handleMouseLeaveProsesPenerbitan}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="container-colom">
                   <div className="separator-dputr">
                     <div className="triangle triangle-left"></div>
@@ -583,7 +861,7 @@ const FixDashboard = () => {
                     </div>
                     <div className="ts-center mtp-20 mbt-25">
                       {data && (
-                        <div className="fs-50 fc-green f-500">
+                        <div className="fs-50 fc-white f-500">
                           {Math.round(data.proses_penerbitan_perc)} %
                         </div>
                       )}
@@ -602,13 +880,31 @@ const FixDashboard = () => {
                     )}
                     <div className="ts-right mtp-10">
                       {data && (
-                        <span className="mrg-35  fs-20 fw-500">
+                        <span className="mrg-15  fs-25 fw-500">
                           {data.proses_penerbitan}
                         </span>
                       )}
                     </div>
                   </div>
                 </div>
+                {showPopupProsesPenerbitan && (
+                  <div
+                    className="popup"
+                    style={{
+                      position: "absolute",
+                      top: popupPosition.top + "px",
+                      left: popupPosition.left + "px",
+                    }}
+                  >
+                    <div>
+                      <p className="notePopup">Note</p>
+                    </div>
+                    <div className="noteIsi">
+                      "Berkas Aktual Terverifikasi Dinas Teknis" - "Berkas
+                      Terbit PBG"
+                    </div>
+                  </div>
+                )}
               </div>
               {/* end */}
 
@@ -620,22 +916,68 @@ const FixDashboard = () => {
                     </span>
                   </div>
                   <div className="container-35 mtp-35">
-                    <div className="clm-6 ts-left">
-                      <span className="inter-25 fw-500">Potensi Kecil:</span>
+                    <div
+                      className="clm-6 ts-left"
+                      onMouseEnter={handleMouseEnterPotensiKecil}
+                      onMouseLeave={handleMouseLeavePotensiKecil}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <span className="inter-25 fw-500">Non Usaha:</span>
                       <br />
                       {data && (
                         <div className="fs-50 fc-red-heart fw-500 mtp-15">
                           {Math.round(data.potensi_kecil_perc)} %
                         </div>
                       )}
+                      {showPopupPotensiKecil && (
+                        <div
+                          className="popup"
+                          style={{
+                            position: "absolute",
+                            top: popupPosition.top + "px",
+                            left: popupPosition.left + "px",
+                          }}
+                        >
+                          <div>
+                            <p className="notePopup">Note</p>
+                          </div>
+                          <div className="noteIsi">
+                            Total perizinan yang memiliki "Nilai Retribusi"
+                            Dibawah Rp. 50 Juta
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <div className="clm-6 ts-right ">
-                      <span className="inter-25 fw-500">Potensi Besar:</span>
+                    <div
+                      className="clm-6 ts-right "
+                      onMouseEnter={handleMouseEnterPotensiBesar}
+                      onMouseLeave={handleMouseLeavePotensiBesar}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <span className="inter-25 fw-500">Usaha:</span>
                       <br />
                       {data && (
                         <span className="text-actual-verif mtp-15">
                           {Math.round(data.potensi_besar_perc)} %
                         </span>
+                      )}
+                      {showPopupPotensiBesar && (
+                        <div
+                          className="popup"
+                          style={{
+                            position: "absolute",
+                            top: popupPosition.top + "px",
+                            left: popupPosition.left + "px",
+                          }}
+                        >
+                          <div>
+                            <p className="notePopup">Note</p>
+                          </div>
+                          <div className="noteIsi">
+                            Total perizinan yang memiliki "Nilai Retribusi"
+                            diatas Rp. 50 Juta
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>

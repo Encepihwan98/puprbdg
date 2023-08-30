@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faList, faTimes, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
@@ -15,19 +15,22 @@ const FixDashboard = () => {
 
   const itemsPerPage = 10; // Jumlah data per halaman
   const [data, setData] = useState([]);
+  const [dataInformasi, setDataInformasi] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedPotensi, setSelectedPotensi] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectRowData, setSelectRowData] = useState('');
+  const [isDialogOpenInformasi, setIsDialogOpenInformasi] = useState(false);
+  const [selectRowData, setSelectRowData] = useState("");
 
-  let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
-  let sheetName = encodeURIComponent("logbook");
-  let apiKey = "AIzaSyB2WHCLlhqILOtiAih_xam8y7-znaT829s";
+  // let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
+  // let sheetName = encodeURIComponent("Data");
+  // let apiKey = "AIzaSyB2WHCLlhqILOtiAih_xam8y7-znaT829s";
 
-  let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+  // let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+  let url = "http://localhost:5000/api/rekap-pbg/";
 
   useEffect(() => {
     fetchData();
@@ -35,11 +38,23 @@ const FixDashboard = () => {
 
   const fetchData = () => {
     axios
-      .get(sheetUrl)
+      .get(url)
       .then((response) => {
-        const newData = response.data.values.slice(1); // Mengabaikan header
-        // console.log(newData);
+        const newData = response.data;
         setData(newData.reverse());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const fechDataInformasi = (nomor) => {
+    axios
+      .get(`http://localhost:5000/api/lacak/${nomor}`)
+      .then((res) => {
+        let Informasi = res.data;
+
+        setDataInformasi(Informasi);
       })
       .catch((error) => {
         console.log(error);
@@ -60,7 +75,7 @@ const FixDashboard = () => {
   });
 
   const filteredData = data.filter((row) => {
-    const potensiValueString = row[31] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
+    const potensiValueString = row["Nilai Retribusi Keseluruhan"] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
     const potensiValue = parseInt(
       potensiValueString
         .replace("Rp", "")
@@ -68,18 +83,24 @@ const FixDashboard = () => {
         .replace(".", "")
         .replace(".", "")
     );
-    // console.log(row[2], potensiValue);
-    const meetsSearchTerm = row.some((cell) =>
-      cell.toLowerCase().includes(searchTerm.toLowerCase())
+    // console.log(row);
+    // const meetsSearchTerm = row.some((cell) =>
+    //   cell.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
+
+    const meetsSearchTerm = Object.values(row).some(
+      (cell) =>
+        typeof cell === "string" &&
+        cell.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const meetsStatusCriteria =
       selectedStatus === "" ||
-      row[7]?.toLowerCase() === selectedStatus.toLowerCase();
+      row["Status Permohonan"]?.toLowerCase() === selectedStatus.toLowerCase();
 
     const meetsYearCriteria =
       selectedYear === "" ||
-      row[37]?.toLowerCase() === selectedYear.toLowerCase();
+      row["Tahun"]?.toLowerCase() === selectedYear.toLowerCase();
 
     const meetsPotensiCriteria =
       selectedPotensi === "" ||
@@ -97,6 +118,7 @@ const FixDashboard = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  // console.log(currentData);
 
   // tahun
   const tahunSekarang = new Date().getFullYear();
@@ -121,7 +143,6 @@ const FixDashboard = () => {
     setSelectedPotensi(event.target.value);
   };
   const handleYearChange = (event) => {
-    console.log(event);
     setSelectedYear(event.target.value);
   };
 
@@ -130,13 +151,21 @@ const FixDashboard = () => {
     setSelectRowData(rowData);
   };
 
+  const openDialogInformasi = (nomor) => {
+    fechDataInformasi(nomor);
+    setIsDialogOpenInformasi(true);
+  };
+  const closeDialogInformasi = () => {
+    setIsDialogOpenInformasi(false);
+  };
+
   const closeDialog = () => {
     setIsDialogOpen(false);
-    setSelectRowData('');
+    setSelectRowData("");
   };
 
   const handleOverlayClick = (event) => {
-    if (event.target.classList.contains('dialog-overlay')) {
+    if (event.target.classList.contains("dialog-overlay")) {
       closeDialog();
     }
   };
@@ -230,18 +259,22 @@ const FixDashboard = () => {
                 <option value={"Kecil"}>Kecil</option>
                 <option value={"Besar"}>Besar</option>
               </select>
+              <div className="legend">
+                <FontAwesomeIcon className="iconLegend" icon={faExclamationCircle} />
+              </div>
             </div>
             <div className="table-container ">
               <div className="horizontal-scroll">
                 <table className="datatab">
                   <thead>
                     <tr className="bg-grey">
+                      <th>Catatan Kekurangan Dokumen</th>
+                      <th>Informasi</th>
                       <th>No Registrasi</th>
                       <th>Nama Pemilik</th>
                       <th>Lokasi BG</th>
                       <th>Tgl Permohonan</th>
                       <th>Status</th>
-                      <th>Catatan Kekurangan Dokumen</th>
                       <th>BA TPA/TPT</th>
                       <th>Gambar</th>
                       <th>KRK/KKPR</th>
@@ -267,68 +300,79 @@ const FixDashboard = () => {
                       <th>Tahun</th>
                       <th className="bg-green">Jenis Konsultasi</th>
                       <th className="bg-green">Fungsi BG</th>
-                      <th>Verivikasi</th>
+                      {/* <th>Verifikasi</th>
                       <th>Tanggal Log</th>
-                      <th>Keterangan Log</th>
+                      <th>Keterangan Log</th> */}
                     </tr>
                   </thead>
                   <tbody>
                     {currentData.length > 0 ? (
                       currentData.map((row, index) => (
-                        <tr key={index}>
-                          <td>{row[0]}</td>
-                          <td>{row[1]}</td>
-                          <td>{row[2]}</td>
-                          <td>{row[3]}</td>
-                          <td>{row[4]}</td>
+                        <tr
+                          key={index}
+                          style={{
+                            backgroundColor:
+                              row["LH"] !== "Ada" && row["SKA"] !== "Ada"
+                                ? "#D29F9F"
+                                : "",
+                          }}
+                        >
                           <td>
                             <div className="center">
                               <button
-                                className="buttonIcon bg-green"
-                                onClick={() => openDialog(row[5])}
+                                className="buttonIcon"
+                                onClick={() =>
+                                  openDialog(row["Catatan Kekurangan Dokumen"])
+                                }
                               >
-                                <FontAwesomeIcon icon={faUser} />
+                                <FontAwesomeIcon icon={faList} />
                               </button>
                             </div>
                           </td>
-                          <td>{row[6]}</td>
-                          <td>{row[7]}</td>
-                          <td>{row[8]}</td>
-                          <td>{row[9]}</td>
-                          <td>{row[10]}</td>
-                          <td>{row[11]}</td>
-                          <td>{row[12]}</td>
-                          <td>{row[13]}</td>
-                          <td>{row[14]}</td>
-                          <td>{row[15]}</td>
-                          <td>{row[16]}</td>
-                          <td>{row[17]}</td>
-                          <td>{row[18]}</td>
-                          <td>{row[19]}</td>
-                          <td>{row[20]}</td>
-                          <td>{row[21]}</td>
-                          <td>{row[22]}</td>
-                          <td>{row[23]}</td>
-                          <td>{row[24]}</td>
-                          <td>{row[25]}</td>
-                          <td>{row[26]}</td>
-                          <td>{row[27]}</td>
-                          {/* <td>{row[28]}</td> */}
-                          <td>{row[29]}</td>
-                          <td className="bg-green">{row[30]}</td>
-                          <td className="bg-green">{row[31]}</td>
-                          {/* <td>{row[32]}</td>
-                          <td>{row[33]}</td>
-                          <td>{row[34]}</td> */}
-                          {/* <td>{row[35]}</td> */}
-                          {/* <td>{row[36]}</td>
-                          <td>{row[37]}</td>
-                          <td>{row[38]}</td>
-                          <td>{row[39]}</td>
-                          <td>{row[40]}</td> */}
-                          <td>{row[41]}</td>
-                          <td>{row[42]}</td>
-                          <td>{row[43]}</td>
+                          <td>
+                            <div className="center">
+                              <button
+                                className="buttonIcon"
+                                onClick={() =>
+                                  openDialogInformasi(row["No. Registrasi"])
+                                }
+                              >
+                                <FontAwesomeIcon icon={faList} />
+                              </button>
+                            </div>
+                          </td>
+                          <td>{row["No. Registrasi"]}</td>
+                          <td>{row["Nama Pemilik"]}</td>
+                          <td>{row["Lokasi BG"]}</td>
+                          <td>{row["Tgl Permohonan"]}</td>
+                          <td>{row["Status Permohonan"]}</td>
+                          <td>{row["BA TPA/TPT"]}</td>
+                          <td>{row["GAMBAR"]}</td>
+                          <td>{row['"KRK/↵KKPR"']}</td>
+                          <td>{row["LH"]}</td>
+                          <td>{row["SKA"]}</td>
+                          <td>{row["Validasi Dinas"]}</td>
+                          <td>{row["PTSP"]}</td>
+                          <td>{row["Selesai Terbit"]}</td>
+                          <td>{row["Tanggal"]}</td>
+                          <td>{row["Penerimaan PAD"]}</td>
+                          <td>{row["SKRD"]}</td> {/* skrd */}
+                          <td>{row["Usulan Retribusi"]}</td>
+                          <td>{row["Nilai Retribusi Keseluruhan"]}</td>
+                          <td>{row["Nama Bangunan"]}</td>
+                          <td>{row["Alamat Pemilik"]}</td>
+                          <td>{row["No. Hp"]}</td>
+                          <td>{row["KODE WHATSAPP"]}</td>
+                          <td>{row["28/8"]}</td> {/*2/8*/}
+                          <td>{row["Keterangan"]}</td>
+                          <td>{row["TTD KADIS"]}</td>
+                          <td>{row["Selesai Terbit"]}</td>
+                          <td>{row[""]}</td>
+                          <td>{row["Tahun"]}</td>
+                          <td className="bg-green">
+                            {row["Jenis Konsultasi"]}
+                          </td>
+                          <td className="bg-green">{row["Fungsi BG"]}</td>
                         </tr>
                       ))
                     ) : (
@@ -383,9 +427,62 @@ const FixDashboard = () => {
       {isDialogOpen && (
         <div className="dialog-overlay" onClick={handleOverlayClick}>
           <dialog open className="dialog">
-            <h4>Catatan Kekurangan</h4>
+            <div className="container-colom">
+              <div>
+                <p className="fs-25 fw-500">Catatan Kekurangan</p>
+              </div>
+              <div>
+                <button className="buttonClose" onClick={closeDialog}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              </div>
+            </div>
             <p>{selectRowData}</p>
             {/* <button className="close-dialog" onClick={closeDialog}>Tutup</button> */}
+          </dialog>
+        </div>
+      )}
+
+      {isDialogOpenInformasi && (
+        <div className="dialog-overlay" onClick={handleOverlayClick}>
+          <dialog open className="dialogInformasi">
+            <div className="container-colom">
+              <div className="clm-6">
+                <p className="fs-25 fw-500">Informasi</p>
+              </div>
+              <div className="clm-6 flex-x-end">
+                <button className="buttonClose" onClick={closeDialogInformasi}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              </div>
+            </div>
+            <div className="container-clom">
+              <div
+                className="horizontal-scroll"
+                style={{ maxHeight: "500px", overflowY: "auto" }}
+              >
+                <table className="tableDialog">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Modul</th>
+                      <th>Tanggal</th>
+                      <th>Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataInformasi.map((item, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{item["Modul"]}</td>
+                        <td>{item["Tanggal"]}</td>
+                        <td>{item["Keterangan"]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </dialog>
         </div>
       )}
