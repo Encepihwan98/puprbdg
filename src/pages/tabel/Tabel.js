@@ -7,7 +7,7 @@ import {
   faList,
   faTimes,
   faExclamationCircle,
-  faGreaterThan
+  faGreaterThan,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
@@ -20,6 +20,7 @@ const FixDashboard = () => {
 
   const itemsPerPage = 10; // Jumlah data per halaman
   const [data, setData] = useState([]);
+  const [dataDeviasi, setDataDeviasi] = useState([]);
   const [dataInformasi, setDataInformasi] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +33,12 @@ const FixDashboard = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
+  let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
+  let sheetName = encodeURIComponent("Bagan 2023");
+  let apiKey = "AIzaSyA8bz--_nRrVAoCmttaoIA1WpYp8Xn7Wp8";
+
+  let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+
   // let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
   // let sheetName = encodeURIComponent("Data");
   // let apiKey = "AIzaSyB2WHCLlhqILOtiAih_xam8y7-znaT829s";
@@ -42,15 +49,34 @@ const FixDashboard = () => {
 
   useEffect(() => {
     fetchData();
+    fetchDataDeviasi();
   }, []);
 
   const fetchData = () => {
     axios
       .get(url)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         const newData = response.data;
+        console.log(newData[0]['KRK/KKPR']);
         setData(newData.reverse());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const fetchDataDeviasi = () => {
+    axios
+      // .get("https://sibedaspbg.bandungkab.go.id/api/simbg/coba")
+      .get(sheetUrl)
+      .then((response) => {
+        let datas = response.data.values;
+        let deviasi_target_potensi_rp = datas[4][11];
+
+        setDataDeviasi({
+          deviasi_target_potensi_rp: deviasi_target_potensi_rp,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -187,6 +213,7 @@ const FixDashboard = () => {
   const handleOverlayClick = (event) => {
     if (event.target.classList.contains("dialog-overlay")) {
       closeDialog();
+      closeDialogInformasi();
     }
   };
 
@@ -211,9 +238,11 @@ const FixDashboard = () => {
                 Deviasi Target dengan Potensi Total Berkas:
               </span>
               <div className="card bg-red  card-pad">
-                <span className="inter-20 fc-white fw-500 pd-5">
-                  Rp 7.665.893.953,-
-                </span>
+                {dataDeviasi && (
+                  <span className="inter-20 fc-white fw-500 pd-5">
+                    Rp {dataDeviasi.deviasi_target_potensi_rp},-
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -296,36 +325,41 @@ const FixDashboard = () => {
                   style={{
                     position: "absolute",
                     top: "480px",
-                    left: "1020px",
+                    left: "1000px",
                   }}
                 >
                   <div>
                     <p className="notePopup">Note</p>
                   </div>
-                  
-                    <div className="clm-12">
-                      <div className="container-colom">
-                        <div className="lengkap"></div>
-                        <div className="icon-grather-container">
-                          <FontAwesomeIcon className="icon-grather" icon={faGreaterThan}></FontAwesomeIcon>
-                        </div>
-                        <div className="legend-ket">
-                          <p>Lengkap</p>
-                        </div>
+
+                  <div className="clm-12">
+                    <div className="container-colom">
+                      <div className="lengkap"></div>
+                      <div className="icon-grather-container">
+                        <FontAwesomeIcon
+                          className="icon-grather"
+                          icon={faGreaterThan}
+                        ></FontAwesomeIcon>
+                      </div>
+                      <div className="legend-ket">
+                        <p>Lengkap</p>
                       </div>
                     </div>
-                    <div className="clm-12">
-                      <div className="container-colom">
-                        <div className="tidak-lengkap"></div>
-                        <div className="icon-grather-container">
-                          <FontAwesomeIcon className="icon-grather" icon={faGreaterThan}></FontAwesomeIcon>
-                        </div>
-                        <div className="legend-ket">
-                          <p>Tidak Lengkap</p>
-                        </div>
+                  </div>
+                  <div className="clm-12">
+                    <div className="container-colom">
+                      <div className="tidak-lengkap"></div>
+                      <div className="icon-grather-container">
+                        <FontAwesomeIcon
+                          className="icon-grather"
+                          icon={faGreaterThan}
+                        ></FontAwesomeIcon>
+                      </div>
+                      <div className="legend-ket">
+                        <p>Tidak Lengkap</p>
                       </div>
                     </div>
-                  
+                  </div>
                 </div>
               )}
             </div>
@@ -378,7 +412,7 @@ const FixDashboard = () => {
                           key={index}
                           style={{
                             backgroundColor:
-                              row["LH"] !== "Ada" && row["SKA"] !== "Ada"
+                              row["LH"] !== "Ada" || row["SKA"] !== "Ada" || row["KRK/KKPR"] !== "Ada"
                                 ? "#D29F9F"
                                 : "",
                           }}
@@ -414,7 +448,7 @@ const FixDashboard = () => {
                           <td>{row["Status Permohonan"]}</td>
                           <td>{row["BA TPA/TPT"]}</td>
                           <td>{row["GAMBAR"]}</td>
-                          <td>{row['"KRK/↵KKPR"']}</td>
+                          <td>{row["KRK/KKPR"]}</td>
                           <td>{row["LH"]}</td>
                           <td>{row["SKA"]}</td>
                           <td>{row["Validasi Dinas"]}</td>

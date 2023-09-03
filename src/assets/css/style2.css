@@ -1031,7 +1031,7 @@
 
 .datatab th,
 .datatab td {
-  border: 1px solid rgb(226, 223, 223); /* Menambahkan garis tepi pada sel header dan sel data */
+  border: 1px solid rgb(255, 255, 255); /* Menambahkan garis tepi pada sel header dan sel data */
   padding: 8px; /* Padding pada sel */
   text-align: left; /* Posisi teks pada sel menjadi kiri */
 }
@@ -1053,8 +1053,13 @@
   background-color: #dfe2e6;
 }
 
+.margin-auto-left{
+  margin-left: auto;
+}
+
 .legend {
-  margin-left: 860px;
+  margin-left: auto;
+  margin-right: 20px;
 }
 
 .iconLegend {
@@ -1198,7 +1203,7 @@
 .lengkap{
   width: 120px;
   height: 60px;
-  background-image: linear-gradient(to right, #dfe2e6 50%,  #9ccbfa 50%);
+  background-image: linear-gradient(to right, #dfe2e6 50%,   #00917c 50%);
   border: none;
   margin-left: 15px;
   margin-bottom: 15px;
