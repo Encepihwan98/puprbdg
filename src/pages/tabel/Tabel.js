@@ -37,7 +37,8 @@ const FixDashboard = () => {
   // let apiKey = "AIzaSyB2WHCLlhqILOtiAih_xam8y7-znaT829s";
 
   // let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
-  let url = "http://localhost:5000/api/rekap-pbg/";
+  // let url = "http://localhost:5000/api/rekap-pbg/";
+  let url = "https://sibedaspbg.bandungkab.go.id/api/rekap-pbg/";
 
   useEffect(() => {
     fetchData();
@@ -47,6 +48,7 @@ const FixDashboard = () => {
     axios
       .get(url)
       .then((response) => {
+        console.log(response);
         const newData = response.data;
         setData(newData.reverse());
       })
@@ -57,7 +59,8 @@ const FixDashboard = () => {
 
   const fechDataInformasi = (nomor) => {
     axios
-      .get(`http://localhost:5000/api/lacak/${nomor}`)
+      // .get(`http://localhost:5000/api/lacak/${nomor}`)
+      .get(`https://sibedaspbg.bandungkab.go.id/api/lacak/${nomor}`)
       .then((res) => {
         let Informasi = res.data;
 
@@ -491,10 +494,10 @@ const FixDashboard = () => {
         <div className="dialog-overlay" onClick={handleOverlayClick}>
           <dialog open className="dialog">
             <div className="container-colom">
-              <div>
+              <div className="clm-6">
                 <p className="fs-25 fw-500">Catatan Kekurangan</p>
               </div>
-              <div>
+              <div className="clm-6 flex-x-end">
                 <button className="buttonClose" onClick={closeDialog}>
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
