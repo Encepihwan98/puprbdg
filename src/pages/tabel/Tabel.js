@@ -1,6 +1,5 @@
 import NavigationBar from "../../components/NavigationsBar";
-import { Link } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -12,7 +11,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
-const FixDashboard = () => {
+const Table = () => {
+  const { angka } = useParams();
+  console.log(angka);
   //kiri -> getter, kanan -> setter
   const date = new Date().getDate();
   const month = new Date().toLocaleString("default", { month: "long" });
@@ -47,7 +48,35 @@ const FixDashboard = () => {
   // let url = "http://localhost:5000/api/rekap-pbg/";
   let url = "https://sibedaspbg.bandungkab.go.id/api/rekap-pbg/";
 
+  // tahun
+  const tahunSekarang = new Date().getFullYear();
+  let thisYear = tahunSekarang.toString();
+  const tahunLalu = tahunSekarang - 1;
+  let lastYear = tahunLalu.toString();
+  
   useEffect(() => {
+    if (angka === "berkasTerbitLast") {
+      // setSelectedStatus("Perbaikan Ulang");
+      // setSelectedPotensi("Kecil");
+      setSelectedYear(lastYear);
+    }else if ( angka === "totalBerkasNow"){
+      setSelectedYear(thisYear);
+    }else if (angka === "belumTerVerif"){
+      setSelectedYear(thisYear);
+      setSelectedStatus("Perbaikan Ulang");
+      setSelectedStatus("Verifikasi Ulang");
+    }else if (angka === "berkasTerVerif"){
+      setSelectedYear(thisYear);
+      setSelectedStatus("Selesai Verifikasi");
+    }else if (angka === "usaha"){
+      setSelectedYear(thisYear);
+      setSelectedStatus("Selesai Verifikasi");
+      setSelectedPotensi("Besar");
+    }else if (angka === "nonUsaha"){
+      setSelectedYear(thisYear);
+      setSelectedStatus("Perbaikan Ulang");
+      setSelectedPotensi("Kecil");
+    }
     fetchData();
     fetchDataDeviasi();
   }, []);
@@ -58,7 +87,7 @@ const FixDashboard = () => {
       .then((response) => {
         // console.log(response);
         const newData = response.data;
-        console.log(newData[0]['KRK/KKPR']);
+        // console.log(newData[0]['KRK/KKPR']);
         setData(newData.reverse());
       })
       .catch((error) => {
@@ -104,7 +133,6 @@ const FixDashboard = () => {
     link.addEventListener("click", () => {
       // Hapus kelas "active" dari semua tautan sebelumnya
       links.forEach((link) => link.classList.remove("active"));
-
       // Tambahkan kelas "active" ke tautan yang sedang aktif
       link.classList.add("active");
     });
@@ -149,6 +177,7 @@ const FixDashboard = () => {
       meetsYearCriteria
     );
   });
+  // const
 
   const handleMouseEnter = (event) => {
     const rect = event.target.getBoundingClientRect();
@@ -166,16 +195,11 @@ const FixDashboard = () => {
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
   // console.log(currentData);
 
-  // tahun
-  const tahunSekarang = new Date().getFullYear();
+  //tahun select
   const tahunOptions = [];
 
   for (let tahun = 2021; tahun <= tahunSekarang; tahun++) {
-    tahunOptions.push(
-      <option key={tahun} value={tahun}>
-        {tahun}
-      </option>
-    );
+    tahunOptions.push(tahun);
   }
 
   // serch data
@@ -287,7 +311,11 @@ const FixDashboard = () => {
                 onChange={handleYearChange}
               >
                 <option value={""}>Tahun</option>
-                {tahunOptions}
+                {tahunOptions.map((tahun, index) => (
+                  <option key={index} value={tahun}>
+                    {tahun}
+                  </option>
+                ))}
               </select>
               <select
                 className="mlf-10 selectOptionst"
@@ -368,9 +396,9 @@ const FixDashboard = () => {
                 <table className="datatab">
                   <thead>
                     <tr className="bg-grey">
-                      <th>Catatan Kekurangan Dokumen</th>
+                      <th>Catatan Kekurangan</th>
                       <th>Informasi</th>
-                      <th>No Registrasi</th>
+                      <th>No. Registrasi</th>
                       <th>Nama Pemilik</th>
                       <th>Lokasi BG</th>
                       <th>Tgl Permohonan</th>
@@ -412,7 +440,9 @@ const FixDashboard = () => {
                           key={index}
                           style={{
                             backgroundColor:
-                              row["LH"] !== "Ada" || row["SKA"] !== "Ada" || row["KRK/KKPR"] !== "Ada"
+                              row["LH"] !== "Ada" ||
+                              row["SKA"] !== "Ada" ||
+                              row["KRK/KKPR"] !== "Ada"
                                 ? "#D29F9F"
                                 : "",
                           }}
@@ -590,4 +620,4 @@ const FixDashboard = () => {
   );
 };
 
-export default FixDashboard;
+export default Table;

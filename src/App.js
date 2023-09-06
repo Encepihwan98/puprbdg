@@ -21,7 +21,7 @@ function App() {
           <Route path="/" element={<Dashboard/>}></Route>
           <Route path="/office" element={<Office/>}></Route>
           <Route path="/dashboard2" element={<Dashboard2/>}></Route>
-          <Route path="/tabel" element={<Tabel/>}></Route>
+          <Route path="/tabel/:angka" element={<Tabel/>}></Route>
         </Routes>
       </Router>
     </div>

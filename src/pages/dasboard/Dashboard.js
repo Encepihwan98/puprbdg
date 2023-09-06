@@ -1,6 +1,7 @@
 import NavigationBar from "../../components/NavigationsBar";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import BoxCard from "../../components/BoxCard";
 import React, { useState, useEffect } from "react";
@@ -59,7 +60,7 @@ const FixDashboard = () => {
     setPopupPosition({ top: rect.bottom, left: rect.left });
     setShowPopupPotensiKecil(true);
   };
-  
+
   const handleMouseEnterPotensiBesar = (event) => {
     const rect = event.target.getBoundingClientRect();
     setPopupPosition({ top: rect.bottom, left: rect.left });
@@ -114,7 +115,7 @@ const FixDashboard = () => {
   const handleMouseLeavePotensiBesar = () => {
     setShowPopupPotensiBesar(false);
   };
-  
+
   const handleMouseLeavePotensiKecil = () => {
     setShowPopupPotensiKecil(false);
   };
@@ -145,6 +146,13 @@ const FixDashboard = () => {
 
   const handleMouseLeavePTSP = () => {
     setShowPopupPTSP(false);
+  };
+
+  const navigate = useNavigate();
+
+  const redirectToTabel = (params) => {
+    let url = `/tabel/${params}`;
+    navigate(url);
   };
 
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
@@ -327,7 +335,7 @@ const FixDashboard = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/Tabel" type="button">
+                  <Link to="/tabel/0" type="button">
                     Tabel
                   </Link>
                 </li>
@@ -346,6 +354,7 @@ const FixDashboard = () => {
             {/* total berkas */}
             <div
               className="c2-b1"
+              onClick={() => redirectToTabel("totalBerkas")}
               onMouseEnter={handleMouseEnterPermohonan1}
               onMouseLeave={handleMouseLeavePermohonan1}
               style={{ cursor: "pointer" }}
@@ -396,7 +405,11 @@ const FixDashboard = () => {
               )}
             </div>
 
-            <div className="card c2-b2-c1">
+            <div
+              className="card c2-b2-c1"
+              onClick={() => redirectToTabel("berkasTerbitLast")}
+              style={{ cursor: "pointer" }}
+            >
               <p className="inter-25 fw-bold ts-center">
                 Berkas Terbit PBG {lastYear}:
               </p>
@@ -509,6 +522,7 @@ const FixDashboard = () => {
 
               <div
                 className="potensi-card"
+                onClick={() => redirectToTabel("totalBerkasNow")}
                 onMouseEnter={handleMouseEnterPotensiYear}
                 onMouseLeave={handleMouseLeavePotensiYear}
                 style={{ cursor: "pointer" }}
@@ -653,6 +667,7 @@ const FixDashboard = () => {
                   <div className="container-colom mtp-10">
                     <div
                       className="clm-25 fw-500"
+                      onClick={() => redirectToTabel("berkasTerVerif")}
                       onMouseEnter={handleMouseEnterTerverifikasi}
                       onMouseLeave={handleMouseLeaveTerverifikasi}
                       style={{ cursor: "pointer" }}
@@ -695,6 +710,7 @@ const FixDashboard = () => {
                     <div className="clm-4  fw-500"></div>
                     <div
                       className="clm-35 fw-500"
+                      onClick={() => redirectToTabel("belumTerVerif")}
                       onMouseEnter={handleMouseEnterBelumverifikasi}
                       onMouseLeave={handleMouseLeaveBelumverifikasi}
                       style={{ cursor: "pointer" }}
@@ -918,6 +934,7 @@ const FixDashboard = () => {
                   <div className="container-35 mtp-35">
                     <div
                       className="clm-6 ts-left"
+                      onClick={() => redirectToTabel("nonUsaha")}
                       onMouseEnter={handleMouseEnterPotensiKecil}
                       onMouseLeave={handleMouseLeavePotensiKecil}
                       style={{ cursor: "pointer" }}
@@ -949,7 +966,8 @@ const FixDashboard = () => {
                       )}
                     </div>
                     <div
-                      className="clm-6 ts-right "
+                      className="clm-6 ts-right"
+                      onClick={() => redirectToTabel("usaha")}
                       onMouseEnter={handleMouseEnterPotensiBesar}
                       onMouseLeave={handleMouseLeavePotensiBesar}
                       style={{ cursor: "pointer" }}
