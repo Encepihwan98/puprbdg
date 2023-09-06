@@ -281,8 +281,8 @@ const Table = () => {
                   Dashboard
                 </Link>
               </li>
-              <li>
-                <Link to="/Tabel" type="button">
+              <li className="bg-blue br-10">
+                <Link to="/tabel/0" type="button">
                   Tabel
                 </Link>
               </li>

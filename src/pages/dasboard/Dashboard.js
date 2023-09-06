@@ -329,7 +329,7 @@ const FixDashboard = () => {
           <div className="date-today container-colom">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <ul>
-                <li>
+                <li className="bg-blue br-10">
                   <Link to="/" type="button">
                     Dashboard
                   </Link>
@@ -470,7 +470,7 @@ const FixDashboard = () => {
                 className="berkas-terbit"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                style={{ cursor: "pointer" }}
+                // style={{ cursor: "pointer" }}
               >
                 <div className="ts-center mtp-10">
                   <span className=" inter-25 fw-500">Berkas Terbit PBG:</span>
@@ -594,18 +594,20 @@ const FixDashboard = () => {
                 className="card-ptsp"
                 onMouseEnter={handleMouseEnterPTSP}
                 onMouseLeave={handleMouseLeavePTSP}
-                style={{ cursor: "pointer" }}
+                // style={{ cursor: "pointer" }}
               >
                 <div className="mlf-35 card-ptsp-atas">
                   <span className="inter-30 fw-500 text-right">
                     Berproses Izin PBG di DPMTSP:
                   </span>
+                  <br/><br/><br/>
                   <div>
                     <div className="luar-box bg-red mt-3">
                       <div className="bg-red box-dinas-perizinan text-left">
                         {data && (
                           <span className="total-value-pbg me-3">
-                            {Math.round(data.terproses_di_ptsp_perc)}%
+                            {/* {Math.round(data.terproses_di_ptsp_perc)}% */}
+                            {data.terproses_di_ptsp}
                           </span>
                         )}
                         <br />
@@ -613,6 +615,7 @@ const FixDashboard = () => {
                       </div>
                     </div>
                   </div>
+                  <br/>
                   <div className="mtp-20">
                     {data && (
                       <span className="bg-blue inter-20 br-10 pd-5 fw-500">
@@ -620,13 +623,13 @@ const FixDashboard = () => {
                       </span>
                     )}
                   </div>
-                  <div className="mtp-15">
+                  {/* <div className="mtp-15">
                     {data && (
                       <span className="inter-25 ts-left fw-500">
                         {data.terproses_di_ptsp}
                       </span>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 <div className="card-ptsp-bawah">
                   <div className="separator-ptsp boxCard">
@@ -804,12 +807,12 @@ const FixDashboard = () => {
                 className="card-dputr"
                 onMouseEnter={handleMouseEnterDPUTR}
                 onMouseLeave={handleMouseLeaveDPUTR}
-                style={{ cursor: "pointer" }}
+                // style={{ cursor: "pointer" }}
               >
                 <div className="container-colom">
                   <div className="clm-12 ts-center">
                     <span className="inter-30 fw-500 me-3">
-                      Sudah selesai Rekomtex PBG:
+                      Sudah selesai Rekomtek PBG:
                     </span>
                     <div className="mtp-35">
                       {data && (
@@ -863,7 +866,7 @@ const FixDashboard = () => {
                 className="proses-penerbitan"
                 onMouseEnter={handleMouseEnterProsesPenerbitan}
                 onMouseLeave={handleMouseLeaveProsesPenerbitan}
-                style={{ cursor: "pointer" }}
+                // style={{ cursor: "pointer" }}
               >
                 <div className="container-colom">
                   <div className="separator-dputr">
