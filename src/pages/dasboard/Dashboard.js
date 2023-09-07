@@ -309,7 +309,11 @@ const FixDashboard = () => {
               <div className="card bg-blue  card-pad">
                 {data && (
                   <span className="inter-20 fw-500 pd-5">
-                    Rp {data.targetPAD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")},-
+                    Rp{" "}
+                    {data.targetPAD
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    ,-
                   </span>
                 )}
               </div>
@@ -691,8 +695,7 @@ const FixDashboard = () => {
                       {data && (
                         <div className="ts-right">
                           <span className="text-actual-ptnsi-verif">
-                            {Math.round(data.percenVerif)}{" "}
-                            %
+                            {Math.round(data.percenVerif)} %
                           </span>
                         </div>
                       )}
@@ -975,15 +978,17 @@ const FixDashboard = () => {
                     </div>
                     <div
                       className="clm-6 ts-right"
-                      onClick={() => redirectToTabel("usaha")}
                       onMouseEnter={handleMouseEnterPotensiBesar}
                       onMouseLeave={handleMouseLeavePotensiBesar}
-                      style={{ cursor: "pointer" }}
                     >
                       <span className="inter-25 fw-500">Usaha:</span>
                       <br />
                       {data && (
-                        <span className="text-actual-verif mtp-15">
+                        <span
+                          onClick={() => redirectToTabel("usaha")}
+                          style={{ cursor: "pointer" }}
+                          className="text-actual-verif mtp-15"
+                        >
                           {Math.round(data.potensi_besar_perc)} %
                         </span>
                       )}
@@ -1026,7 +1031,11 @@ const FixDashboard = () => {
                     </div>
                     <div className="clm-6 ts-right">
                       {data && (
-                        <span className="inter-20 mrg-35 fw-500">
+                        <span
+                          onClick={() => redirectToTabel("usaha")}
+                          style={{ cursor: "pointer" }}
+                          className="inter-20 mrg-35 fw-500"
+                        >
                           {data.potensi_besar}
                         </span>
                       )}
