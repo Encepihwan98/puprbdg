@@ -2,6 +2,8 @@ import NavigationBar from "../../components/NavigationsBar";
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Loading from "../../components/Loading";
+import Select from "react-select";
 import {
   faList,
   faTimes,
@@ -11,10 +13,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
-const Table = () => {
+const options = [
+  { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
+  { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
+  { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
+];
+const Table2 = () => {
   const { angka } = useParams();
   console.log(angka);
   //kiri -> getter, kanan -> setter
+  const [loading, setLoading] = useState(true);
   const date = new Date().getDate();
   const month = new Date().toLocaleString("default", { month: "long" });
   const currentYear = new Date().getFullYear();
@@ -25,7 +33,7 @@ const Table = () => {
   const [dataInformasi, setDataInformasi] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState([]);
   const [selectedPotensi, setSelectedPotensi] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -33,6 +41,7 @@ const Table = () => {
   const [selectRowData, setSelectRowData] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const [selectedOption, setSelectedOption] = useState(null);
 
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
   let sheetName = encodeURIComponent("Bagan 2023");
@@ -53,28 +62,38 @@ const Table = () => {
   let thisYear = tahunSekarang.toString();
   const tahunLalu = tahunSekarang - 1;
   let lastYear = tahunLalu.toString();
-  
+
   useEffect(() => {
     if (angka === "berkasTerbitLast") {
       // setSelectedStatus("Perbaikan Ulang");
       // setSelectedPotensi("Kecil");
       setSelectedYear(lastYear);
-    }else if ( angka === "totalBerkasNow"){
+    } else if (angka === "totalBerkasNow") {
       setSelectedYear(thisYear);
-    }else if (angka === "belumTerVerif"){
+    } else if (angka === "belumTerVerif") {
       setSelectedYear(thisYear);
-      setSelectedStatus("Perbaikan Ulang");
-      setSelectedStatus("Verifikasi Ulang");
-    }else if (angka === "berkasTerVerif"){
+      setSelectedStatus([
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
+        { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
+      ]);
+    } else if (angka === "berkasTerVerif") {
       setSelectedYear(thisYear);
-      setSelectedStatus("Selesai Verifikasi");
-    }else if (angka === "usaha"){
+      setSelectedStatus([
+        { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
+      ]);
+    } else if (angka === "usaha") {
       setSelectedYear(thisYear);
-      setSelectedStatus("Selesai Verifikasi");
+      setSelectedStatus([
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
+        { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
+      ]);
       setSelectedPotensi("Besar");
-    }else if (angka === "nonUsaha"){
+    } else if (angka === "nonUsaha") {
       setSelectedYear(thisYear);
-      setSelectedStatus("Perbaikan Ulang");
+      setSelectedStatus([
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
+        { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
+      ]);
       setSelectedPotensi("Kecil");
     }
     fetchData();
@@ -101,10 +120,13 @@ const Table = () => {
       .get(sheetUrl)
       .then((response) => {
         let datas = response.data.values;
+        // console.log(datas);
         let deviasi_target_potensi_rp = datas[4][11];
+        let targetPAD = datas[1][11];
 
         setDataDeviasi({
           deviasi_target_potensi_rp: deviasi_target_potensi_rp,
+          targetPAD: targetPAD,
         });
       })
       .catch((error) => {
@@ -113,6 +135,7 @@ const Table = () => {
   };
 
   const fechDataInformasi = (nomor) => {
+    setLoading(true);
     axios
       // .get(`http://localhost:5000/api/lacak/${nomor}`)
       .get(`https://sibedaspbg.bandungkab.go.id/api/lacak/${nomor}`)
@@ -123,6 +146,11 @@ const Table = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       });
   };
 
@@ -139,7 +167,7 @@ const Table = () => {
   });
 
   const filteredData = data.filter((row) => {
-    const potensiValueString = row["Nilai Retribusi Keseluruhan"] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
+    const potensiValueString = row["Usulan Retribusi"] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
     const potensiValue = parseInt(
       potensiValueString
         .replace("Rp", "")
@@ -147,10 +175,6 @@ const Table = () => {
         .replace(".", "")
         .replace(".", "")
     );
-    // console.log(row);
-    // const meetsSearchTerm = row.some((cell) =>
-    //   cell.toLowerCase().includes(searchTerm.toLowerCase())
-    // );
 
     const meetsSearchTerm = Object.values(row).some(
       (cell) =>
@@ -158,9 +182,13 @@ const Table = () => {
         cell.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    //   row["Status Permohonan"]?.toLowerCase() === selectedStatus.toLowerCase();
     const meetsStatusCriteria =
-      selectedStatus === "" ||
-      row["Status Permohonan"]?.toLowerCase() === selectedStatus.toLowerCase();
+      selectedStatus.length === 0 || // Jika tidak ada status yang dipilih, maka tidak ada filter status
+      selectedStatus.some(
+        (status) =>
+          status.value.toLowerCase() === row["Status Permohonan"]?.toLowerCase()
+      );
 
     const meetsYearCriteria =
       selectedYear === "" ||
@@ -207,7 +235,8 @@ const Table = () => {
     setSearchTerm(event.target.value);
   };
   const handleStatusChange = (event) => {
-    setSelectedStatus(event.target.value);
+    console.log(event);
+    setSelectedStatus(event);
   };
   const handlePotensiChange = (event) => {
     setSelectedPotensi(event.target.value);
@@ -219,6 +248,10 @@ const Table = () => {
   const openDialog = (rowData) => {
     setIsDialogOpen(true);
     setSelectRowData(rowData);
+  };
+
+  const handleOptionsCoba = (event) => {
+    setSelectedOption(event);
   };
 
   const openDialogInformasi = (nomor) => {
@@ -253,7 +286,7 @@ const Table = () => {
               </span>
               <div className="card bg-blue  card-pad">
                 <span className="inter-20 fw-500 pd-5">
-                  Rp 25.085.584.721,-
+                  Rp {dataDeviasi.targetPAD},-
                 </span>
               </div>
             </div>
@@ -317,16 +350,15 @@ const Table = () => {
                   </option>
                 ))}
               </select>
-              <select
-                className="mlf-10 selectOptionst"
+              <Select
+                className="mlf-10"
                 value={selectedStatus}
                 onChange={handleStatusChange}
-              >
-                <option value={""}>Status</option>
-                <option value={"Perbaikan Ulang"}>Perbaikan Ulang</option>
-                <option value={"Selesai Verifikasi"}>Selesai Verifikasi</option>
-                <option value={"Verifikasi Ulang"}>Verifikasi Ulang</option>
-              </select>
+                placeholder="Status"
+                options={options}
+                isMulti
+                style={{ borderRadius: "10px", border: "1px solid black" }}
+              />
               <select
                 className="mlf-10 selectOptionst"
                 value={selectedPotensi}
@@ -434,6 +466,7 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    
                     {currentData.length > 0 ? (
                       currentData.map((row, index) => (
                         <tr
@@ -600,15 +633,23 @@ const Table = () => {
                       <th>Keterangan</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {dataInformasi.map((item, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{item["Modul"]}</td>
-                        <td>{item["Tanggal"]}</td>
-                        <td>{item["Keterangan"]}</td>
+                  <tbody className="">
+                    {loading ? (
+                      <tr>
+                        <div className="" style={{ marginLeft: "600px", marginTop: "150px" }}>
+                          <Loading />
+                        </div>
                       </tr>
-                    ))}
+                    ) : (
+                      dataInformasi.map((item, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{item["Modul"]}</td>
+                          <td>{item["Tanggal"]}</td>
+                          <td>{item["Keterangan"]}</td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -620,4 +661,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default Table2;

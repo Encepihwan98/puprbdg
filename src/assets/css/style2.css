@@ -1265,3 +1265,52 @@
   margin-top: -25px;
   font-weight: 500;
 }
+
+
+/* //loading spiner */
+
+.loading-outer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: rotate-outer 1.5s linear infinite forwards;
+  position: relative;
+}
+.loading-outer .loading-inner {
+  width: 70px;
+  height: 70px;
+  border-radius: inherit;
+  border: 5px solid rgba(255, 255, 255, 0.8);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  animation: rotate-inner 1.5s linear infinite forwards;
+  position: absolute;
+}
+
+.loading-cell{
+  margin-left: 600px;
+}
+
+
+.center-table tr {
+  width: 100%;
+  text-align: center; /* Pusatkan konten dalam sel */
+}
+
+
+@keyframes rotate-outer {
+  50% {
+    transform: rotate(200deg);
+ }
+}
+@keyframes rotate-inner {
+  50% {
+    transform: rotate(-400deg);
+ }
+}

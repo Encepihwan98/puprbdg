@@ -175,8 +175,9 @@ const FixDashboard = () => {
       // .get("https://sibedaspbg.bandungkab.go.id/api/simbg/coba")
       .get(sheetUrl)
       .then((response) => {
+        // console.log(response);
         let datas = response.data.values;
-
+        let targetPAD = parseInt(datas[1][11].replace(/\./g, ""));
         let total_berkas = datas[2][10];
 
         let total_berkas_rp = datas[2][11];
@@ -236,6 +237,7 @@ const FixDashboard = () => {
         let berkas_terbit_last_year_rp = [14][11];
 
         setData({
+          targetPAD: targetPAD,
           total_berkas: total_berkas,
           total_berkas_rp: total_berkas_rp,
           total_berkas_rp1: total_berkas_rp1,
@@ -284,6 +286,7 @@ const FixDashboard = () => {
           terproses_di_dputr_rp2: terproses_di_dputr_rp2,
           proses_penerbitan_rp1: proses_penerbitan_rp1,
           proses_penerbitan_rp2: proses_penerbitan_rp2,
+          percenVerif: (dataChartVerif / targetPAD) * 100,
         });
         setDataChartVerifChart([[dataChartVerif], [aktual_belum_varif]]);
         setdataChartBelumVerif([[potensi_kecilChart], [potensi_besarChart]]);
@@ -304,9 +307,11 @@ const FixDashboard = () => {
                 Target PAD {currentYear}:
               </span>
               <div className="card bg-blue  card-pad">
-                <span className="inter-20 fw-500 pd-5">
-                  Rp 25.085.584.721,-
-                </span>
+                {data && (
+                  <span className="inter-20 fw-500 pd-5">
+                    Rp {data.targetPAD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")},-
+                  </span>
+                )}
               </div>
             </div>
             <div className="flex-x-end">
@@ -600,7 +605,9 @@ const FixDashboard = () => {
                   <span className="inter-30 fw-500 text-right">
                     Berproses Izin PBG di DPMTSP:
                   </span>
-                  <br/><br/><br/>
+                  <br />
+                  <br />
+                  <br />
                   <div>
                     <div className="luar-box bg-red mt-3">
                       <div className="bg-red box-dinas-perizinan text-left">
@@ -615,7 +622,7 @@ const FixDashboard = () => {
                       </div>
                     </div>
                   </div>
-                  <br/>
+                  <br />
                   <div className="mtp-20">
                     {data && (
                       <span className="bg-blue inter-20 br-10 pd-5 fw-500">
@@ -684,9 +691,7 @@ const FixDashboard = () => {
                       {data && (
                         <div className="ts-right">
                           <span className="text-actual-ptnsi-verif">
-                            {Math.round(
-                              data.berkas_aktual_terverifikasi_dinas_teknis_perc
-                            )}{" "}
+                            {Math.round(data.percenVerif)}{" "}
                             %
                           </span>
                         </div>
@@ -727,10 +732,10 @@ const FixDashboard = () => {
                       <br></br>
                       {data && (
                         <div className="text-blm-actual-verif">
-                          {Math.round(
+                          {/* {Math.round(
                             data.berkas_aktual_belum_terverifikasi_perc
                           )}{" "}
-                          %
+                          % */}
                         </div>
                       )}
                       {showPopupBelumverifikasi && (
