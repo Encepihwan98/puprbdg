@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../../components/Loading";
-import Select,  { StylesConfig } from "react-select";
+import Select from "react-select";
 import {
   faList,
   faTimes,
@@ -14,23 +14,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
 const options = [
-  // { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
-  // { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
-  { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-  { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
+  { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
   { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
-  { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
-  { value: "Menunggu Penugasan TPT/TPA", label: "Menunggu Penugasan TPT/TPA" },
-  { value: "Menunggu Penjadwalan Konsultasi", label: "Menunggu Penjadwalan Konsultasi" },
-  { value: "Konsultasi", label: "Konsultasi" },
-  { value: "Perhitungan Retribusi", label: "Perhitungan Retribusi" },
-  { value: "Selesai Penilaian Konsultasi", label: "Selesai Penilaian Konsultasi"},
-  { value: "Pengiriman SKRD", label: "Pengiriman SKRD"},
-  { value: "Menunggu Pembayaran Retribusi", label: "Menunggu Pembayaran Retribusi"},
-  { value: "Menunggu Validasi Retribusi", label: "Menunggu Validasi Retribusi"},
-  { value: "Menunggu Pengambilan Izin", label: "Menunggu Pengambilan Izin"},
-  { value: "Penugasan Inspeksi", label: "Penugasan Inspeksi"},
-
+  { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
 ];
 const Table2 = () => {
   const { angka } = useParams();
@@ -87,45 +73,28 @@ const Table2 = () => {
     } else if (angka === "belumTerVerif") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-        { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
-        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
     } else if (angka === "berkasTerVerif") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Menunggu Penugasan TPT/TPA", label: "Menunggu Penugasan TPT/TPA" },
-        { value: "Menunggu Penjadwalan Konsultasi", label: "Menunggu Penjadwalan Konsultasi" },
-        { value: "Konsultasi", label: "Konsultasi" },
-        { value: "Perhitungan Retribusi", label: "Perhitungan Retribusi" },
-        { value: "Pengiriman SKRD", label: "Pengiriman SKRD" },
+        { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
       ]);
     } else if (angka === "usaha") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-        { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
-        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
       setSelectedPotensi("Besar");
     } else if (angka === "nonUsaha") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-        { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
-        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
       setSelectedPotensi("Kecil");
-    } else if (angka === "dpmtsp"){
-      setSelectedYear(thisYear);
-      setSelectedStatus([
-        { value: "Menunggu Pembayaran Retribusi", label: "Menunggu Pembayaran Retribusi" },
-        { value: "Menunggu Validasi Retribusi", label: "Menunggu Validasi Retribusi" },
-        { value: "Pengiriman SKRD", label: "Pengiriman SKRD" },
-      ]);
     }
     fetchData();
     fetchDataDeviasi();
@@ -135,7 +104,7 @@ const Table2 = () => {
     axios
       .get(url)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         const newData = response.data;
         // console.log(newData[0]['KRK/KKPR']);
         setData(newData.reverse());
@@ -218,7 +187,7 @@ const Table2 = () => {
       selectedStatus.length === 0 || // Jika tidak ada status yang dipilih, maka tidak ada filter status
       selectedStatus.some(
         (status) =>
-          status.value.toLowerCase() === row["Status"]?.toLowerCase()
+          status.value.toLowerCase() === row["Status Permohonan"]?.toLowerCase()
       );
 
     const meetsYearCriteria =
@@ -385,9 +354,10 @@ const Table2 = () => {
                 className="mlf-10"
                 value={selectedStatus}
                 onChange={handleStatusChange}
-                placeholder="--- Status ---"
+                placeholder="Status"
                 options={options}
                 isMulti
+                style={{ borderRadius: "10px", border: "1px solid black" }}
               />
               <select
                 className="mlf-10 selectOptionst"
@@ -464,7 +434,6 @@ const Table2 = () => {
                       <th>Nama Pemilik</th>
                       <th>Lokasi BG</th>
                       <th>Tgl Permohonan</th>
-                      <th>Status Permohonan</th>
                       <th>Status</th>
                       <th>BA TPA/TPT</th>
                       <th>Gambar</th>
@@ -486,8 +455,8 @@ const Table2 = () => {
                       <th>2/8</th>
                       <th>Keterangan Kontrak</th>
                       <th>TTD KADIS</th>
-                      {/* <th>Tahun Terbit</th>
-                      <th>Tahun Berjalan</th> */}
+                      <th>Tahun Terbit</th>
+                      <th>Tahun Berjalan</th>
                       <th>Tahun</th>
                       <th className="bg-green">Jenis Konsultasi</th>
                       <th className="bg-green">Fungsi BG</th>
@@ -540,7 +509,6 @@ const Table2 = () => {
                           <td>{row["Lokasi BG"]}</td>
                           <td>{row["Tgl Permohonan"]}</td>
                           <td>{row["Status Permohonan"]}</td>
-                          <td>{row["Status"]}</td>
                           <td>{row["BA TPA/TPT"]}</td>
                           <td>{row["GAMBAR"]}</td>
                           <td>{row["KRK/KKPR"]}</td>
@@ -561,8 +529,8 @@ const Table2 = () => {
                           <td>{row["28/8"]}</td> {/*2/8*/}
                           <td>{row["Keterangan"]}</td>
                           <td>{row["TTD KADIS"]}</td>
-                          {/* <td>{row["Selesai Terbit"]}</td>
-                          <td>{row[""]}</td> */}
+                          <td>{row["Selesai Terbit"]}</td>
+                          <td>{row[""]}</td>
                           <td>{row["Tahun"]}</td>
                           <td className="bg-green">
                             {row["Jenis Konsultasi"]}

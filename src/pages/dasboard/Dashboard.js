@@ -613,7 +613,11 @@ const FixDashboard = () => {
                   <br />
                   <br />
                   <div>
-                    <div className="luar-box bg-red mt-3">
+                    <div
+                      onClick={() => redirectToTabel("dpmtsp")}
+                      style={{ cursor: "pointer" }}
+                      className="luar-box bg-red mt-3"
+                    >
                       <div className="bg-red box-dinas-perizinan text-left">
                         {data && (
                           <span className="total-value-pbg me-3">
@@ -681,10 +685,10 @@ const FixDashboard = () => {
                   <div className="container-colom mtp-10">
                     <div
                       className="clm-25 fw-500"
-                      onClick={() => redirectToTabel("berkasTerVerif")}
+                      // onClick={() => redirectToTabel("berkasTerVerif")}
                       onMouseEnter={handleMouseEnterTerverifikasi}
                       onMouseLeave={handleMouseLeaveTerverifikasi}
-                      style={{ cursor: "pointer" }}
+                      // style={{ cursor: "pointer" }}
                     >
                       <div className="ts-center">
                         <span className="inter-25 ">
@@ -721,10 +725,10 @@ const FixDashboard = () => {
                     <div className="clm-4  fw-500"></div>
                     <div
                       className="clm-35 fw-500"
-                      onClick={() => redirectToTabel("belumTerVerif")}
+                      // onClick={() => redirectToTabel("belumTerVerif")}
                       onMouseEnter={handleMouseEnterBelumverifikasi}
                       onMouseLeave={handleMouseLeaveBelumverifikasi}
-                      style={{ cursor: "pointer" }}
+                      // style={{ cursor: "pointer" }}
                     >
                       <div className="ts-center">
                         <span className="inter-25 mlf-10 fw-500 ">
@@ -945,10 +949,9 @@ const FixDashboard = () => {
                   <div className="container-35 mtp-35">
                     <div
                       className="clm-6 ts-left"
-                      onClick={() => redirectToTabel("nonUsaha")}
                       onMouseEnter={handleMouseEnterPotensiKecil}
                       onMouseLeave={handleMouseLeavePotensiKecil}
-                      style={{ cursor: "pointer" }}
+                      // style={{ cursor: "pointer" }}
                     >
                       <span className="inter-25 fw-500">Non Usaha:</span>
                       <br />
@@ -985,8 +988,8 @@ const FixDashboard = () => {
                       <br />
                       {data && (
                         <span
-                          onClick={() => redirectToTabel("usaha")}
-                          style={{ cursor: "pointer" }}
+                          // onClick={() => redirectToTabel("usaha")}
+                          // style={{ cursor: "pointer" }}
                           className="text-actual-verif mtp-15"
                         >
                           {Math.round(data.potensi_besar_perc)} %
@@ -1024,7 +1027,11 @@ const FixDashboard = () => {
                   <div className="container-colom mtp-15">
                     <div className="clm-6 mlf-35">
                       {data && (
-                        <span className="ts-right mrg-35 fs-20 fw-500">
+                        <span
+                          onClick={() => redirectToTabel("nonUsaha")}
+                          style={{ cursor: "pointer" }}
+                          className="ts-right mrg-35 fs-20 fw-500"
+                        >
                           {data.potensi_kecil}
                         </span>
                       )}
