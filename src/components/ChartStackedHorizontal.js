@@ -4,20 +4,17 @@ import HighchartsReact from "highcharts-react-official";
 import HC_rounded from "highcharts-rounded-corners";
 HC_rounded(Highcharts);
 
-const ChartStackedVertikal = ({ className, width, height, data, color }) => {
-  
+const ChartStackedHorizontal = ({ className, width, data, color }) => {
   // const total = data[0] + data[1]
   // const max = Math.max(...data)
-
-  console.log(height);
+  console.log(color[1]);
   const options = {
     chart: {
-      type: "column",
-      height: height ? height : 300,
+      type: "bar",
+      height: 81,
       spacing: [0, 0, 0, 0],
-      margin: [0, 0, 0, 0],
-      // marginRight: 0,
-      // marginTop: 0,
+      marginRight: 0,
+      marginTop: 0,
     },
     title: {
       text: null,
@@ -27,7 +24,7 @@ const ChartStackedVertikal = ({ className, width, height, data, color }) => {
     },
     yAxis: {
       visible: false,
-      max: 369,
+      max: null,
       labels: {
         formatter: function () {
           return "Rp " + this.value.toLocaleString(); // Menambahkan "Rp" pada label sumbu nilai
@@ -41,12 +38,6 @@ const ChartStackedVertikal = ({ className, width, height, data, color }) => {
       enabled: false, // Menyembunyikan kreditttt
     },
     plotOptions: {
-      column: {
-        stacking: "normal",
-        borderRadius: 10,
-        pointPadding: 0, // Mengatur pointPadding menjadi 0
-        groupPadding: 0, // Mengatur groupPadding menjadi 0
-      },
       series: {
         stacking: "normal",
         dataLabels: {
@@ -54,15 +45,8 @@ const ChartStackedVertikal = ({ className, width, height, data, color }) => {
           color: "#FFFFFF",
           textOutline: "none",
           style: {
-            fontSize: "15px",
+            fontSize: "20px",
             textOutline: "none",
-            // transform: "rotate(45deg)",
-            // transformOrigin: "left top",
-            textAlign: "center", 
-            verticalAlign: "middle",
-          },
-          formatter: function () {
-            return Highcharts.numberFormat(this.y, 0, ",", "");
           },
         },
 
@@ -77,33 +61,31 @@ const ChartStackedVertikal = ({ className, width, height, data, color }) => {
     series: [
       {
         showInLegend: false,
-        color: color[0],
-        data: data[0],
-        borderRadiusTopLeft: "50%",
-        borderRadiusTopRight: "50%",
-        marginLeft: -500,
-      },
-      {
-        showInLegend: false,
         color: color[1],
         data: data[1],
-        // borderRadiusTopLeft: "30%",
-        // borderRadiusTopRight: "30%",
+        borderRadiusTopLeft: "30%",
+        borderRadiusTopRight: "30%",
         marginLeft: -500,
       },
       {
         showInLegend: false,
-        color: color[2],
-        data: data[2],
-        borderRadiusBottomLeft: "50%",
-        borderRadiusBottomRight: "50%",
+        color: color[0],
+        data: data[0],
+        // borderRadiusBottomLeft: "30%",
+        // borderRadiusBottomRight: "30%",
+      },
+      {
+        showInLegend: false,
+        color: color[0],
+        data: data[0],
+        borderRadiusBottomLeft: "30%",
+        borderRadiusBottomRight: "30%",
       },
     ],
   };
 
   const chartStyle = {
-    height: height ? height : 300,
-    width: width ? width : 38,
+    width: width ? width : 200,
   };
 
   return (
@@ -117,4 +99,4 @@ const ChartStackedVertikal = ({ className, width, height, data, color }) => {
   );
 };
 
-export default ChartStackedVertikal;
+export default ChartStackedHorizontal;

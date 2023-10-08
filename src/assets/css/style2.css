@@ -24,6 +24,9 @@
   width: 50%;
 }
 
+.clm-4{
+  width: 33,33%;
+}
 .clm-25 {
   width: 25%;
 }
@@ -50,6 +53,10 @@
   width: 20%;
 }
 
+.align-item-x-center{
+ align-items: center;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -59,6 +66,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex-align-item-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .centered-content {
@@ -154,6 +167,10 @@
   margin-top: 35px;
 }
 
+.mtp-37 {
+  margin-top: 37px;
+}
+
 .mtp-50 {
   margin-top: 50px;
 }
@@ -170,12 +187,20 @@
   margin-left: 15px;
 }
 
+.mlf-20 {
+  margin-left: 20px;
+}
+
 .mlf-25 {
   margin-left: 25px;
 }
 
 .mlf-35 {
   margin-left: 35px;
+}
+
+.mlf-30 {
+  margin-left: 30px;
 }
 
 .mlf-50 {
@@ -188,6 +213,10 @@
 
 .mlf-28 {
   margin-left: 25%;
+}
+
+.mrg-10 {
+  margin-right: 10px;
 }
 
 .mrg-35 {
@@ -240,6 +269,12 @@
 .pd-10 {
   padding: 10px;
 }
+.pd-15 {
+  padding: 15px;
+}
+.pd-20 {
+  padding: 20px;
+}
 /* padding end */
 
 .widht-278 {
@@ -250,6 +285,9 @@
   width: 794px;
 }
 
+.width-613{
+  width: 613px;
+}
 /* start font */
 
 .inter-20 {
@@ -486,7 +524,7 @@
 }
 
 .card-rupiah {
-  width: 181px;
+  width: 176px;
   height: 86px;
   background-color: #81c0ff;
   /* font-size: 25px;
@@ -816,7 +854,7 @@
 }
 
 .text-actual-verif {
-  margin-right: 25px;
+  /* margin-right: 25px; */
   text-align: right;
   font-weight: 500;
   font-size: 50px;
@@ -1188,6 +1226,26 @@
   z-index: 999; /* Menempatkan di atas elemen lain -tambahan*/
 }
 
+.dialog-overlay-usaha {
+  position: fixed;
+  top: 30%;
+  left: 24%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* Menempatkan di atas elemen lain -tambahan*/
+}
+
+.dialogUsaha{
+  width: 663px;
+  height: 326px;
+  background-color: white;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
 .popupLegend {
   display: block;
   position: absolute;
@@ -1224,6 +1282,35 @@
   border: none;
   margin-left: 15px;
   margin-bottom: 15px;
+}
+
+.costChart{
+  height: 150px;
+  padding: 15px;
+}
+.costKecil{
+ background-color: #C62C11;
+ border-top-left-radius: 20px;
+ border-bottom-left-radius: 20px;
+ font-size: 25px;
+ color: white;
+ font-weight: 500;
+}
+
+.costSedang{
+  background-color: #AB1004;
+  font-size: 25px;
+ color: white;
+ font-weight: 500;
+}
+
+.costBesar{
+ background-color: #7E0B02;
+ border-top-right-radius: 20px;
+ border-bottom-right-radius: 20px;
+ font-size: 25px;
+ color: white;
+ font-weight: 500;
 }
 
 .icon-grather-container {
@@ -1311,6 +1398,90 @@
   text-align: center; /* Pusatkan konten dalam sel */
 }
 
+.iconStyle {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  /* font-size: 20px;   */
+  border: 2px solid black;
+  border-radius: 50%;
+};
+
+.stacked{
+  height: 330px;
+  width: 38px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.stacked-top{
+  background-color: #D2222D;
+  height: 110px;
+  color: white;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-items: center;
+  position: relative;
+}
+
+.stacked-top span {
+  transform: rotate(90deg); 
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.stacked-center{
+  background-color: #FFBF00;
+  height: 110px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+.stacked-center span {
+  transform: rotate(90deg); 
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.stacked-under{
+  background-color: #238823;
+  height: 110px;
+  color: white;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+.stacked-under span {
+  transform: rotate(90deg); 
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
 
 @keyframes rotate-outer {
   50% {

@@ -6,8 +6,12 @@ import { useNavigate } from "react-router-dom";
 import BoxCard from "../../components/BoxCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartStacked from "../../components/ChartStacked";
+//import ChartStackedVertikal from "../../components/ChartStackedVertikal";
+//import ChartStackedHorizontal from "../../components/ChartStackedHorizontal";
+import StackedVertikal from "../../components/StackedVertikal";
 // import { async } from "q";
 
 const FixDashboard = () => {
@@ -17,6 +21,7 @@ const FixDashboard = () => {
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
   const [data, setData] = useState(null);
+  const [dataUsaha, setDataUsaha] = useState(null);
   const [dataChartVerifChart, setDataChartVerifChart] = useState(null);
   const [dataChartBelumVerif, setdataChartBelumVerif] = useState(null);
 
@@ -33,10 +38,21 @@ const FixDashboard = () => {
   const [showPopupProsesPenerbitan, setShowPopupProsesPenerbitan] =
     useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpenNonUsaha, setIsDialogOpenNonUsaha] = useState(false);
+
+  const [macetplanBelumVerif, setMacetplanBelumVerif] = useState(null);
+  const [macetplanAktualVerif, setMacetplanAktualVerif] = useState(null);
+  const [macetplanTerbitPbg, setMacetpTerbitPbg] = useState(null);
+  const [macetplanPotensiBesar, setMacetpPotensiBesar] = useState(null);
+  const [macetplanPotensiKecil, setMacetpPotensiKecil] = useState(null);
+  const [macetplanProsesPenerbitan, setMacetpProsesPenerbitan] = useState(null);
+  const [macetplanProsesDputr, setMcetpProsesDputr] = useState(null);
+  const [macetplanProsesPtsp, setMcetpProsesPtsp] = useState(null);
 
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
-  // console.log(dataChartBelumVerif);
+
   const menuLinks = document.querySelectorAll(".date-today ul li a");
 
   menuLinks.forEach((link) => {
@@ -155,6 +171,29 @@ const FixDashboard = () => {
     navigate(url);
   };
 
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const openDialogNonUsaha = () => {
+    setIsDialogOpenNonUsaha(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
+
+  const closeDialogNonUsaha = () => {
+    setIsDialogOpenNonUsaha(false);
+  };
+
+  const handleOverlayClick = (event) => {
+    if (event.target.classList.contains("dialog-overlay-usaha")) {
+      closeDialog();
+      closeDialogNonUsaha();
+    }
+  };
+
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
   let sheetName = encodeURIComponent("Bagan 2023");
   let apiKey = "AIzaSyA8bz--_nRrVAoCmttaoIA1WpYp8Xn7Wp8";
@@ -163,6 +202,8 @@ const FixDashboard = () => {
 
   useEffect(() => {
     fetchData();
+    getDataUsaha();
+    getDataChartStacked();
     const interval = setInterval(() => {
       fetchData();
     }, 24 * 60 * 60 * 1000);
@@ -293,6 +334,116 @@ const FixDashboard = () => {
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const getDataUsaha = () => {
+    axios
+      .get("https://sibedaspbg.bandungkab.go.id/api/nilai-retribusi/")
+      .then((res) => {
+        var dataUsahaNon = res.data;
+        let nonUsahaDibawah = dataUsahaNon.nonUsahaDibawah
+          .toString()
+          .slice(0, -6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let nonUsahaDibawah1 = dataUsahaNon.nonUsahaDibawah
+          .toString()
+          .slice(-6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let nonUsahaDiatas = dataUsahaNon.nonUsahaDiatas
+          .toString()
+          .slice(0, -6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let nonUsahaDiatas1 = dataUsahaNon.nonUsahaDiatas
+          .toString()
+          .slice(-6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let usahaDiatas = dataUsahaNon.usahaDiatas
+          .toString()
+          .slice(0, -6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let usahaDiatas1 = dataUsahaNon.usahaDiatas
+          .toString()
+          .slice(-6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let usahaDibawah = dataUsahaNon.usahaDibawah
+          .toString()
+          .slice(0, -6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let usahaDibawah1 = dataUsahaNon.usahaDibawah
+          .toString()
+          .slice(-6)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        let countNonUsahaDiatas = dataUsahaNon.countNonUsahaDiatas;
+        let countNonUsahaDibawah = dataUsahaNon.countNonUsahaDibawah;
+        let countUsahaDiatas = dataUsahaNon.countUsahaDiatas;
+        let countUsahaDibawah = dataUsahaNon.countUsahaDibawah;
+
+        setDataUsaha({
+          nonUsahaDibawah: nonUsahaDibawah,
+          nonUsahaDibawah1: nonUsahaDibawah1,
+          nonUsahaDiatas: nonUsahaDiatas,
+          nonUsahaDiatas1: nonUsahaDiatas1,
+          usahaDiatas: usahaDiatas,
+          usahaDiatas1: usahaDiatas1,
+          usahaDibawah: usahaDibawah,
+          usahaDibawah1: usahaDibawah1,
+          countNonUsahaDiatas: countNonUsahaDiatas,
+          countNonUsahaDibawah: countNonUsahaDibawah,
+          countUsahaDiatas: countUsahaDiatas,
+          countUsahaDibawah: countUsahaDibawah,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getDataChartStacked = () => {
+    axios
+      .get("https://sibedaspbg.bandungkab.go.id/api/macet-plan/")
+      .then((res) => {
+        let dataMacetPlan = res.data;
+        setMacetplanBelumVerif([
+          dataMacetPlan.berkas_aktual_belum_terverifikasi_ov14,
+          dataMacetPlan.berkas_aktual_belum_terverifikasi_7to14,
+          dataMacetPlan.berkas_aktual_belum_terverifikasi_und7,
+        ]);
+        setMacetplanAktualVerif([
+          dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_ov14,
+          dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_7to14,
+          dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_und7,
+        ]);
+        setMacetpTerbitPbg([
+          dataMacetPlan.berkas_terbit_pbg_ov14,
+          dataMacetPlan.berkas_terbit_pbg_7to14,
+          dataMacetPlan.berkas_terbit_pbg_und7,
+        ]);
+        setMacetpPotensiBesar([
+          dataMacetPlan.potensi_besar_ov14,
+          dataMacetPlan.potensi_besar_7to14,
+          dataMacetPlan.potensi_besar_und7,
+        ]);
+        setMacetpPotensiKecil([
+          dataMacetPlan.potensi_kecil_ov14,
+          dataMacetPlan.potensi_kecil_7to14,
+          dataMacetPlan.potensi_kecil_und7,
+        ]);
+        setMacetpProsesPenerbitan([
+          dataMacetPlan.proses_penerbitan_ov14,
+          dataMacetPlan.proses_penerbitan_7to14,
+          dataMacetPlan.proses_penerbitan_und7,
+        ]);
+        setMcetpProsesDputr([
+          dataMacetPlan.terproses_di_dputr_ov14,
+          dataMacetPlan.terproses_di_dputr_7to14,
+          dataMacetPlan.terproses_di_dputr_und7,
+        ]);
+        setMcetpProsesPtsp([
+          dataMacetPlan.terproses_di_ptsp_ov14,
+          dataMacetPlan.terproses_di_ptsp_7to14,
+          dataMacetPlan.terproses_di_ptsp_und7,
+        ]);
       });
   };
 
@@ -605,46 +756,55 @@ const FixDashboard = () => {
                 onMouseLeave={handleMouseLeavePTSP}
                 // style={{ cursor: "pointer" }}
               >
-                <div className="mlf-35 card-ptsp-atas">
-                  <span className="inter-30 fw-500 text-right">
-                    Berproses Izin PBG di DPMTSP:
-                  </span>
-                  <br />
-                  <br />
-                  <br />
-                  <div>
-                    <div
-                      onClick={() => redirectToTabel("dpmtsp")}
-                      style={{ cursor: "pointer" }}
-                      className="luar-box bg-red mt-3"
-                    >
-                      <div className="bg-red box-dinas-perizinan text-left">
-                        {data && (
-                          <span className="total-value-pbg me-3">
-                            {/* {Math.round(data.terproses_di_ptsp_perc)}% */}
-                            {data.terproses_di_ptsp}
-                          </span>
-                        )}
-                        <br />
-                        <span className="total-text-pbg me-3 mb-1">DPMTSP</span>
-                      </div>
-                    </div>
-                  </div>
-                  <br />
-                  <div className="mtp-20">
-                    {data && (
-                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                        Rp. {data.terproses_di_ptsp_rp}
-                      </span>
+                <div className="container-colom">
+                  <div className="mlf-15">
+                    {macetplanProsesPtsp && (
+                      <StackedVertikal data={macetplanProsesPtsp} marginTop="44px" />
                     )}
                   </div>
-                  {/* <div className="mtp-15">
+                  <div className="mlf-15 card-ptsp-atas">
+                    <span className="inter-23 fw-500 text-right">
+                      Berproses Izin PBG di DPMTSP:
+                    </span>
+                    <br />
+                    <br />
+                    <br />
+                    <div>
+                      <div
+                        onClick={() => redirectToTabel("dpmtsp")}
+                        style={{ cursor: "pointer" }}
+                        className="luar-box bg-red mt-3"
+                      >
+                        <div className="bg-red box-dinas-perizinan text-left">
+                          {data && (
+                            <span className="total-value-pbg me-3">
+                              {/* {Math.round(data.terproses_di_ptsp_perc)}% */}
+                              {data.terproses_di_ptsp}
+                            </span>
+                          )}
+                          <br />
+                          <span className="total-text-pbg me-3 mb-1">
+                            DPMTSP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="mtp-20">
+                      {data && (
+                        <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                          Rp.{data.terproses_di_ptsp_rp}
+                        </span>
+                      )}
+                    </div>
+                    {/* <div className="mtp-15">
                     {data && (
                       <span className="inter-25 ts-left fw-500">
                         {data.terproses_di_ptsp}
                       </span>
                     )}
                   </div> */}
+                  </div>
                 </div>
                 <div className="card-ptsp-bawah">
                   <div className="separator-ptsp boxCard">
@@ -682,113 +842,127 @@ const FixDashboard = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="container-colom mtp-10">
-                    <div
-                      className="clm-25 fw-500"
-                      // onClick={() => redirectToTabel("berkasTerVerif")}
-                      onMouseEnter={handleMouseEnterTerverifikasi}
-                      onMouseLeave={handleMouseLeaveTerverifikasi}
-                      // style={{ cursor: "pointer" }}
-                    >
-                      <div className="ts-center">
-                        <span className="inter-25 ">
-                          Berkas Aktual Terverifikasi Dinas Teknis:
-                        </span>
-                      </div>
-                      <br />
-                      {data && (
-                        <div className="ts-right">
-                          <span className="text-actual-ptnsi-verif">
-                            {Math.round(data.percenVerif)} %
-                          </span>
-                        </div>
-                      )}
-                      {showPopupTerverifikasi && (
-                        <div
-                          className="popup"
-                          style={{
-                            position: "absolute",
-                            top: popupPosition.top + "px",
-                            left: popupPosition.left + "px",
-                          }}
-                        >
-                          <div>
-                            <p className="notePopup">Note</p>
-                          </div>
-                          <div className="noteIsi">
-                            Total keseluruhan berkas diterima tahun{" "}
-                            {currentYear} yang sudah melengkapi persyaratan
-                          </div>
-                        </div>
+                  <div className="container-colom">
+                    <div className="mlf-15">
+                      {macetplanAktualVerif && (
+                        <StackedVertikal data={macetplanAktualVerif} />
                       )}
                     </div>
-                    <div className="clm-4  fw-500"></div>
-                    <div
-                      className="clm-35 fw-500"
-                      // onClick={() => redirectToTabel("belumTerVerif")}
-                      onMouseEnter={handleMouseEnterBelumverifikasi}
-                      onMouseLeave={handleMouseLeaveBelumverifikasi}
-                      // style={{ cursor: "pointer" }}
-                    >
-                      <div className="ts-center">
-                        <span className="inter-25 mlf-10 fw-500 ">
-                          Berkas Aktual Belum Terverifikasi:
-                        </span>
-                      </div>
-                      <br />
-                      <br></br>
-                      {data && (
-                        <div className="text-blm-actual-verif">
-                          {/* {Math.round(
+                    <div>
+                      <div className="container-colom mtp-10">
+                        <div
+                          className="clm-25 fw-500"
+                          // onClick={() => redirectToTabel("berkasTerVerif")}
+                          onMouseEnter={handleMouseEnterTerverifikasi}
+                          onMouseLeave={handleMouseLeaveTerverifikasi}
+                          // style={{ cursor: "pointer" }}
+                        >
+                          <div className="ts-center">
+                            <span className="inter-25 ">
+                              Berkas Aktual Terverifikasi Dinas Teknis:
+                            </span>
+                          </div>
+                          <br />
+                          {data && (
+                            <div className="ts-right">
+                              <span className="text-actual-ptnsi-verif">
+                                {Math.round(data.percenVerif)} %
+                              </span>
+                            </div>
+                          )}
+                          {showPopupTerverifikasi && (
+                            <div
+                              className="popup"
+                              style={{
+                                position: "absolute",
+                                top: popupPosition.top + "px",
+                                left: popupPosition.left + "px",
+                              }}
+                            >
+                              <div>
+                                <p className="notePopup">Note</p>
+                              </div>
+                              <div className="noteIsi">
+                                Total keseluruhan berkas diterima tahun{" "}
+                                {currentYear} yang sudah melengkapi persyaratan
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="clm-4  fw-500"></div>
+                        <div
+                          className="clm-35 fw-500"
+                          // onClick={() => redirectToTabel("belumTerVerif")}
+                          onMouseEnter={handleMouseEnterBelumverifikasi}
+                          onMouseLeave={handleMouseLeaveBelumverifikasi}
+                          // style={{ cursor: "pointer" }}
+                        >
+                          <div className="ts-center">
+                            <span className="inter-25 mlf-10 fw-500 ">
+                              Berkas Aktual Belum Terverifikasi:
+                            </span>
+                          </div>
+                          <br />
+                          <br></br>
+                          {data && (
+                            <div className="text-blm-actual-verif">
+                              {/* {Math.round(
                             data.berkas_aktual_belum_terverifikasi_perc
                           )}{" "}
                           % */}
+                            </div>
+                          )}
+                          {showPopupBelumverifikasi && (
+                            <div
+                              className="popup"
+                              style={{
+                                position: "absolute",
+                                top: popupPosition.top + "px",
+                                left: popupPosition.left + "px",
+                              }}
+                            >
+                              <div>
+                                <p className="notePopup">Note</p>
+                              </div>
+                              <div className="noteIsi">
+                                Total keseluruhan berkas diterima tahun{" "}
+                                {currentYear} yang belum melengkapi persyaratan
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      )}
-                      {showPopupBelumverifikasi && (
-                        <div
-                          className="popup"
-                          style={{
-                            position: "absolute",
-                            top: popupPosition.top + "px",
-                            left: popupPosition.left + "px",
-                          }}
-                        >
-                          <div>
-                            <p className="notePopup">Note</p>
-                          </div>
-                          <div className="noteIsi">
-                            Total keseluruhan berkas diterima tahun{" "}
-                            {currentYear} yang belum melengkapi persyaratan
-                          </div>
+                      </div>
+                      <div className="container-colom mtp-15 mlf-35">
+                        {dataChartVerifChart && (
+                          <ChartStacked
+                            data={dataChartVerifChart}
+                            width="635px"
+                            color={color}
+                          ></ChartStacked>
+                        )}
+                      </div>
+                      <div className="container-colom mtp-10">
+                        <div className="clm-6 mlf-35">
+                          {data && (
+                            <span className="inter-20 ts-left fw-500">
+                              {data.berkas_aktual_terverifikasi_dinas_teknis}
+                            </span>
+                          )}
                         </div>
-                      )}
+                        <div className="clm-6 ">
+                          {data && (
+                            <div className="ts-right mrg-35">
+                              <span className=" ts-right mrg-35 fs-20 fw-500">
+                                {data.berkas_aktual_belum_terverifikasi}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="container-colom mtp-15 mlf-35">
-                    {dataChartVerifChart && (
-                      <ChartStacked
-                        data={dataChartVerifChart}
-                        width="741px"
-                        color={color}
-                      ></ChartStacked>
-                    )}
-                  </div>
-                  <div className="container-colom mtp-10">
-                    <div className="clm-6 mlf-35">
-                      {data && (
-                        <span className="inter-20 ts-left fw-500">
-                          {data.berkas_aktual_terverifikasi_dinas_teknis}
-                        </span>
-                      )}
-                    </div>
-                    <div className="clm-6 ">
-                      {data && (
-                        <div className="ts-right mrg-35">
-                          <span className=" ts-right mrg-35 fs-20 fw-500">
-                            {data.berkas_aktual_belum_terverifikasi}
-                          </span>
-                        </div>
+                    <div className="mrg-15">
+                      {macetplanBelumVerif && (
+                        <StackedVertikal data={macetplanBelumVerif} />
                       )}
                     </div>
                   </div>
@@ -822,8 +996,13 @@ const FixDashboard = () => {
                 // style={{ cursor: "pointer" }}
               >
                 <div className="container-colom">
+                  <div className="mlf-15">
+                    {macetplanTerbitPbg && (
+                      <StackedVertikal data={macetplanTerbitPbg} marginTop="65px" />
+                    )}
+                  </div>
                   <div className="clm-12 ts-center">
-                    <span className="inter-30 fw-500 me-3">
+                    <span className="inter-25 fw-500 me-3 center">
                       Sudah selesai Rekomtek PBG:
                     </span>
                     <div className="mtp-35">
@@ -834,7 +1013,7 @@ const FixDashboard = () => {
                       )}
                     </div>
                     {data && (
-                      <div className="card-rupiah mlf-35 mtp-15 ts-left">
+                      <div className="card-rupiah mlf-15 mtp-15 ts-left">
                         <span className="pd-5 fs-25 fw-500">
                           Rp{data.terproses_di_dputr_rp1}
                         </span>
@@ -884,37 +1063,44 @@ const FixDashboard = () => {
                   <div className="separator-dputr">
                     <div className="triangle triangle-left"></div>
                   </div>
-                  <div>
-                    <div className="ts-center">
-                      <span className="mlf-10 inter-25 fw-500">
-                        Proses <br /> Penerbitan:
-                      </span>
-                    </div>
-                    <div className="ts-center mtp-20 mbt-25">
-                      {data && (
-                        <div className="fs-50 fc-white f-500">
-                          {Math.round(data.proses_penerbitan_perc)} %
-                        </div>
+                  <div className="container-colom">
+                    <div className="">
+                      {macetplanProsesPenerbitan && (
+                        <StackedVertikal data={macetplanProsesPenerbitan} marginTop="65px"/>
                       )}
                     </div>
-
-                    {data && (
-                      <div className="card-rupiah mtp-35 ts-left">
-                        <span className="pd-5 fs-25 fw-500">
-                          Rp{data.proses_penerbitan_rp1}
-                        </span>
-                        <br />
-                        <span className="pd-5 fs-25 fw-500">
-                          {data.proses_penerbitan_rp2}
+                    <div className="mlf-10">
+                      <div className="ts-center">
+                        <span className="inter-25 fw-500">
+                          Proses <br /> Penerbitan:
                         </span>
                       </div>
-                    )}
-                    <div className="ts-right mtp-10">
+                      <div className="ts-center mtp-20 mbt-25">
+                        {data && (
+                          <div className="fs-50 fc-white f-500">
+                            {Math.round(data.proses_penerbitan_perc)} %
+                          </div>
+                        )}
+                      </div>
+
                       {data && (
-                        <span className="mrg-15  fs-25 fw-500">
-                          {data.proses_penerbitan}
-                        </span>
+                        <div className="card-rupiah mtp-35 ts-left">
+                          <span className="pd-5 fs-25 fw-500">
+                            Rp{data.proses_penerbitan_rp1}
+                          </span>
+                          <br />
+                          <span className="pd-5 fs-25 fw-500">
+                            {data.proses_penerbitan_rp2}
+                          </span>
+                        </div>
                       )}
+                      <div className="ts-right mtp-10">
+                        {data && (
+                          <span className="mrg-15  fs-25 fw-500">
+                            {data.proses_penerbitan}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -946,105 +1132,143 @@ const FixDashboard = () => {
                       Berkas Aktual Belum Terverifikasi
                     </span>
                   </div>
-                  <div className="container-35 mtp-35">
-                    <div
-                      className="clm-6 ts-left"
-                      onMouseEnter={handleMouseEnterPotensiKecil}
-                      onMouseLeave={handleMouseLeavePotensiKecil}
-                      // style={{ cursor: "pointer" }}
-                    >
-                      <span className="inter-25 fw-500">Non Usaha:</span>
-                      <br />
-                      {data && (
-                        <div className="fs-50 fc-red-heart fw-500 mtp-15">
-                          {Math.round(data.potensi_kecil_perc)} %
-                        </div>
-                      )}
-                      {showPopupPotensiKecil && (
-                        <div
-                          className="popup"
-                          style={{
-                            position: "absolute",
-                            top: popupPosition.top + "px",
-                            left: popupPosition.left + "px",
-                          }}
-                        >
-                          <div>
-                            <p className="notePopup">Note</p>
-                          </div>
-                          <div className="noteIsi">
-                            Total perizinan yang memiliki "Nilai Retribusi"
-                            Dibawah Rp. 50 Juta
-                          </div>
-                        </div>
+                  <div className="container-colom">
+                    <div className="mlf-10">
+                      {macetplanPotensiKecil && (
+                        <StackedVertikal data={macetplanPotensiKecil} />
                       )}
                     </div>
-                    <div
-                      className="clm-6 ts-right"
-                      onMouseEnter={handleMouseEnterPotensiBesar}
-                      onMouseLeave={handleMouseLeavePotensiBesar}
-                    >
-                      <span className="inter-25 fw-500">Usaha:</span>
-                      <br />
-                      {data && (
-                        <span
-                          // onClick={() => redirectToTabel("usaha")}
+                    <div>
+                      <div className="container-35 mtp-35">
+                        <div
+                          className="clm-6 ts-left"
+                          onMouseEnter={handleMouseEnterPotensiKecil}
+                          onMouseLeave={handleMouseLeavePotensiKecil}
                           // style={{ cursor: "pointer" }}
-                          className="text-actual-verif mtp-15"
                         >
-                          {Math.round(data.potensi_besar_perc)} %
-                        </span>
-                      )}
-                      {showPopupPotensiBesar && (
-                        <div
-                          className="popup"
-                          style={{
-                            position: "absolute",
-                            top: popupPosition.top + "px",
-                            left: popupPosition.left + "px",
-                          }}
-                        >
-                          <div>
-                            <p className="notePopup">Note</p>
+                          <span className="inter-25 fw-500">Non Usaha:</span>
+                          <br />
+                          <div className="container-colom">
+                            {data && (
+                              <span className="fs-50 fc-red-heart fw-500 mtp-15">
+                                {Math.round(data.potensi_kecil_perc)}%
+                              </span>
+                            )}
+                            <div
+                              className="iconStyle mtp-15 mlf-20"
+                              onClick={openDialogNonUsaha}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <FontAwesomeIcon
+                                className="iconLegend"
+                                icon={faChevronDown}
+                              />
+                            </div>
                           </div>
-                          <div className="noteIsi">
-                            Total perizinan yang memiliki "Nilai Retribusi"
-                            diatas Rp. 50 Juta
-                          </div>
+                          {showPopupPotensiKecil && (
+                            <div
+                              className="popup"
+                              style={{
+                                position: "absolute",
+                                top: popupPosition.top + "px",
+                                left: popupPosition.left + "px",
+                              }}
+                            >
+                              <div>
+                                <p className="notePopup">Note</p>
+                              </div>
+                              <div className="noteIsi">
+                                Total perizinan yang memiliki "Nilai Retribusi"
+                                Dibawah Rp. 50 Juta
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mlf-35 mtp-10">
-                    {dataChartBelumVerif && (
-                      <ChartStacked
-                        data={dataChartBelumVerif}
-                        width="472px"
-                        color={color2}
-                      ></ChartStacked>
-                    )}
-                  </div>
-                  <div className="container-colom mtp-15">
-                    <div className="clm-6 mlf-35">
-                      {data && (
-                        <span
-                          onClick={() => redirectToTabel("nonUsaha")}
-                          style={{ cursor: "pointer" }}
-                          className="ts-right mrg-35 fs-20 fw-500"
+                        <div
+                          className="clm-6 ts-right"
+                          onMouseEnter={handleMouseEnterPotensiBesar}
+                          onMouseLeave={handleMouseLeavePotensiBesar}
                         >
-                          {data.potensi_kecil}
-                        </span>
-                      )}
+                          <span className="inter-25 fw-500">Usaha:</span>
+                          <br />
+                          <div className="container-colom">
+                            <div
+                              className="iconStyle mtp-15"
+                              onClick={openDialog}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <FontAwesomeIcon
+                                className="iconLegend"
+                                icon={faChevronDown}
+                              />
+                            </div>
+                            {data && (
+                              <span
+                                // onClick={() => redirectToTabel("usaha")}
+                                // style={{ cursor: "pointer" }}
+                                className="text-actual-verif mtp-15 mlf-35"
+                              >
+                                {Math.round(data.potensi_besar_perc)}%
+                              </span>
+                            )}
+                          </div>
+                          {showPopupPotensiBesar && (
+                            <div
+                              className="popup"
+                              style={{
+                                position: "absolute",
+                                top: popupPosition.top + "px",
+                                left: popupPosition.left + "px",
+                              }}
+                            >
+                              <div>
+                                <p className="notePopup">Note</p>
+                              </div>
+                              <div className="noteIsi">
+                                Total perizinan yang memiliki "Nilai Retribusi"
+                                diatas Rp. 50 Juta
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="mlf-35 mtp-10">
+                        {dataChartBelumVerif && (
+                          <ChartStacked
+                            data={dataChartBelumVerif}
+                            width="382px"
+                            color={color2}
+                          ></ChartStacked>
+                        )}
+                      </div>
+                      <div className="container-colom mtp-15">
+                        <div className="clm-6 mlf-35">
+                          {data && (
+                            <span
+                              onClick={() => redirectToTabel("nonUsaha")}
+                              style={{ cursor: "pointer" }}
+                              className="ts-right mrg-35 fs-20 fw-500"
+                            >
+                              {data.potensi_kecil}
+                            </span>
+                          )}
+                        </div>
+                        <div className="clm-6 ts-right">
+                          {data && (
+                            <span
+                              onClick={() => redirectToTabel("usaha")}
+                              style={{ cursor: "pointer" }}
+                              className="inter-20 mrg-35 fw-500"
+                            >
+                              {data.potensi_besar}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div className="clm-6 ts-right">
-                      {data && (
-                        <span
-                          onClick={() => redirectToTabel("usaha")}
-                          style={{ cursor: "pointer" }}
-                          className="inter-20 mrg-35 fw-500"
-                        >
-                          {data.potensi_besar}
-                        </span>
+                    <div className="mrg-10">
+                      {macetplanPotensiBesar && (
+                        <StackedVertikal data={macetplanPotensiBesar} />
                       )}
                     </div>
                   </div>
@@ -1052,8 +1276,125 @@ const FixDashboard = () => {
               </div>
             </div>
           </div>
+          <br />
         </div>
       </div>
+      {isDialogOpen && (
+        <div className="dialog-overlay-usaha" onClick={handleOverlayClick}>
+          <div className="dialogUsaha">
+            <div className="container-colom2 pd-15">
+              <div className="clm-4 fs-25 fw-500">
+                &#60; 75 juta
+                <br />
+                rupiah
+              </div>
+              {/* <div className="clm-4 center fs-25 fw-500">
+                25 - 50 juta
+                <br />
+                rupiah
+              </div> */}
+              <div className="clm-4 flex-align-item-right fs-25 fw-500">
+                > 70 juta
+                <br />
+                rupiah
+              </div>
+            </div>
+            <div className="container-colom costChart">
+              <div className="clm-6 costKecil center">
+                {dataUsaha && (
+                  <span className="mtp-15">
+                    Rp {dataUsaha.usahaDibawah} <br /> .
+                    {dataUsaha.usahaDibawah1}
+                  </span>
+                )}
+              </div>
+              {/* <div className="clm-4 costSedang center">
+                <span className="mtp-15">
+                  Rp 5.898.
+                  <br />
+                  941.251
+                </span>
+              </div> */}
+              <div className="clm-6 costBesar center">
+                {dataUsaha && (
+                  <span className="mtp-15">
+                    Rp {dataUsaha.usahaDiatas} <br /> .{dataUsaha.usahaDiatas1}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="container-colom2 pd-15">
+              {dataUsaha && (
+                <div className="clm-6 fs-25 fw-500">
+                  {dataUsaha.countUsahaDibawah}
+                </div>
+              )}
+              {/* <div className="clm-4 center fs-25 fw-500">1594</div> */}
+              {dataUsaha && (
+                <div className="clm-6 flex-align-item-right fs-25 fw-500">
+                  {dataUsaha.countNonUsahaDiatas}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {isDialogOpenNonUsaha && (
+        <div className="dialog-overlay-usaha" onClick={handleOverlayClick}>
+          <div className="dialogUsaha">
+            <div className="container-colom2 pd-15">
+              <div className="clm-4 fs-25 fw-500">
+                &#60; 25 juta
+                <br />
+                rupiah
+              </div>
+              {/* <div className="clm-4 center fs-25 fw-500">
+                25 - 50 juta
+                <br />
+                rupiah
+              </div> */}
+              <div className="clm-4 flex-align-item-right fs-25 fw-500">
+                > 25 juta && 50 Juta Rupiah
+              </div>
+            </div>
+            <div className="container-colom costChart">
+              <div className="clm-6 costKecil center">
+                {dataUsaha && (
+                  <span className="mtp-15">
+                    Rp {dataUsaha.nonUsahaDibawah} <br /> .
+                    {dataUsaha.nonUsahaDibawah1}
+                  </span>
+                )}
+              </div>
+              {/* <div className="clm-4 costSedang center">
+                <span className="mtp-15">
+                  Rp 5.898.
+                  <br />
+                  941.251
+                </span>
+              </div> */}
+              <div className="clm-6 costBesar center">
+                {dataUsaha && (
+                  <span className="mtp-15">
+                    Rp {dataUsaha.nonUsahaDiatas} <br /> .
+                    {dataUsaha.nonUsahaDiatas1}
+                  </span>
+                )}
+              </div>
+            </div>
+            {dataUsaha && (
+              <div className="container-colom2 pd-15">
+                <div className="clm-6 fs-25 fw-500">
+                  {dataUsaha.countNonUsahaDibawah}
+                </div>
+                <div className="clm-6 flex-align-item-right fs-25 fw-500">
+                  {dataUsaha.countNonUsahaDiatas}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

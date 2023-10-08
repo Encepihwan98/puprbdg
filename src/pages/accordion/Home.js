@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import BoxCard from "../../components/BoxCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartStacked from "../../components/ChartStacked";
 import ChartStackedVertikal from "../../components/ChartStackedVertikal";
+import ChartStackedHorizontal from "../../components/ChartStackedHorizontal";
 // import { async } from "q";
 
 const Home = () => {
@@ -34,6 +36,7 @@ const Home = () => {
   const [showPopupProsesPenerbitan, setShowPopupProsesPenerbitan] =
     useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
@@ -156,6 +159,20 @@ const Home = () => {
   const redirectToTabel = (params) => {
     let url = `/tabel/${params}`;
     navigate(url);
+  };
+
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handleOverlayClick = (event) => {
+    if (event.target.classList.contains("dialog-overlay")) {
+      closeDialog();
+    }
   };
 
   let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
@@ -608,50 +625,58 @@ const Home = () => {
                 onMouseLeave={handleMouseLeavePTSP}
                 // style={{ cursor: "pointer" }}
               >
-                {/* <div>
-                  <ChartStackedVertikal
-                    data={testChart}
-                    height="100px"
-                    width="38px"
-                    color={color3}
-                  ></ChartStackedVertikal>
-                </div> */}
-                <div className="mlf-70 card-ptsp-atas">
-                  <span className="inter-23 fw-500 text-right">
-                    Berproses Ijin<br/> PBG di DPMTSP:
-                  </span>
-                  <br />
-                  <br />
-                  <br />
-                  <div>
-                    <div className="luar-box bg-red mt-3">
-                      <div className="bg-red box-dinas-perizinan text-left">
-                        {data && (
-                          <span className="total-value-pbg me-3">
-                            {/* {Math.round(data.terproses_di_ptsp_perc)}% */}
-                            {data.terproses_di_ptsp}
+                <div className="container-colom">
+                  <div className="mlf-15">
+                    <ChartStackedVertikal
+                      data={testChart}
+                      height="330px"
+                      width="38px"
+                      color={color3}
+                    ></ChartStackedVertikal>
+                  </div>
+                  <div className="mlf-15 card-ptsp-atas">
+                    <span className="inter-23 fw-500 text-right">
+                      Berproses Izin PBG di DPMTSP:
+                    </span>
+                    <br />
+                    <br />
+                    <br />
+                    <div>
+                      <div
+                        onClick={() => redirectToTabel("dpmtsp")}
+                        style={{ cursor: "pointer" }}
+                        className="luar-box bg-red mt-3"
+                      >
+                        <div className="bg-red box-dinas-perizinan text-left">
+                          {data && (
+                            <span className="total-value-pbg me-3">
+                              {/* {Math.round(data.terproses_di_ptsp_perc)}% */}
+                              {data.terproses_di_ptsp}
+                            </span>
+                          )}
+                          <br />
+                          <span className="total-text-pbg me-3 mb-1">
+                            DPMTSP
                           </span>
-                        )}
-                        <br />
-                        <span className="total-text-pbg me-3 mb-1">DPMTSP</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <br />
-                  <div className="mtp-20">
-                    {data && (
-                      <span className="bg-blue inter-20 br-10 pd-5 fw-500">
-                        Rp. {data.terproses_di_ptsp_rp}
-                      </span>
-                    )}
-                  </div>
-                  {/* <div className="mtp-15">
+                    <br />
+                    <div className="mtp-20">
+                      {data && (
+                        <span className="bg-blue inter-20 br-10 pd-5 fw-500">
+                          Rp.{data.terproses_di_ptsp_rp}
+                        </span>
+                      )}
+                    </div>
+                    {/* <div className="mtp-15">
                     {data && (
                       <span className="inter-25 ts-left fw-500">
                         {data.terproses_di_ptsp}
                       </span>
                     )}
                   </div> */}
+                  </div>
                 </div>
                 <div className="card-ptsp-bawah">
                   <div className="separator-ptsp boxCard">
@@ -692,10 +717,10 @@ const Home = () => {
                   <div className="container-colom mtp-10">
                     <div
                       className="clm-25 fw-500"
-                      onClick={() => redirectToTabel("berkasTerVerif")}
+                      // onClick={() => redirectToTabel("berkasTerVerif")}
                       onMouseEnter={handleMouseEnterTerverifikasi}
                       onMouseLeave={handleMouseLeaveTerverifikasi}
-                      style={{ cursor: "pointer" }}
+                      // style={{ cursor: "pointer" }}
                     >
                       <div className="ts-center">
                         <span className="inter-25 ">
@@ -732,10 +757,10 @@ const Home = () => {
                     <div className="clm-4  fw-500"></div>
                     <div
                       className="clm-35 fw-500"
-                      onClick={() => redirectToTabel("belumTerVerif")}
+                      // onClick={() => redirectToTabel("belumTerVerif")}
                       onMouseEnter={handleMouseEnterBelumverifikasi}
                       onMouseLeave={handleMouseLeaveBelumverifikasi}
-                      style={{ cursor: "pointer" }}
+                      // style={{ cursor: "pointer" }}
                     >
                       <div className="ts-center">
                         <span className="inter-25 mlf-10 fw-500 ">
@@ -956,18 +981,25 @@ const Home = () => {
                   <div className="container-35 mtp-35">
                     <div
                       className="clm-6 ts-left"
-                      onClick={() => redirectToTabel("nonUsaha")}
                       onMouseEnter={handleMouseEnterPotensiKecil}
                       onMouseLeave={handleMouseLeavePotensiKecil}
-                      style={{ cursor: "pointer" }}
+                      // style={{ cursor: "pointer" }}
                     >
                       <span className="inter-25 fw-500">Non Usaha:</span>
                       <br />
-                      {data && (
-                        <div className="fs-50 fc-red-heart fw-500 mtp-15">
-                          {Math.round(data.potensi_kecil_perc)} %
+                      <div className="container-colom">
+                        {data && (
+                          <div className="fs-50 fc-red-heart fw-500 mtp-15">
+                            {Math.round(data.potensi_kecil_perc)} %
+                          </div>
+                        )}
+                        <div className="iconStyle mtp-15 mlf-50">
+                          <FontAwesomeIcon
+                            className="iconLegend"
+                            icon={faChevronDown}
+                          />
                         </div>
-                      )}
+                      </div>
                       {showPopupPotensiKecil && (
                         <div
                           className="popup"
@@ -994,15 +1026,23 @@ const Home = () => {
                     >
                       <span className="inter-25 fw-500">Usaha:</span>
                       <br />
-                      {data && (
-                        <span
-                          onClick={() => redirectToTabel("usaha")}
-                          style={{ cursor: "pointer" }}
-                          className="text-actual-verif mtp-15"
-                        >
-                          {Math.round(data.potensi_besar_perc)} %
-                        </span>
-                      )}
+                      <div className="container-colom">
+                        <div className="iconStyle mtp-15" onClick={openDialog}>
+                          <FontAwesomeIcon
+                            className="iconLegend"
+                            icon={faChevronDown}
+                          />
+                        </div>
+                        {data && (
+                          <span
+                            // onClick={() => redirectToTabel("usaha")}
+                            // style={{ cursor: "pointer" }}
+                            className="text-actual-verif mtp-15 mlf-35"
+                          >
+                            {Math.round(data.potensi_besar_perc)} %
+                          </span>
+                        )}
+                      </div>
                       {showPopupPotensiBesar && (
                         <div
                           className="popup"
@@ -1035,7 +1075,11 @@ const Home = () => {
                   <div className="container-colom mtp-15">
                     <div className="clm-6 mlf-35">
                       {data && (
-                        <span className="ts-right mrg-35 fs-20 fw-500">
+                        <span
+                          onClick={() => redirectToTabel("nonUsaha")}
+                          style={{ cursor: "pointer" }}
+                          className="ts-right mrg-35 fs-20 fw-500"
+                        >
                           {data.potensi_kecil}
                         </span>
                       )}
@@ -1055,16 +1099,46 @@ const Home = () => {
                 </div>
               </div>
             </div>
+            <br />
+            <br />
+            <br />
             <div>
-              <ChartStackedVertikal
-                data={testChart}
-                height={200}
-                color={color3}
-              ></ChartStackedVertikal>
+              {data && (
+                <ChartStackedHorizontal
+                  data={dataChartBelumVerif}
+                  width="472px"
+                  color={color2}
+                ></ChartStackedHorizontal>
+              )}
             </div>
           </div>
+          <br />
         </div>
       </div>
+      {isDialogOpen && (
+        <div className="dialog-overlay" onClick={handleOverlayClick}>
+          <div className="dialogUsaha">
+            <div className="container-colom2 pd-15">
+              <div className="clm-4 fs-25 fw-500">
+                > 25 juta
+                <br />
+                rupiah
+              </div>
+              <div className="clm-4 center fs-25 fw-500">
+                25 - 50 juta
+                <br />
+                rupiah
+              </div>
+              <div className="clm-4 flex-align-item-right fs-25 fw-500">
+                > 50 juta
+                <br />
+                rupiah
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      )}
     </div>
   );
 };
