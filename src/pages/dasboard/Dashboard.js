@@ -759,7 +759,10 @@ const FixDashboard = () => {
                 <div className="container-colom">
                   <div className="mlf-15">
                     {macetplanProsesPtsp && (
-                      <StackedVertikal data={macetplanProsesPtsp} marginTop="44px" />
+                      <StackedVertikal
+                        data={macetplanProsesPtsp}
+                        marginTop="44px"
+                      />
                     )}
                   </div>
                   <div className="mlf-15 card-ptsp-atas">
@@ -826,7 +829,7 @@ const FixDashboard = () => {
                       <p className="notePopup">Note</p>
                     </div>
                     <div className="noteIsi">
-                      "Proses Penerbitan" - "Sudah Selesai Rekomtek PBG"
+                      Total berkas dengan status Menunggu Pembayaran Retribusi, Menunggu Validasi Retribusi, dan Pengiriman SKRD.
                     </div>
                   </div>
                 )}
@@ -998,12 +1001,15 @@ const FixDashboard = () => {
                 <div className="container-colom">
                   <div className="mlf-15">
                     {macetplanTerbitPbg && (
-                      <StackedVertikal data={macetplanTerbitPbg} marginTop="65px" />
+                      <StackedVertikal
+                        data={macetplanTerbitPbg}
+                        marginTop="65px"
+                      />
                     )}
                   </div>
                   <div className="clm-12 ts-center">
                     <span className="inter-25 fw-500 me-3 center">
-                      Sudah selesai Rekomtek PBG:
+                      Belum Selesai Rekomtek PBG:
                     </span>
                     <div className="mtp-35">
                       {data && (
@@ -1045,8 +1051,12 @@ const FixDashboard = () => {
                       <p className="notePopup">Note</p>
                     </div>
                     <div className="noteIsi">
-                      Total berkas yang sedang menunggu pembayaran dan validasi
+                      {/* Total berkas yang sedang menunggu pembayaran dan validasi
                       retribusi
+                       */}
+                      Total berkas dengan status Menunggu Penugasan TPT/TPA,
+                      Menunggu Penjadwalan Konsultasi, Konsultasi, Perhitungan
+                      Retribusi, dan Selesai Penilaian Konsultasi.
                     </div>
                   </div>
                 )}
@@ -1066,7 +1076,10 @@ const FixDashboard = () => {
                   <div className="container-colom">
                     <div className="">
                       {macetplanProsesPenerbitan && (
-                        <StackedVertikal data={macetplanProsesPenerbitan} marginTop="65px"/>
+                        <StackedVertikal
+                          data={macetplanProsesPenerbitan}
+                          marginTop="65px"
+                        />
                       )}
                     </div>
                     <div className="mlf-10">
@@ -1117,8 +1130,7 @@ const FixDashboard = () => {
                       <p className="notePopup">Note</p>
                     </div>
                     <div className="noteIsi">
-                      "Berkas Aktual Terverifikasi Dinas Teknis" - "Berkas
-                      Terbit PBG"
+                      Terproses di DPUTR dan DPMPTSP
                     </div>
                   </div>
                 )}
@@ -1284,9 +1296,9 @@ const FixDashboard = () => {
           <div className="dialogUsaha">
             <div className="container-colom2 pd-15">
               <div className="clm-4 fs-25 fw-500">
-                &#60; 75 juta
+                > 70 Juta
                 <br />
-                rupiah
+                Rupiah
               </div>
               {/* <div className="clm-4 center fs-25 fw-500">
                 25 - 50 juta
@@ -1294,17 +1306,16 @@ const FixDashboard = () => {
                 rupiah
               </div> */}
               <div className="clm-4 flex-align-item-right fs-25 fw-500">
-                > 70 juta
+                &#60; 75 Juta
                 <br />
-                rupiah
+                Rupiah
               </div>
             </div>
             <div className="container-colom costChart">
               <div className="clm-6 costKecil center">
                 {dataUsaha && (
                   <span className="mtp-15">
-                    Rp {dataUsaha.usahaDibawah} <br /> .
-                    {dataUsaha.usahaDibawah1}
+                    Rp {dataUsaha.usahaDiatas} <br /> .{dataUsaha.usahaDiatas1}
                   </span>
                 )}
               </div>
@@ -1318,7 +1329,8 @@ const FixDashboard = () => {
               <div className="clm-6 costBesar center">
                 {dataUsaha && (
                   <span className="mtp-15">
-                    Rp {dataUsaha.usahaDiatas} <br /> .{dataUsaha.usahaDiatas1}
+                    Rp {dataUsaha.usahaDibawah} <br /> .
+                    {dataUsaha.usahaDibawah1}
                   </span>
                 )}
               </div>
@@ -1344,9 +1356,9 @@ const FixDashboard = () => {
           <div className="dialogUsaha">
             <div className="container-colom2 pd-15">
               <div className="clm-4 fs-25 fw-500">
-                &#60; 25 juta
+                > Rp. 25 Juta
                 <br />
-                rupiah
+                Rupiah
               </div>
               {/* <div className="clm-4 center fs-25 fw-500">
                 25 - 50 juta
@@ -1354,15 +1366,17 @@ const FixDashboard = () => {
                 rupiah
               </div> */}
               <div className="clm-4 flex-align-item-right fs-25 fw-500">
-                > 25 juta && 50 Juta Rupiah
+                &#60; Rp. 25 Juta
+                <br />
+                Rupiah
               </div>
             </div>
             <div className="container-colom costChart">
               <div className="clm-6 costKecil center">
                 {dataUsaha && (
                   <span className="mtp-15">
-                    Rp {dataUsaha.nonUsahaDibawah} <br /> .
-                    {dataUsaha.nonUsahaDibawah1}
+                    Rp {dataUsaha.nonUsahaDiatas} <br /> .
+                    {dataUsaha.nonUsahaDiatas1}
                   </span>
                 )}
               </div>
@@ -1376,8 +1390,8 @@ const FixDashboard = () => {
               <div className="clm-6 costBesar center">
                 {dataUsaha && (
                   <span className="mtp-15">
-                    Rp {dataUsaha.nonUsahaDiatas} <br /> .
-                    {dataUsaha.nonUsahaDiatas1}
+                    Rp {dataUsaha.nonUsahaDibawah} <br /> .
+                    {dataUsaha.nonUsahaDibawah1}
                   </span>
                 )}
               </div>
