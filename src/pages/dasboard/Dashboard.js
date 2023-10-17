@@ -408,33 +408,33 @@ const FixDashboard = () => {
         let dataMacetPlan = res.data;
         setMacetplanBelumVerif([
           dataMacetPlan.berkas_aktual_belum_terverifikasi_ov14,
-          dataMacetPlan.berkas_aktual_belum_terverifikasi_7to14,
-          dataMacetPlan.berkas_aktual_belum_terverifikasi_und7,
+          // dataMacetPlan.berkas_aktual_belum_terverifikasi_7to14,
+          // dataMacetPlan.berkas_aktual_belum_terverifikasi_und7,
         ]);
         setMacetplanAktualVerif([
           dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_ov14,
-          dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_7to14,
-          dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_und7,
+          // dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_7to14,
+          // dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_und7,
         ]);
         setMacetpTerbitPbg([
           dataMacetPlan.berkas_terbit_pbg_ov14,
-          dataMacetPlan.berkas_terbit_pbg_7to14,
-          dataMacetPlan.berkas_terbit_pbg_und7,
+          // dataMacetPlan.berkas_terbit_pbg_7to14,
+          // dataMacetPlan.berkas_terbit_pbg_und7,
         ]);
         setMacetpPotensiBesar([
           dataMacetPlan.potensi_besar_ov14,
-          dataMacetPlan.potensi_besar_7to14,
-          dataMacetPlan.potensi_besar_und7,
+          // dataMacetPlan.potensi_besar_7to14,
+          // dataMacetPlan.potensi_besar_und7,
         ]);
         setMacetpPotensiKecil([
           dataMacetPlan.potensi_kecil_ov14,
-          dataMacetPlan.potensi_kecil_7to14,
-          dataMacetPlan.potensi_kecil_und7,
+          // dataMacetPlan.potensi_kecil_7to14,
+          // dataMacetPlan.potensi_kecil_und7,
         ]);
         setMacetpProsesPenerbitan([
           dataMacetPlan.proses_penerbitan_ov14,
-          dataMacetPlan.proses_penerbitan_7to14,
-          dataMacetPlan.proses_penerbitan_und7,
+          // dataMacetPlan.proses_penerbitan_7to14,
+          // dataMacetPlan.proses_penerbitan_und7,
         ]);
         setMcetpProsesDputr([
           dataMacetPlan.terproses_di_dputr_ov14,
@@ -443,8 +443,8 @@ const FixDashboard = () => {
         ]);
         setMcetpProsesPtsp([
           dataMacetPlan.terproses_di_ptsp_ov14,
-          dataMacetPlan.terproses_di_ptsp_7to14,
-          dataMacetPlan.terproses_di_ptsp_und7,
+          // dataMacetPlan.terproses_di_ptsp_7to14,
+          // dataMacetPlan.terproses_di_ptsp_und7,
         ]);
       });
   };
@@ -760,10 +760,10 @@ const FixDashboard = () => {
               >
                 <div className="container-colom">
                   <div className="mlf-15">
-                    {coba && (
+                    {macetplanProsesPtsp && (
                       <MeteranMacetplan
-                        data={coba}
-                        marginTop="44px"
+                        data={macetplanProsesPtsp}
+                        marginTop="100px"
                       />
                     )}
                   </div>
@@ -850,7 +850,7 @@ const FixDashboard = () => {
                   <div className="container-colom">
                     <div className="mlf-15">
                       {macetplanAktualVerif && (
-                        <StackedVertikal data={macetplanAktualVerif} />
+                        <MeteranMacetplan data={macetplanAktualVerif} marginTop="58px" />
                       )}
                     </div>
                     <div>
@@ -967,7 +967,7 @@ const FixDashboard = () => {
                     </div>
                     <div className="mrg-15">
                       {macetplanBelumVerif && (
-                        <StackedVertikal data={macetplanBelumVerif} />
+                        <MeteranMacetplan data={macetplanBelumVerif} marginTop="58px"/>
                       )}
                     </div>
                   </div>
@@ -1003,9 +1003,9 @@ const FixDashboard = () => {
                 <div className="container-colom">
                   <div className="mlf-15">
                     {macetplanTerbitPbg && (
-                      <StackedVertikal
+                      <MeteranMacetplan
                         data={macetplanTerbitPbg}
-                        marginTop="65px"
+                        marginTop="150px"
                       />
                     )}
                   </div>
@@ -1078,9 +1078,9 @@ const FixDashboard = () => {
                   <div className="container-colom">
                     <div className="">
                       {macetplanProsesPenerbitan && (
-                        <StackedVertikal
+                        <MeteranMacetplan
                           data={macetplanProsesPenerbitan}
-                          marginTop="65px"
+                          marginTop="150px"
                         />
                       )}
                     </div>
@@ -1149,7 +1149,7 @@ const FixDashboard = () => {
                   <div className="container-colom">
                     <div className="mlf-10">
                       {macetplanPotensiKecil && (
-                        <StackedVertikal data={macetplanPotensiKecil} />
+                        <MeteranMacetplan data={macetplanPotensiKecil} marginTop="58px" />
                       )}
                     </div>
                     <div>
@@ -1282,7 +1282,7 @@ const FixDashboard = () => {
                     </div>
                     <div className="mrg-10">
                       {macetplanPotensiBesar && (
-                        <StackedVertikal data={macetplanPotensiBesar} />
+                        <MeteranMacetplan data={macetplanPotensiBesar} marginTop="58px" />
                       )}
                     </div>
                   </div>

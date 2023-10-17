@@ -1483,6 +1483,30 @@
   transform: translate(-50%, -50%) rotate(-90deg);
 }
 
+.macet-plan{
+  background-color: #D2222D;
+  height: 180px;
+  color: white;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-items: center;
+  position: relative;
+}
+
+.macet-plan span {
+  transform: rotate(90deg); 
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+
 @keyframes rotate-outer {
   50% {
     transform: rotate(200deg);

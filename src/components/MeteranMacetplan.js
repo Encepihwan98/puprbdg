@@ -7,8 +7,8 @@ const MeteranMacetplan = ({ data, marginTop }) => {
   const [meteranMacetPlan] = data;
 
   const stackedStyle = {
-    height: "330px",
-    width: "38px",
+    height: "180px",
+    width: "28px",
     margin: `${marginTop} 0 0 0`,
   };
 
