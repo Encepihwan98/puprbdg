@@ -12,6 +12,7 @@ import ChartStacked from "../../components/ChartStacked";
 //import ChartStackedVertikal from "../../components/ChartStackedVertikal";
 //import ChartStackedHorizontal from "../../components/ChartStackedHorizontal";
 import StackedVertikal from "../../components/StackedVertikal";
+import MeteranMacetplan from "../../components/MeteranMacetplan";
 // import { async } from "q";
 
 const FixDashboard = () => {
@@ -52,7 +53,7 @@ const FixDashboard = () => {
 
   const color = ["#00917c", "#c62c11"];
   const color2 = ["#7E0B02", "#c62c11"];
-
+  const coba = [3400000];
   const menuLinks = document.querySelectorAll(".date-today ul li a");
 
   menuLinks.forEach((link) => {
@@ -758,9 +759,9 @@ const FixDashboard = () => {
               >
                 <div className="container-colom">
                   <div className="mlf-15">
-                    {macetplanProsesPtsp && (
-                      <StackedVertikal
-                        data={macetplanProsesPtsp}
+                    {coba && (
+                      <MeteranMacetplan
+                        data={coba}
                         marginTop="44px"
                       />
                     )}
