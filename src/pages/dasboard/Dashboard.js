@@ -438,8 +438,8 @@ const FixDashboard = () => {
         ]);
         setMcetpProsesDputr([
           dataMacetPlan.terproses_di_dputr_ov14,
-          dataMacetPlan.terproses_di_dputr_7to14,
-          dataMacetPlan.terproses_di_dputr_und7,
+          // dataMacetPlan.terproses_di_dputr_7to14,
+          // dataMacetPlan.terproses_di_dputr_und7,
         ]);
         setMcetpProsesPtsp([
           dataMacetPlan.terproses_di_ptsp_ov14,
@@ -1002,9 +1002,9 @@ const FixDashboard = () => {
               >
                 <div className="container-colom">
                   <div className="mlf-15">
-                    {macetplanTerbitPbg && (
+                    {macetplanProsesDputr && (
                       <MeteranMacetplan
-                        data={macetplanTerbitPbg}
+                        data={macetplanProsesDputr}
                         marginTop="150px"
                       />
                     )}
