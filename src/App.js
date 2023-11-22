@@ -9,6 +9,7 @@ import Tabel  from "./pages/tabel/Tabel";
 import Office from "./pages/office/Office";
 import Tabel2 from "./pages/accordion/Table";
 import Home2 from "./pages/accordion/Home";
+import Dash from "./pages/accordion/Dash";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +27,7 @@ function App() {
           <Route path="/tabel/:angka" element={<Tabel/>}></Route>
           <Route path="/tabel2/:angka" element={<Tabel2/>}></Route>
           <Route path="/home" element={<Home2/>}></Route>
+          <Route path="/Dash/:angka" element={<Dash/>}></Route>
         </Routes>
       </Router>
     </div>

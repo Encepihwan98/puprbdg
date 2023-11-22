@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import Select from "react-select";
+import queryString from "query-string";
 import {
   faList,
   faTimes,
@@ -14,13 +15,42 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
 const options = [
-  { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
+  {
+    value: "Verifikasi Kelengkapan Operator",
+    label: "Verifikasi Kelengkapan Operator",
+  },
+  {
+    value: "Dikembalikan Untuk Revisi Dokumen",
+    label: "Dikembalikan Untuk Revisi Dokumen",
+  },
   { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
-  { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
+  { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+  { value: "Menunggu Penugasan TPT/TPA", label: "Menunggu Penugasan TPT/TPA" },
+  {
+    value: "Menunggu Penjadwalan Konsultasi",
+    label: "Menunggu Penjadwalan Konsultasi",
+  },
+  { value: "Konsultasi", label: "Konsultasi" },
+  { value: "Perhitungan Retribusi", label: "Perhitungan Retribusi" },
+  {
+    value: "Selesai Penilaian Konsultasi",
+    label: "Selesai Penilaian Konsultasi",
+  },
+  { value: "Pengiriman SKRD", label: "Pengiriman SKRD" },
+  {
+    value: "Menunggu Pembayaran Retribusi",
+    label: "Menunggu Pembayaran Retribusi",
+  },
+  {
+    value: "Menunggu Validasi Retribusi",
+    label: "Menunggu Validasi Retribusi",
+  },
+  { value: "Menunggu Pengambilan Izin", label: "Menunggu Pengambilan Izin" },
+  { value: "Penugasan Inspeksi", label: "Penugasan Inspeksi" },
 ];
 const Table2 = () => {
   const { angka } = useParams();
-  console.log(angka);
+  // console.log(angka);
   //kiri -> getter, kanan -> setter
   const [loading, setLoading] = useState(true);
   const date = new Date().getDate();
@@ -29,6 +59,7 @@ const Table2 = () => {
 
   const itemsPerPage = 10; // Jumlah data per halaman
   const [data, setData] = useState([]);
+  const [totalPage, setTotalPage] = useState([]);
   const [dataDeviasi, setDataDeviasi] = useState([]);
   const [dataInformasi, setDataInformasi] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -55,7 +86,8 @@ const Table2 = () => {
 
   // let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
   // let url = "http://localhost:5000/api/rekap-pbg/";
-  let url = "https://sibedaspbg.bandungkab.go.id/api/rekap-pbg/";
+  // let param = "";
+  // let url = `http://127.0.0.1:5000/api/rekap-pbg/?page=${currentPage}`;
 
   // tahun
   const tahunSekarang = new Date().getFullYear();
@@ -95,19 +127,38 @@ const Table2 = () => {
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
       setSelectedPotensi("Kecil");
+    }else if (angka === "test") {
+      setSelectedYear(thisYear);
+      setSelectedStatus([
+        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+      ]);
+      setSelectedPotensi("Kecil");
     }
-    fetchData();
-    fetchDataDeviasi();
-  }, []);
 
-  const fetchData = () => {
+    // fetchData();
+  }, [angka]);
+
+  useEffect(() => {
+    handleTest();
+    fetchDataDeviasi();
+  }, [selectedStatus]);
+
+  let url = `http://127.0.0.1:5000/api/rekap-pbg/`;
+
+  const fetchData = (url) => {
     axios
       .get(url)
       .then((response) => {
         // console.log(response);
-        const newData = response.data;
-        // console.log(newData[0]['KRK/KKPR']);
+        const newData = response.data.data;
+        const totalPageAll = response.data.total_page;
+        const page = response.data.current_page;
+        console.log("ini test tahun ke : ", selectedYear);
+        // console.log("ini page", response.data.current_page);
+        // console.log(newData);
         setData(newData.reverse());
+        setTotalPage(totalPageAll);
+        setCurrentPage(page);
       })
       .catch((error) => {
         console.log(error);
@@ -163,47 +214,6 @@ const Table2 = () => {
     });
   });
 
-  const filteredData = data.filter((row) => {
-    const potensiValueString = row["Nilai Retribusi Keseluruhan"] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
-    const potensiValue = parseInt(
-      potensiValueString
-        .replace("Rp", "")
-        .replace(".", "")
-        .replace(".", "")
-        .replace(".", "")
-    );
-
-    const meetsSearchTerm = Object.values(row).some(
-      (cell) =>
-        typeof cell === "string" &&
-        cell.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    //   row["Status Permohonan"]?.toLowerCase() === selectedStatus.toLowerCase();
-    const meetsStatusCriteria =
-      selectedStatus.length === 0 || // Jika tidak ada status yang dipilih, maka tidak ada filter status
-      selectedStatus.some(
-        (status) =>
-          status.value.toLowerCase() === row["Status Permohonan"]?.toLowerCase()
-      );
-
-    const meetsYearCriteria =
-      selectedYear === "" ||
-      row["Tahun"]?.toLowerCase() === selectedYear.toLowerCase();
-
-    const meetsPotensiCriteria =
-      selectedPotensi === "" ||
-      (selectedPotensi === "Besar" && potensiValue > 50000000) || // Lebih dari 50 juta
-      (selectedPotensi === "Kecil" && potensiValue <= 50000000); // Kurang dari atau sama dengan 50 juta
-    return (
-      meetsSearchTerm &&
-      meetsStatusCriteria &&
-      meetsPotensiCriteria &&
-      meetsYearCriteria
-    );
-  });
-  // const
-
   const handleMouseEnter = (event) => {
     const rect = event.target.getBoundingClientRect();
     setPopupPosition({ top: rect.bottom, left: rect.left });
@@ -214,10 +224,27 @@ const Table2 = () => {
     setShowPopup(false);
   };
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const handleTest = () => {
+    console.log("ini page tahun ke : ", selectedYear);
+    var valuesStatus = selectedStatus.map((item) => item.value);
+    const resultString = valuesStatus.join(", ");
+    const queryParams = {
+      page: currentPage,
+      tahun: selectedYear,
+      potensi: selectedPotensi,
+      status: resultString,
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
+  };
+
+  // const totalPages = Math.ceil(data.length / itemsPerPage);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = data;
   // console.log(currentData);
 
   //tahun select
@@ -234,21 +261,58 @@ const Table2 = () => {
   const handleStatusChange = (event) => {
     console.log(event);
     setSelectedStatus(event);
+    const values = event.map((item) => item.value);
+    const resultString = values.join(", ");
+
+    console.log(resultString);
+
+    const queryParams = {
+      page: currentPage,
+      tahun: selectedYear,
+      potensi: selectedPotensi,
+      status: resultString,
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
   };
+
   const handlePotensiChange = (event) => {
-    setSelectedPotensi(event.target.value);
+    let newPotensi = event.target.value;
+    setSelectedPotensi(newPotensi);
+
+    const queryParams = {
+      page: currentPage,
+      tahun: selectedYear,
+      potensi: newPotensi,
+      status: "",
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
   };
-  const handleYearChange = (event) => {
-    setSelectedYear(event.target.value);
+  const handleYearChange = (newYear) => {
+    setSelectedYear(newYear);
+    const queryParams = {
+      page: currentPage,
+      tahun: newYear,
+      potensi: selectedPotensi,
+      status: "",
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
   };
 
   const openDialog = (rowData) => {
     setIsDialogOpen(true);
     setSelectRowData(rowData);
-  };
-
-  const handleOptionsCoba = (event) => {
-    setSelectedOption(event);
   };
 
   const openDialogInformasi = (nomor) => {
@@ -269,6 +333,22 @@ const Table2 = () => {
       closeDialog();
       closeDialogInformasi();
     }
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+
+    const queryParams = {
+      page: newPage,
+      tahun: selectedYear,
+      potensi: selectedPotensi,
+      status: "",
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
   };
 
   return (
@@ -338,7 +418,7 @@ const Table2 = () => {
               <select
                 className="mlf-10 selectOptionst"
                 value={selectedYear}
-                onChange={handleYearChange}
+                onChange={(e) => handleYearChange(e.target.value)}
               >
                 <option value={""}>Tahun</option>
                 {tahunOptions.map((tahun, index) => (
@@ -516,7 +596,7 @@ const Table2 = () => {
                           <td>{row["Tanggal"]}</td>
                           <td>{row["Penerimaan PAD"]}</td>
                           <td>{row["SKRD"]}</td> {/* skrd */}
-                          <td>{row["Usulan Retribusi"]}</td>
+                          <td>{row["Capitals"]}</td>
                           <td>{row["Nilai Retribusi Keseluruhan"]}</td>
                           <td>{row["Nama Bangunan"]}</td>
                           <td>{row["Alamat Pemilik"]}</td>
@@ -543,24 +623,24 @@ const Table2 = () => {
                 </table>
                 <div className="pagination">
                   <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
+                    onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
                     Prev
                   </button>
 
                   {Array.from(
-                    { length: totalPages > 5 ? 5 : totalPages },
+                    { length: totalPage > 5 ? 5 : totalPage },
                     (_, index) => {
                       const pageNumber = currentPage - 2 + index;
-                      if (pageNumber > 0 && pageNumber <= totalPages) {
+                      if (pageNumber > 0 && pageNumber <= totalPage) {
                         return (
                           <button
                             key={index}
                             className={
                               currentPage === pageNumber ? "active" : ""
                             }
-                            onClick={() => setCurrentPage(pageNumber)}
+                            onClick={() => handlePageChange(pageNumber)}
                           >
                             {pageNumber}
                           </button>
@@ -570,8 +650,8 @@ const Table2 = () => {
                     }
                   )}
                   <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPage}
                   >
                     Next
                   </button>

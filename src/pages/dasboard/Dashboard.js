@@ -606,7 +606,14 @@ const FixDashboard = () => {
                 <p className="pgb-text">Jumlah Permohonan</p>
               </BoxCard>
               <BoxCard className="box-card bg-green">
-                <p className="pgb-value">1558</p>
+                {data && (
+                  <p className="pgb-value">
+                    {data.total_berkas -
+                      data.terproses_di_ptsp -
+                      data.total_berkas_now -
+                      data.berkas_terbit_last}
+                  </p>
+                )}
                 <p className="pgb-text">Dinas Teknis</p>
               </BoxCard>
               <BoxCard className="box-card bg-red">
@@ -831,7 +838,8 @@ const FixDashboard = () => {
                       <p className="notePopup">Note</p>
                     </div>
                     <div className="noteIsi">
-                      Total berkas dengan status Menunggu Pembayaran Retribusi, Menunggu Validasi Retribusi, dan Pengiriman SKRD.
+                      Total berkas dengan status Menunggu Pembayaran Retribusi,
+                      Menunggu Validasi Retribusi, dan Pengiriman SKRD.
                     </div>
                   </div>
                 )}
@@ -850,7 +858,10 @@ const FixDashboard = () => {
                   <div className="container-colom">
                     <div className="mlf-15">
                       {macetplanAktualVerif && (
-                        <MeteranMacetplan data={macetplanAktualVerif} marginTop="58px" />
+                        <MeteranMacetplan
+                          data={macetplanAktualVerif}
+                          marginTop="58px"
+                        />
                       )}
                     </div>
                     <div>
@@ -911,10 +922,10 @@ const FixDashboard = () => {
                           <br></br>
                           {data && (
                             <div className="text-blm-actual-verif">
-                              {/* {Math.round(
-                            data.berkas_aktual_belum_terverifikasi_perc
-                          )}{" "}
-                          % */}
+                              {Math.round(
+                                data.berkas_aktual_belum_terverifikasi_perc
+                              )}{" "}
+                              %
                             </div>
                           )}
                           {showPopupBelumverifikasi && (
@@ -967,7 +978,10 @@ const FixDashboard = () => {
                     </div>
                     <div className="mrg-15">
                       {macetplanBelumVerif && (
-                        <MeteranMacetplan data={macetplanBelumVerif} marginTop="58px"/>
+                        <MeteranMacetplan
+                          data={macetplanBelumVerif}
+                          marginTop="58px"
+                        />
                       )}
                     </div>
                   </div>
@@ -1149,7 +1163,10 @@ const FixDashboard = () => {
                   <div className="container-colom">
                     <div className="mlf-10">
                       {macetplanPotensiKecil && (
-                        <MeteranMacetplan data={macetplanPotensiKecil} marginTop="58px" />
+                        <MeteranMacetplan
+                          data={macetplanPotensiKecil}
+                          marginTop="58px"
+                        />
                       )}
                     </div>
                     <div>
@@ -1162,14 +1179,14 @@ const FixDashboard = () => {
                         >
                           <span className="inter-25 fw-500">Non Usaha:</span>
                           <br />
-                          <div className="container-colom">
-                            {data && (
+                          <div className="container-colom ">
+                            {/* {data && (
                               <span className="fs-50 fc-red-heart fw-500 mtp-15">
                                 {Math.round(data.potensi_kecil_perc)}%
                               </span>
-                            )}
+                            )} */}
                             <div
-                              className="iconStyle mtp-15 mlf-20"
+                              className="iconStyle ts-right mtp-15 mlf-120"
                               onClick={openDialogNonUsaha}
                               style={{ cursor: "pointer" }}
                             >
@@ -1216,7 +1233,7 @@ const FixDashboard = () => {
                                 icon={faChevronDown}
                               />
                             </div>
-                            {data && (
+                            {/* {data && (
                               <span
                                 // onClick={() => redirectToTabel("usaha")}
                                 // style={{ cursor: "pointer" }}
@@ -1224,7 +1241,7 @@ const FixDashboard = () => {
                               >
                                 {Math.round(data.potensi_besar_perc)}%
                               </span>
-                            )}
+                            )} */}
                           </div>
                           {showPopupPotensiBesar && (
                             <div
@@ -1282,7 +1299,10 @@ const FixDashboard = () => {
                     </div>
                     <div className="mrg-10">
                       {macetplanPotensiBesar && (
-                        <MeteranMacetplan data={macetplanPotensiBesar} marginTop="58px" />
+                        <MeteranMacetplan
+                          data={macetplanPotensiBesar}
+                          marginTop="58px"
+                        />
                       )}
                     </div>
                   </div>

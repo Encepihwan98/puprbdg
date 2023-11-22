@@ -552,7 +552,7 @@ const Table2 = () => {
                           <td>{row["Tanggal"]}</td>
                           <td>{row["Penerimaan PAD"]}</td>
                           <td>{row["SKRD"]}</td> {/* skrd */}
-                          <td>{row["Usulan Retribusi"]}</td>
+                          <td>{row["Capitals"]}</td>
                           <td>{row["Nilai Retribusi Keseluruhan"]}</td>
                           <td>{row["Nama Bangunan"]}</td>
                           <td>{row["Alamat Pemilik"]}</td>
