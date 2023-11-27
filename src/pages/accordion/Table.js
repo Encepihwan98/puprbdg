@@ -136,7 +136,7 @@ const Table2 = () => {
     }
 
     // fetchData();
-  }, [angka]);
+  }, [selectedYear]);
 
   useEffect(() => {
     handleTest();

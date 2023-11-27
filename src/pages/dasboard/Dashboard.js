@@ -433,7 +433,7 @@ const FixDashboard = () => {
         ]);
         setMacetpProsesPenerbitan([
           dataMacetPlan.proses_penerbitan_ov14,
-          // dataMacetPlan.proses_penerbitan_7to14,
+          // dataMacetPlan.proses_penerbitan_7to14o,
           // dataMacetPlan.proses_penerbitan_und7,
         ]);
         setMcetpProsesDputr([
@@ -610,7 +610,7 @@ const FixDashboard = () => {
                   <p className="pgb-value">
                     {data.total_berkas -
                       data.terproses_di_ptsp -
-                      data.total_berkas_now -
+                      data.berkas_terbit_pbg -
                       data.berkas_terbit_last}
                   </p>
                 )}
