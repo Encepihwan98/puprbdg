@@ -432,8 +432,9 @@ const FixDashboard = () => {
           // dataMacetPlan.potensi_kecil_und7,
         ]);
         setMacetpProsesPenerbitan([
-          dataMacetPlan.proses_penerbitan_ov14,
-          // dataMacetPlan.proses_penerbitan_7to14o,
+          // dataMacetPlan.proses_penerbitan_ov14,
+          50
+          // dataMacetPlan.proses_penerbitan_7to14o.,
           // dataMacetPlan.proses_penerbitan_und7,
         ]);
         setMcetpProsesDputr([
