@@ -432,8 +432,8 @@ const FixDashboard = () => {
           // dataMacetPlan.potensi_kecil_und7,
         ]);
         setMacetpProsesPenerbitan([
-          // dataMacetPlan.proses_penerbitan_ov14,
-          50
+          dataMacetPlan.proses_penerbitan_ov14,
+          // 50
           // dataMacetPlan.proses_penerbitan_7to14o.,
           // dataMacetPlan.proses_penerbitan_und7,
         ]);
@@ -1319,7 +1319,7 @@ const FixDashboard = () => {
           <div className="dialogUsaha">
             <div className="container-colom2 pd-15">
               <div className="clm-4 fs-25 fw-500">
-                > 70 Juta
+                &#62; 70 Juta
                 <br />
                 Rupiah
               </div>
@@ -1379,7 +1379,7 @@ const FixDashboard = () => {
           <div className="dialogUsaha">
             <div className="container-colom2 pd-15">
               <div className="clm-4 fs-25 fw-500">
-                > Rp. 25 Juta
+                &#62; Rp. 25 Juta
                 <br />
                 Rupiah
               </div>
