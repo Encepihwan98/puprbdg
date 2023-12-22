@@ -210,7 +210,7 @@ const Table2 = () => {
 
   const links = document.querySelectorAll(".date-today ul li a");
 
-  // Loop melalui tautan dan tambahkan event listener
+  // Loop melalui tautan dan tambahkan event listener backup
   links.forEach((link) => {
     link.addEventListener("click", () => {
       // Hapus kelas "active" dari semua tautan sebelumnya
