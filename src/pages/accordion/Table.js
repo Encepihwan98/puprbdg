@@ -127,7 +127,7 @@ const Table2 = () => {
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
       setSelectedPotensi("Kecil");
-    }else if (angka === "test") {
+    } else if (angka === "test") {
       setSelectedYear(thisYear);
       setSelectedStatus([
         { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
@@ -146,6 +146,7 @@ const Table2 = () => {
   let url = `http://127.0.0.1:5000/api/rekap-pbg/`;
 
   const fetchData = (url) => {
+    setLoading(true);
     axios
       .get(url)
       .then((response) => {
@@ -162,6 +163,11 @@ const Table2 = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       });
   };
 
@@ -198,7 +204,7 @@ const Table2 = () => {
       .finally(() => {
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 500);
       });
   };
 
@@ -232,7 +238,7 @@ const Table2 = () => {
       page: currentPage,
       tahun: selectedYear,
       potensi: selectedPotensi,
-      status: resultString,
+      status: selectedStatus.map((status) => status.value).join(','),
     };
 
     const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
@@ -263,14 +269,13 @@ const Table2 = () => {
     setSelectedStatus(event);
     const values = event.map((item) => item.value);
     const resultString = values.join(", ");
-
     console.log(resultString);
 
     const queryParams = {
       page: currentPage,
       tahun: selectedYear,
       potensi: selectedPotensi,
-      status: resultString,
+      status: selectedStatus.map((status) => status.value).join(','),
     };
 
     const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
@@ -287,7 +292,7 @@ const Table2 = () => {
       page: currentPage,
       tahun: selectedYear,
       potensi: newPotensi,
-      status: "",
+      status: selectedStatus.map((status) => status.value).join(','),
     };
 
     const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
@@ -301,7 +306,7 @@ const Table2 = () => {
       page: currentPage,
       tahun: newYear,
       potensi: selectedPotensi,
-      status: "",
+      status: selectedStatus.map((status) => status.value).join(','),
     };
 
     const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
@@ -337,12 +342,12 @@ const Table2 = () => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-
+    
     const queryParams = {
       page: newPage,
       tahun: selectedYear,
       potensi: selectedPotensi,
-      status: "",
+      status: selectedStatus.map((status) => status.value).join(','),
     };
 
     const url = `http://127.0.0.1:5000/api/rekap-pbg/?${queryString.stringify(
@@ -543,7 +548,15 @@ const Table2 = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {currentData.length > 0 ? (
+                    {loading ? (
+                      <tr>
+                        <td colSpan="32" style={{ textAlign: "center" }}>
+                          <div style={{ marginLeft: "600px", marginTop : "100px", marginBottom : "100px" }}>
+                            <Loading />
+                          </div>
+                        </td>
+                      </tr>
+                    ) : currentData.length > 0 ? (
                       currentData.map((row, index) => (
                         <tr
                           key={index}
@@ -584,7 +597,7 @@ const Table2 = () => {
                           <td>{row["Nama Pemilik"]}</td>
                           <td>{row["Lokasi BG"]}</td>
                           <td>{row["Tgl Permohonan"]}</td>
-                          <td>{row["Status Permohonan"]}</td>
+                          <td>{row["Status"]}</td>
                           <td>{row["BA TPA/TPT"]}</td>
                           <td>{row["GAMBAR"]}</td>
                           <td>{row["KRK/KKPR"]}</td>
@@ -712,9 +725,9 @@ const Table2 = () => {
                   <tbody className="">
                     {loading ? (
                       <tr>
-                        <Loading
-                          style={{ marginLeft: "600px", marginTop: "100px" }}
-                        />
+                        <div style={{ marginLeft: "500px", marginTop : "100px" }}>
+                          <Loading />
+                        </div>
                       </tr>
                     ) : (
                       dataInformasi.map((item, index) => (
