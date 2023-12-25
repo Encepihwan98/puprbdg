@@ -158,7 +158,7 @@ const Table2 = () => {
         status: "",
       };
   
-      const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+      const url = `https://sibedaspbg.bandungkab.go.id/api/rekap-pbg2/?${queryString.stringify(
         queryParams
       )}`;
       fetchData(url);
@@ -285,7 +285,7 @@ const Table2 = () => {
       status: selectedStatus.map((status) => status.value).join(","),
     };
 
-    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+    const url = `https://sibedaspbg.bandungkab.go.id/api/rekap-pbg2/?${queryString.stringify(
       queryParams
     )}`;
     fetchData(url);
@@ -321,7 +321,7 @@ const Table2 = () => {
       status: selectedStatus.map((status) => status.value).join(","),
     };
 
-    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+    const url = `https://sibedaspbg.bandungkab.go.id/api/rekap-pbg2/?${queryString.stringify(
       queryParams
     )}`;
     fetchData(url);
@@ -339,7 +339,7 @@ const Table2 = () => {
       status: selectedStatus.map((status) => status.value).join(","),
     };
 
-    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+    const url = `https://sibedaspbg.bandungkab.go.id/api/rekap-pbg2/?${queryString.stringify(
       queryParams
     )}`;
     fetchData(url);
@@ -358,7 +358,7 @@ const Table2 = () => {
       status: selectedStatus.map((status) => status.value).join(","),
     };
 
-    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+    const url = `https://sibedaspbg.bandungkab.go.id/api/rekap-pbg2/?${queryString.stringify(
       queryParams
     )}`;
     fetchData(url);
@@ -375,7 +375,7 @@ const Table2 = () => {
       status: selectedStatus.map((status) => status.value).join(","),
     };
 
-    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+    const url = `https://sibedaspbg.bandungkab.go.id/api/rekap-pbg2/?${queryString.stringify(
       queryParams
     )}`;
     fetchData(url);
@@ -418,7 +418,7 @@ const Table2 = () => {
       status: selectedStatus.map((status) => status.value).join(","),
     };
 
-    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+    const url = `https://sibedaspbg.bandungkab.go.id/api/rekap-pbg2/?${queryString.stringify(
       queryParams
     )}`;
     fetchData(url);
