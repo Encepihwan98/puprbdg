@@ -767,7 +767,11 @@ const FixDashboard = () => {
                 // style={{ cursor: "pointer" }}
               >
                 <div className="container-colom">
-                  <div className="mlf-15">
+                  <div
+                    onClick={() => redirectToTabel("terproses_di_ptsp")}
+                    style={{ cursor: "pointer" }}
+                    className="mlf-15"
+                  >
                     {macetplanProsesPtsp && (
                       <MeteranMacetplan
                         data={macetplanProsesPtsp}
@@ -784,7 +788,7 @@ const FixDashboard = () => {
                     <br />
                     <div>
                       <div
-                        onClick={() => redirectToTabel("dpmtsp")}
+                        onClick={() => redirectToTabel("terproses_di_ptsp14")}
                         style={{ cursor: "pointer" }}
                         className="luar-box bg-red mt-3"
                       >
@@ -857,7 +861,15 @@ const FixDashboard = () => {
                     </div>
                   </div>
                   <div className="container-colom">
-                    <div className="mlf-15">
+                    <div
+                      onClick={() =>
+                        redirectToTabel(
+                          "berkas_aktual_terverifikasi_dinas_teknis14"
+                        )
+                      }
+                      style={{ cursor: "pointer" }}
+                      className="mlf-15"
+                    >
                       {macetplanAktualVerif && (
                         <MeteranMacetplan
                           data={macetplanAktualVerif}
@@ -959,14 +971,28 @@ const FixDashboard = () => {
                         )}
                       </div>
                       <div className="container-colom mtp-10">
-                        <div className="clm-6 mlf-35">
+                        <div
+                          onClick={() =>
+                            redirectToTabel(
+                              "berkas_aktual_terverifikasi_dinas_teknis"
+                            )
+                          }
+                          style={{ cursor: "pointer" }}
+                          className="clm-6 mlf-35"
+                        >
                           {data && (
                             <span className="inter-20 ts-left fw-500">
                               {data.berkas_aktual_terverifikasi_dinas_teknis}
                             </span>
                           )}
                         </div>
-                        <div className="clm-6 ">
+                        <div
+                          onClick={() =>
+                            redirectToTabel("berkas_aktual_belum_terverifikasi")
+                          }
+                          style={{ cursor: "pointer" }}
+                          className="clm-6 "
+                        >
                           {data && (
                             <div className="ts-right mrg-35">
                               <span className=" ts-right mrg-35 fs-20 fw-500">
@@ -977,7 +1003,13 @@ const FixDashboard = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="mrg-15">
+                    <div
+                      onClick={() =>
+                        redirectToTabel("berkas_aktual_belum_terverifikasi14")
+                      }
+                      style={{ cursor: "pointer" }}
+                      className="mrg-15"
+                    >
                       {macetplanBelumVerif && (
                         <MeteranMacetplan
                           data={macetplanBelumVerif}
@@ -1016,7 +1048,11 @@ const FixDashboard = () => {
                 // style={{ cursor: "pointer" }}
               >
                 <div className="container-colom">
-                  <div className="mlf-15">
+                  <div
+                    onClick={() => redirectToTabel("terproses_di_dputr")}
+                    style={{ cursor: "pointer" }}
+                    className="mlf-15"
+                  >
                     {macetplanProsesDputr && (
                       <MeteranMacetplan
                         data={macetplanProsesDputr}
@@ -1048,7 +1084,13 @@ const FixDashboard = () => {
                     )}
                     <div className="mtp-10">
                       {data && (
-                        <div className="ts-right mrg-35 inter-25 fw-500">
+                        <div
+                          onClick={() =>
+                            redirectToTabel("terproses_di_dputr14")
+                          }
+                          style={{ cursor: "pointer" }}
+                          className="ts-right mrg-35 inter-25 fw-500"
+                        >
                           {data.terproses_di_dputr}
                         </div>
                       )}
@@ -1091,7 +1133,11 @@ const FixDashboard = () => {
                     <div className="triangle triangle-left"></div>
                   </div>
                   <div className="container-colom">
-                    <div className="">
+                    <div
+                      onClick={() => redirectToTabel("proses_penerbitan")}
+                      style={{ cursor: "pointer" }}
+                      className=""
+                    >
                       {macetplanProsesPenerbitan && (
                         <MeteranMacetplan
                           data={macetplanProsesPenerbitan}
@@ -1126,7 +1172,13 @@ const FixDashboard = () => {
                       )}
                       <div className="ts-right mtp-10">
                         {data && (
-                          <span className="mrg-15  fs-25 fw-500">
+                          <span
+                            onClick={() =>
+                              redirectToTabel("proses_penerbitan14")
+                            }
+                            style={{ cursor: "pointer" }}
+                            className="mrg-15  fs-25 fw-500"
+                          >
                             {data.proses_penerbitan}
                           </span>
                         )}
@@ -1162,7 +1214,11 @@ const FixDashboard = () => {
                     </span>
                   </div>
                   <div className="container-colom">
-                    <div className="mlf-10">
+                    <div
+                      onClick={() => redirectToTabel("potensi_kecil14")}
+                      style={{ cursor: "pointer" }}
+                      className="mlf-10"
+                    >
                       {macetplanPotensiKecil && (
                         <MeteranMacetplan
                           data={macetplanPotensiKecil}
@@ -1298,7 +1354,11 @@ const FixDashboard = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="mrg-10">
+                    <div
+                      onClick={() => redirectToTabel("potensi_besar14")}
+                      style={{ cursor: "pointer" }}
+                      className="mrg-10"
+                    >
                       {macetplanPotensiBesar && (
                         <MeteranMacetplan
                           data={macetplanPotensiBesar}

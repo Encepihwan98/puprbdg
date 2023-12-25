@@ -3,38 +3,55 @@ import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../../components/Loading";
-import Select,  { StylesConfig } from "react-select";
+import Select from "react-select";
+import queryString from "query-string";
 import {
   faList,
   faTimes,
   faExclamationCircle,
   faGreaterThan,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { async } from "q";
 
 const options = [
-  // { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
-  // { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
-  { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-  { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
+  {
+    value: "Verifikasi Kelengkapan Operator",
+    label: "Verifikasi Kelengkapan Operator",
+  },
+  {
+    value: "Dikembalikan Untuk Revisi Dokumen",
+    label: "Dikembalikan Untuk Revisi Dokumen",
+  },
   { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
   { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
   { value: "Menunggu Penugasan TPT/TPA", label: "Menunggu Penugasan TPT/TPA" },
-  { value: "Menunggu Penjadwalan Konsultasi", label: "Menunggu Penjadwalan Konsultasi" },
+  {
+    value: "Menunggu Penjadwalan Konsultasi",
+    label: "Menunggu Penjadwalan Konsultasi",
+  },
   { value: "Konsultasi", label: "Konsultasi" },
   { value: "Perhitungan Retribusi", label: "Perhitungan Retribusi" },
-  { value: "Selesai Penilaian Konsultasi", label: "Selesai Penilaian Konsultasi"},
-  { value: "Pengiriman SKRD", label: "Pengiriman SKRD"},
-  { value: "Menunggu Pembayaran Retribusi", label: "Menunggu Pembayaran Retribusi"},
-  { value: "Menunggu Validasi Retribusi", label: "Menunggu Validasi Retribusi"},
-  { value: "Menunggu Pengambilan Izin", label: "Menunggu Pengambilan Izin"},
-  { value: "Penugasan Inspeksi", label: "Penugasan Inspeksi"},
-
+  {
+    value: "Selesai Penilaian Konsultasi",
+    label: "Selesai Penilaian Konsultasi",
+  },
+  { value: "Pengiriman SKRD", label: "Pengiriman SKRD" },
+  {
+    value: "Menunggu Pembayaran Retribusi",
+    label: "Menunggu Pembayaran Retribusi",
+  },
+  {
+    value: "Menunggu Validasi Retribusi",
+    label: "Menunggu Validasi Retribusi",
+  },
+  { value: "Menunggu Pengambilan Izin", label: "Menunggu Pengambilan Izin" },
+  { value: "Penugasan Inspeksi", label: "Penugasan Inspeksi" },
 ];
 const Table2 = () => {
   const { angka } = useParams();
-  console.log(angka);
+  // console.log(angka);
   //kiri -> getter, kanan -> setter
   const [loading, setLoading] = useState(true);
   const date = new Date().getDate();
@@ -43,6 +60,8 @@ const Table2 = () => {
 
   const itemsPerPage = 10; // Jumlah data per halaman
   const [data, setData] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("");
+  const [totalPage, setTotalPage] = useState([]);
   const [dataDeviasi, setDataDeviasi] = useState([]);
   const [dataInformasi, setDataInformasi] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -69,7 +88,8 @@ const Table2 = () => {
 
   // let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
   // let url = "http://localhost:5000/api/rekap-pbg/";
-  let url = "https://sibedaspbg.bandungkab.go.id/api/rekap-pbg/";
+  // let param = "";
+  // let url = `http://127.0.0.1:5000/api/rekap-pbg/?page=${currentPage}`;
 
   // tahun
   const tahunSekarang = new Date().getFullYear();
@@ -79,69 +99,118 @@ const Table2 = () => {
 
   useEffect(() => {
     if (angka === "berkasTerbitLast") {
-      // setSelectedStatus("Perbaikan Ulang");
-      // setSelectedPotensi("Kecil");
       setSelectedYear(lastYear);
     } else if (angka === "totalBerkasNow") {
       setSelectedYear(thisYear);
     } else if (angka === "belumTerVerif") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-        { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
-        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
     } else if (angka === "berkasTerVerif") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Menunggu Penugasan TPT/TPA", label: "Menunggu Penugasan TPT/TPA" },
-        { value: "Menunggu Penjadwalan Konsultasi", label: "Menunggu Penjadwalan Konsultasi" },
-        { value: "Konsultasi", label: "Konsultasi" },
-        { value: "Perhitungan Retribusi", label: "Perhitungan Retribusi" },
-        { value: "Pengiriman SKRD", label: "Pengiriman SKRD" },
+        { value: "Selesai Verifikasi", label: "Selesai Verifikasi" },
       ]);
     } else if (angka === "usaha") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-        { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
-        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
       setSelectedPotensi("Besar");
     } else if (angka === "nonUsaha") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Verifikasi Kelengkapan Operator", label: "Verifikasi Kelengkapan Operator" },
-        { value: "Dikembalikan Untuk Revisi Dokumen", label: "Dikembalikan Untuk Revisi Dokumen" },
-        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
+        { value: "Perbaikan Ulang", label: "Perbaikan Ulang" },
         { value: "Verifikasi Ulang", label: "Verifikasi Ulang" },
       ]);
       setSelectedPotensi("Kecil");
-    } else if (angka === "dpmtsp"){
+    } else if (angka === "test") {
       setSelectedYear(thisYear);
       setSelectedStatus([
-        { value: "Menunggu Pembayaran Retribusi", label: "Menunggu Pembayaran Retribusi" },
-        { value: "Menunggu Validasi Retribusi", label: "Menunggu Validasi Retribusi" },
-        { value: "Pengiriman SKRD", label: "Pengiriman SKRD" },
+        { value: "Perbaikan Dokumen", label: "Perbaikan Dokumen" },
       ]);
+      setSelectedPotensi("Kecil");
+    } else if (
+      angka === "terproses_di_ptsp" ||
+      angka === "terproses_di_ptsp14" ||
+      angka === "berkas_aktual_terverifikasi_dinas_teknis14" ||
+      angka === "berkas_aktual_terverifikasi_dinas_teknis" ||
+      angka === "berkas_aktual_belum_terverifikasi14" ||
+      angka === "berkas_aktual_belum_terverifikasi" ||
+      angka === "terproses_di_dputr" ||
+      angka === "terproses_di_dputr14" ||
+      angka === "proses_penerbitan" ||
+      angka === "proses_penerbitan14" ||
+      angka === "potensi_kecil14" ||
+      angka === "potensi_besar14"
+    ) {
+      setSelectedFilter(angka);
+    }else {
+      // Hanya menjalankan API call nomor 1 jika angka tidak sesuai dengan filtered
+      const queryParams = {
+        page: currentPage,
+        tahun: selectedYear,
+        potensi: selectedPotensi,
+        filtered: "",
+        status: "",
+      };
+  
+      const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+        queryParams
+      )}`;
+      fetchData(url);
+      return; // Keluar dari useEffect setelah menjalankan API call nomor 1
     }
-    fetchData();
-    fetchDataDeviasi();
-  }, []);
 
-  const fetchData = () => {
+    // fetchData();
+  }, [selectedYear]);
+
+  useEffect(() => {
+    if (
+      selectedFilter === "terproses_di_ptsp" ||
+      selectedFilter === "terproses_di_ptsp14" ||
+      selectedFilter === "berkas_aktual_terverifikasi_dinas_teknis14" ||
+      selectedFilter === "berkas_aktual_terverifikasi_dinas_teknis" ||
+      selectedFilter === "berkas_aktual_belum_terverifikasi14" ||
+      selectedFilter === "berkas_aktual_belum_terverifikasi" ||
+      selectedFilter === "terproses_di_dputr" ||
+      selectedFilter === "terproses_di_dputr14" ||
+      selectedFilter === "proses_penerbitan" ||
+      selectedFilter === "proses_penerbitan14" ||
+      selectedFilter === "potensi_kecil14" ||
+      selectedFilter === "potensi_besar14"
+    ) {
+      handleTest();
+      fetchDataDeviasi();
+    }
+  }, [selectedStatus, selectedFilter]);
+
+  const fetchData = (url) => {
+    setLoading(true);
     axios
       .get(url)
       .then((response) => {
-        console.log(response);
-        const newData = response.data;
-        // console.log(newData[0]['KRK/KKPR']);
+        // console.log(response);
+        const newData = response.data.data;
+        const totalPageAll = response.data.total_page;
+        const page = response.data.current_page;
+        console.log("ini test tahun ke : ", selectedYear);
+        // console.log("ini page", response.data.current_page);
+        // console.log(newData);
         setData(newData.reverse());
+        setTotalPage(totalPageAll);
+        setCurrentPage(page);
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 300);
       });
   };
 
@@ -151,13 +220,10 @@ const Table2 = () => {
       .get(sheetUrl)
       .then((response) => {
         let datas = response.data.values;
-        // console.log(datas);
         let deviasi_target_potensi_rp = datas[4][11];
-        let targetPAD = datas[1][11];
 
         setDataDeviasi({
           deviasi_target_potensi_rp: deviasi_target_potensi_rp,
-          targetPAD: targetPAD,
         });
       })
       .catch((error) => {
@@ -181,7 +247,7 @@ const Table2 = () => {
       .finally(() => {
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 300);
       });
   };
 
@@ -197,47 +263,6 @@ const Table2 = () => {
     });
   });
 
-  const filteredData = data.filter((row) => {
-    const potensiValueString = row["Usulan Retribusi"] || ""; // Menggunakan nilai default string kosong jika elemen tidak ada
-    const potensiValue = parseInt(
-      potensiValueString
-        .replace("Rp", "")
-        .replace(".", "")
-        .replace(".", "")
-        .replace(".", "")
-    );
-
-    const meetsSearchTerm = Object.values(row).some(
-      (cell) =>
-        typeof cell === "string" &&
-        cell.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    //   row["Status Permohonan"]?.toLowerCase() === selectedStatus.toLowerCase();
-    const meetsStatusCriteria =
-      selectedStatus.length === 0 || // Jika tidak ada status yang dipilih, maka tidak ada filter status
-      selectedStatus.some(
-        (status) =>
-          status.value.toLowerCase() === row["Status"]?.toLowerCase()
-      );
-
-    const meetsYearCriteria =
-      selectedYear === "" ||
-      row["Tahun"]?.toLowerCase() === selectedYear.toLowerCase();
-
-    const meetsPotensiCriteria =
-      selectedPotensi === "" ||
-      (selectedPotensi === "Besar" && potensiValue > 50000000) || // Lebih dari 50 juta
-      (selectedPotensi === "Kecil" && potensiValue <= 50000000); // Kurang dari atau sama dengan 50 juta
-    return (
-      meetsSearchTerm &&
-      meetsStatusCriteria &&
-      meetsPotensiCriteria &&
-      meetsYearCriteria
-    );
-  });
-  // const
-
   const handleMouseEnter = (event) => {
     const rect = event.target.getBoundingClientRect();
     setPopupPosition({ top: rect.bottom, left: rect.left });
@@ -248,10 +273,28 @@ const Table2 = () => {
     setShowPopup(false);
   };
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const handleTest = () => {
+    console.log("ini page tahun ke : ", selectedYear);
+    var valuesStatus = selectedStatus.map((item) => item.value);
+    const resultString = valuesStatus.join(", ");
+    const queryParams = {
+      page: currentPage,
+      tahun: selectedYear,
+      potensi: selectedPotensi,
+      filtered: selectedFilter,
+      status: selectedStatus.map((status) => status.value).join(","),
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
+  };
+
+  // const totalPages = Math.ceil(data.length / itemsPerPage);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = data;
   // console.log(currentData);
 
   //tahun select
@@ -265,24 +308,82 @@ const Table2 = () => {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
+
+  const handleSearchButtonClick = () => {
+    // Logika pencarian atau tindakan lainnya dapat ditambahkan di sini
+    console.log("Button clicked! Searching for:", searchTerm);
+    const queryParams = {
+      page: currentPage,
+      tahun: selectedYear,
+      potensi: selectedPotensi,
+      filtered: selectedFilter,
+      search: searchTerm,
+      status: selectedStatus.map((status) => status.value).join(","),
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
+  };
+
   const handleStatusChange = (event) => {
-    console.log(event);
     setSelectedStatus(event);
+
+    const queryParams = {
+      page: currentPage,
+      tahun: selectedYear,
+      potensi: selectedPotensi,
+      filtered: selectedFilter,
+      search: searchTerm,
+      status: selectedStatus.map((status) => status.value).join(","),
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
   };
+
   const handlePotensiChange = (event) => {
-    setSelectedPotensi(event.target.value);
+    let newPotensi = event.target.value;
+    setSelectedPotensi(newPotensi);
+
+    const queryParams = {
+      page: currentPage,
+      tahun: selectedYear,
+      potensi: newPotensi,
+      filtered: selectedFilter,
+      search: searchTerm,
+      status: selectedStatus.map((status) => status.value).join(","),
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
   };
-  const handleYearChange = (event) => {
-    setSelectedYear(event.target.value);
+
+  const handleYearChange = (newYear) => {
+    setSelectedYear(newYear);
+    const queryParams = {
+      page: currentPage,
+      tahun: newYear,
+      potensi: selectedPotensi,
+      filtered: selectedFilter,
+      search: searchTerm,
+      status: selectedStatus.map((status) => status.value).join(","),
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
   };
 
   const openDialog = (rowData) => {
     setIsDialogOpen(true);
     setSelectRowData(rowData);
-  };
-
-  const handleOptionsCoba = (event) => {
-    setSelectedOption(event);
   };
 
   const openDialogInformasi = (nomor) => {
@@ -305,6 +406,24 @@ const Table2 = () => {
     }
   };
 
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+
+    const queryParams = {
+      page: newPage,
+      tahun: selectedYear,
+      potensi: selectedPotensi,
+      filtered: selectedFilter,
+      search: searchTerm,
+      status: selectedStatus.map((status) => status.value).join(","),
+    };
+
+    const url = `http://127.0.0.1:5000/api/rekap-pbg2/?${queryString.stringify(
+      queryParams
+    )}`;
+    fetchData(url);
+  };
+
   return (
     <div>
       <NavigationBar />
@@ -317,7 +436,7 @@ const Table2 = () => {
               </span>
               <div className="card bg-blue  card-pad">
                 <span className="inter-20 fw-500 pd-5">
-                  Rp {dataDeviasi.targetPAD},-
+                  Rp 25.085.584.721,-
                 </span>
               </div>
             </div>
@@ -367,12 +486,22 @@ const Table2 = () => {
                 value={searchTerm}
                 onChange={handleSearch}
               />
+              <button
+                type="text"
+                onClick={handleSearchButtonClick}
+                className="searchBtn"
+              >
+                <FontAwesomeIcon
+                  className=""
+                  icon={faMagnifyingGlass}
+                ></FontAwesomeIcon>
+              </button>
             </div>
             <div className="container-colom2 mlf-15 mtp-10">
               <select
                 className="mlf-10 selectOptionst"
                 value={selectedYear}
-                onChange={handleYearChange}
+                onChange={(e) => handleYearChange(e.target.value)}
               >
                 <option value={""}>Tahun</option>
                 {tahunOptions.map((tahun, index) => (
@@ -385,9 +514,10 @@ const Table2 = () => {
                 className="mlf-10"
                 value={selectedStatus}
                 onChange={handleStatusChange}
-                placeholder="--- Status ---"
+                placeholder="Status"
                 options={options}
                 isMulti
+                style={{ borderRadius: "10px", border: "1px solid black" }}
               />
               <select
                 className="mlf-10 selectOptionst"
@@ -464,7 +594,6 @@ const Table2 = () => {
                       <th>Nama Pemilik</th>
                       <th>Lokasi BG</th>
                       <th>Tgl Permohonan</th>
-                      <th>Status Permohonan</th>
                       <th>Status</th>
                       <th>BA TPA/TPT</th>
                       <th>Gambar</th>
@@ -486,8 +615,8 @@ const Table2 = () => {
                       <th>2/8</th>
                       <th>Keterangan Kontrak</th>
                       <th>TTD KADIS</th>
-                      {/* <th>Tahun Terbit</th>
-                      <th>Tahun Berjalan</th> */}
+                      <th>Tahun Terbit</th>
+                      <th>Tahun Berjalan</th>
                       <th>Tahun</th>
                       <th className="bg-green">Jenis Konsultasi</th>
                       <th className="bg-green">Fungsi BG</th>
@@ -497,8 +626,21 @@ const Table2 = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    
-                    {currentData.length > 0 ? (
+                    {loading ? (
+                      <tr>
+                        <td colSpan="32" style={{ textAlign: "center" }}>
+                          <div
+                            style={{
+                              marginLeft: "600px",
+                              marginTop: "100px",
+                              marginBottom: "100px",
+                            }}
+                          >
+                            <Loading />
+                          </div>
+                        </td>
+                      </tr>
+                    ) : currentData.length > 0 ? (
                       currentData.map((row, index) => (
                         <tr
                           key={index}
@@ -539,7 +681,6 @@ const Table2 = () => {
                           <td>{row["Nama Pemilik"]}</td>
                           <td>{row["Lokasi BG"]}</td>
                           <td>{row["Tgl Permohonan"]}</td>
-                          <td>{row["Status Permohonan"]}</td>
                           <td>{row["Status"]}</td>
                           <td>{row["BA TPA/TPT"]}</td>
                           <td>{row["GAMBAR"]}</td>
@@ -561,8 +702,8 @@ const Table2 = () => {
                           <td>{row["28/8"]}</td> {/*2/8*/}
                           <td>{row["Keterangan"]}</td>
                           <td>{row["TTD KADIS"]}</td>
-                          {/* <td>{row["Selesai Terbit"]}</td>
-                          <td>{row[""]}</td> */}
+                          <td>{row["Selesai Terbit"]}</td>
+                          <td>{row[""]}</td>
                           <td>{row["Tahun"]}</td>
                           <td className="bg-green">
                             {row["Jenis Konsultasi"]}
@@ -579,24 +720,24 @@ const Table2 = () => {
                 </table>
                 <div className="pagination">
                   <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
+                    onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
                     Prev
                   </button>
 
                   {Array.from(
-                    { length: totalPages > 5 ? 5 : totalPages },
+                    { length: totalPage > 5 ? 5 : totalPage },
                     (_, index) => {
                       const pageNumber = currentPage - 2 + index;
-                      if (pageNumber > 0 && pageNumber <= totalPages) {
+                      if (pageNumber > 0 && pageNumber <= totalPage) {
                         return (
                           <button
                             key={index}
                             className={
                               currentPage === pageNumber ? "active" : ""
                             }
-                            onClick={() => setCurrentPage(pageNumber)}
+                            onClick={() => handlePageChange(pageNumber)}
                           >
                             {pageNumber}
                           </button>
@@ -606,8 +747,8 @@ const Table2 = () => {
                     }
                   )}
                   <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPage}
                   >
                     Next
                   </button>
@@ -668,7 +809,9 @@ const Table2 = () => {
                   <tbody className="">
                     {loading ? (
                       <tr>
-                        <div className="" style={{ marginLeft: "600px", marginTop: "150px" }}>
+                        <div
+                          style={{ marginLeft: "500px", marginTop: "100px" }}
+                        >
                           <Loading />
                         </div>
                       </tr>
