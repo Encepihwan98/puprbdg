@@ -7,7 +7,7 @@ HC_rounded(Highcharts);
 const ChartStacked = ({ className, width, data, color }) => {
   // const total = data[0] + data[1]
   // const max = Math.max(...data)
-  console.log(color[1]);
+  //console.log(color[1]);
   const options = {
     chart: {
       type: "bar",

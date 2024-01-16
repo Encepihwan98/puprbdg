@@ -17,10 +17,14 @@ import MeteranMacetplan from "../../components/MeteranMacetplan";
 
 const FixDashboard = () => {
   //kiri -> getter, kanan -> setter
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const date = new Date().getDate();
   const month = new Date().toLocaleString("default", { month: "long" });
-  const currentYear = new Date().getFullYear();
-  const lastYear = currentYear - 1;
+  let currentYear = new Date().getFullYear();
+  let lastYear = currentYear - 1;
+  const [selectCurrentYear, setSelectCurrentYear] = useState(currentYear);
+  const [selectLastYear, setSelectLastYear] = useState(lastYear);
+
   const [data, setData] = useState(null);
   const [dataUsaha, setDataUsaha] = useState(null);
   const [dataChartVerifChart, setDataChartVerifChart] = useState(null);
@@ -66,6 +70,16 @@ const FixDashboard = () => {
       link.classList.add("active");
     });
   });
+
+  const tahunSekarang = new Date().getFullYear();
+  let thisYear = tahunSekarang.toString();
+  const tahunLalu = tahunSekarang - 1;
+
+  const tahunOptions = [];
+
+  for (let tahun = 2022; tahun <= tahunSekarang; tahun++) {
+    tahunOptions.push(tahun);
+  }
 
   const handleMouseEnter = (event) => {
     const rect = event.target.getBoundingClientRect();
@@ -196,29 +210,46 @@ const FixDashboard = () => {
     }
   };
 
-  let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
-  let sheetName = encodeURIComponent("Bagan 2023");
-  let apiKey = "AIzaSyA8bz--_nRrVAoCmttaoIA1WpYp8Xn7Wp8";
+  // let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
+  // let sheetName = encodeURIComponent("Bagan 2023");
+  // let apiKey = "AIzaSyA8bz--_nRrVAoCmttaoIA1WpYp8Xn7Wp8";
 
-  let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+  // let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
 
   useEffect(() => {
-    fetchData();
+    handleUrl(selectedYear);
     getDataUsaha();
     getDataChartStacked();
     const interval = setInterval(() => {
-      fetchData();
+      handleUrl(selectedYear);
     }, 24 * 60 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedYear]);
 
-  const fetchData = () => {
+  const handleYearChange = (e) => {
+    const selectedYear = e;
+    setSelectCurrentYear(e);
+    setSelectLastYear(e - 1);
+    setSelectedYear(selectedYear);
+  };
+
+  const handleUrl = (newYear) => {
+    let sheetId = "1eeyCizwEH8DMpUBW4x0w2rZTv3pc3xNjE18r2uyx1IY";
+    let sheetName = encodeURIComponent("Bagan " + newYear + "");
+    let apiKey = "AIzaSyA8bz--_nRrVAoCmttaoIA1WpYp8Xn7Wp8";
+
+    let sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+
+    fetchData(sheetUrl);
+  };
+
+  const fetchData = (url) => {
     axios
       // .get("https://sibedaspbg.bandungkab.go.id/api/simbg/coba")
-      .get(sheetUrl)
+      .get(url)
       .then((response) => {
-        // console.log(response);
+        // console.log(response);p
         let datas = response.data.values;
         let targetPAD = parseInt(datas[1][11].replace(/\./g, ""));
         let total_berkas = datas[2][10];
@@ -402,52 +433,50 @@ const FixDashboard = () => {
   };
 
   const getDataChartStacked = () => {
-    axios
-      .get("https://sibedaspbg.bandungkab.go.id/api/macet-plan/")
-      .then((res) => {
-        let dataMacetPlan = res.data;
-        setMacetplanBelumVerif([
-          dataMacetPlan.berkas_aktual_belum_terverifikasi_ov14,
-          // dataMacetPlan.berkas_aktual_belum_terverifikasi_7to14,
-          // dataMacetPlan.berkas_aktual_belum_terverifikasi_und7,
-        ]);
-        setMacetplanAktualVerif([
-          dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_ov14,
-          // dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_7to14,
-          // dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_und7,
-        ]);
-        setMacetpTerbitPbg([
-          dataMacetPlan.berkas_terbit_pbg_ov14,
-          // dataMacetPlan.berkas_terbit_pbg_7to14,
-          // dataMacetPlan.berkas_terbit_pbg_und7,
-        ]);
-        setMacetpPotensiBesar([
-          dataMacetPlan.potensi_besar_ov14,
-          // dataMacetPlan.potensi_besar_7to14,
-          // dataMacetPlan.potensi_besar_und7,
-        ]);
-        setMacetpPotensiKecil([
-          dataMacetPlan.potensi_kecil_ov14,
-          // dataMacetPlan.potensi_kecil_7to14,
-          // dataMacetPlan.potensi_kecil_und7,
-        ]);
-        setMacetpProsesPenerbitan([
-          dataMacetPlan.proses_penerbitan_ov14,
-          // 50
-          // dataMacetPlan.proses_penerbitan_7to14o.,
-          // dataMacetPlan.proses_penerbitan_und7,
-        ]);
-        setMcetpProsesDputr([
-          dataMacetPlan.terproses_di_dputr_ov14,
-          // dataMacetPlan.terproses_di_dputr_7to14,
-          // dataMacetPlan.terproses_di_dputr_und7,
-        ]);
-        setMcetpProsesPtsp([
-          dataMacetPlan.terproses_di_ptsp_ov14,
-          // dataMacetPlan.terproses_di_ptsp_7to14,
-          // dataMacetPlan.terproses_di_ptsp_und7,
-        ]);
-      });
+    axios.get("https://sibedaspbg.bandungkab.go.id/api/macet-plan/").then((res) => {
+      let dataMacetPlan = res.data;
+      setMacetplanBelumVerif([
+        dataMacetPlan.berkas_aktual_belum_terverifikasi_ov14,
+        // dataMacetPlan.berkas_aktual_belum_terverifikasi_7to14,
+        // dataMacetPlan.berkas_aktual_belum_terverifikasi_und7,
+      ]);
+      setMacetplanAktualVerif([
+        dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_ov14,
+        // dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_7to14,
+        // dataMacetPlan.berkas_aktual_terverifikasi_dinas_teknis_und7,
+      ]);
+      setMacetpTerbitPbg([
+        dataMacetPlan.berkas_terbit_pbg_ov14,
+        // dataMacetPlan.berkas_terbit_pbg_7to14,
+        // dataMacetPlan.berkas_terbit_pbg_und7,
+      ]);
+      setMacetpPotensiBesar([
+        dataMacetPlan.potensi_besar_ov14,
+        // dataMacetPlan.potensi_besar_7to14,
+        // dataMacetPlan.potensi_besar_und7,
+      ]);
+      setMacetpPotensiKecil([
+        dataMacetPlan.potensi_kecil_ov14,
+        // dataMacetPlan.potensi_kecil_7to14,
+        // dataMacetPlan.potensi_kecil_und7,
+      ]);
+      setMacetpProsesPenerbitan([
+        dataMacetPlan.proses_penerbitan_ov14,
+        // 50
+        // dataMacetPlan.proses_penerbitan_7to14o.,
+        // dataMacetPlan.proses_penerbitan_und7,
+      ]);
+      setMcetpProsesDputr([
+        dataMacetPlan.terproses_di_dputr_ov14,
+        // dataMacetPlan.terproses_di_dputr_7to14,
+        // dataMacetPlan.terproses_di_dputr_und7,
+      ]);
+      setMcetpProsesPtsp([
+        dataMacetPlan.terproses_di_ptsp_ov14,
+        // dataMacetPlan.terproses_di_ptsp_7to14,
+        // dataMacetPlan.terproses_di_ptsp_und7,
+      ]);
+    });
   };
 
   return (
@@ -458,7 +487,7 @@ const FixDashboard = () => {
           <div className="container-colom">
             <div className="flex-x-start">
               <span className="inter-25 fw-500 text-pad">
-                Target PAD {currentYear}:
+                Target PAD {selectCurrentYear}:
               </span>
               <div className="card bg-blue  card-pad">
                 {data && (
@@ -490,7 +519,7 @@ const FixDashboard = () => {
         {/* row tanggal  */}
         <div className="row-tgl mtp-25 flex-x-center">
           <div className="date-today container-colom">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{  }}>
               <ul>
                 <li className="bg-blue br-10">
                   <Link to="/" type="button">
@@ -502,10 +531,26 @@ const FixDashboard = () => {
                     Tabel
                   </Link>
                 </li>
+                <li>
+                  <select
+                    className="selectOptionst"
+                    onChange={(e) => handleYearChange(e.target.value)}
+                    value={selectedYear}
+                  >
+                    {tahunOptions
+                      .slice()
+                      .reverse()
+                      .map((tahun, index) => (
+                        <option key={index} value={tahun}>
+                          {tahun}
+                        </option>
+                      ))}
+                  </select>
+                </li>
               </ul>
-              <div className="cobacoba">
+              <div className="">
                 <p className="inter-25 fw-500 m-10">
-                  {date} {month} {currentYear}
+                  {date} {month} {selectCurrentYear}
                 </p>
               </div>
             </div>
@@ -574,7 +619,7 @@ const FixDashboard = () => {
               style={{ cursor: "pointer" }}
             >
               <p className="inter-25 fw-bold ts-center">
-                Berkas Terbit PBG {lastYear}:
+                Berkas Terbit PBG {selectLastYear}:
               </p>
               <div className="bg-purple card-tt-tolak">
                 {data && (
@@ -700,7 +745,7 @@ const FixDashboard = () => {
                 <div className="ts-center">
                   <br />
                   <span className="inter-20 fw-500 mtp-10">
-                    Total Berkas {currentYear}
+                    Total Berkas {selectCurrentYear}
                   </span>
                 </div>
                 <div className="ts-center mtp-10">
@@ -856,7 +901,7 @@ const FixDashboard = () => {
                   <div className="">
                     <div className="ts-center">
                       <span className="inter-30 fw-700">
-                        Total Berkas {currentYear}:
+                        Total Berkas {selectCurrentYear}:
                       </span>
                     </div>
                   </div>
@@ -913,7 +958,8 @@ const FixDashboard = () => {
                               </div>
                               <div className="noteIsi">
                                 Total keseluruhan berkas diterima tahun{" "}
-                                {currentYear} yang sudah melengkapi persyaratan
+                                {selectCurrentYear} yang sudah melengkapi
+                                persyaratan
                               </div>
                             </div>
                           )}
@@ -955,7 +1001,8 @@ const FixDashboard = () => {
                               </div>
                               <div className="noteIsi">
                                 Total keseluruhan berkas diterima tahun{" "}
-                                {currentYear} yang belum melengkapi persyaratan
+                                {selectCurrentYear} yang belum melengkapi
+                                persyaratan
                               </div>
                             </div>
                           )}

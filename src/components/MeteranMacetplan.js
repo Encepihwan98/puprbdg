@@ -3,7 +3,7 @@ import React from "react";
 const MeteranMacetplan = ({ data, marginTop }) => {
   // const total = data[0] + data[1]
   // const max = Math.max(...data)
-  console.log(data);
+  //console.log(data);
   const [meteranMacetPlan] = data;
 
   const stackedStyle = {
