@@ -249,7 +249,7 @@ const FixDashboard = () => {
       // .get("https://sibedaspbg.bandungkab.go.id/api/simbg/coba")
       .get(url)
       .then((response) => {
-        // console.log(response);p
+        // console.log(response);P
         let datas = response.data.values;
         let targetPAD = parseInt(datas[1][11].replace(/\./g, ""));
         let total_berkas = datas[2][10];
@@ -518,7 +518,7 @@ const FixDashboard = () => {
 
         {/* row tanggal  */}
         <div className="row-tgl mtp-25 flex-x-center">
-          <div className="date-today container-colom">
+          <div className="date-today">
             <div style={{  }}>
               <ul>
                 <li className="bg-blue br-10">

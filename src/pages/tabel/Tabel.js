@@ -457,7 +457,7 @@ const Table2 = () => {
 
         {/* row tanggal  */}
         <div className="row-tgl mtp-25 flex-x-center">
-          <div className="date-today container-colom">
+          <div className="date-today">
             <ul>
               <li>
                 <Link to="/" type="button">

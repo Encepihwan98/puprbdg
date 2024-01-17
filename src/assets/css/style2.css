@@ -466,7 +466,8 @@
 
 .date-today p {
   padding: 5px;
-  margin-left: 990px;
+  /* margin-left: 990px; */
+  float: right;
 }
 
 .date-today ul {
