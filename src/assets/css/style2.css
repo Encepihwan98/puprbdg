@@ -62,6 +62,10 @@
   justify-content: center;
 }
 
+.fc-colomn {
+  flex-direction: column;
+}
+
 .flex-align-item-center {
   display: flex;
   justify-content: center;
@@ -110,7 +114,7 @@
 /* start margin */
 
 /* bg color start */
-.bg-blue {
+.pg-plue {
   background-color: #81c0ff;
 }
 
@@ -135,6 +139,11 @@
 }
 
 /* bg color end */
+.mr-5 {
+  margin: 5px;
+}
+
+
 .m-10 {
   margin: 10px;
 }
@@ -145,6 +154,10 @@
 
 .mbt-10 {
   margin-bottom: 10px;
+}
+
+.mtp-5 {
+  margin-top: 5px;
 }
 
 .mtp-10 {
@@ -281,12 +294,20 @@
 }
 /* padding end */
 
+.widht-100 {
+  width: 100px;
+}
+
 .widht-278 {
   width: 278px;
 }
 
 .width-794 {
   width: 794px;
+}
+
+.width-264 {
+  width: 264px;
 }
 
 .width-613{
@@ -312,6 +333,10 @@
   color: black;
 }
 
+.legend-center {
+    flex-grow: 1;
+    text-align: center;
+}
 .inter-30 {
   font-family: "inter";
   font-size: 30px;
@@ -409,6 +434,12 @@
 /* text style */
 .ts-center {
   text-align: center;
+}
+
+.ts-center-lgd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .ts-right {
@@ -1287,6 +1318,40 @@
   margin-bottom: 15px;
 }
 
+.berkas-terbit-terverifikasi{
+  width: 100px;
+  height: 50px;
+  background-color: #FFBF00;
+  border: none;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+
+.bg-btt{
+  background-color: #FFBF00;
+}
+
+.bg-btl{
+  background-color: #238823;
+}
+
+.berkas-terbit-total{
+  width: 100px;
+  height: 50px;
+  background-color: #238823;
+  border: none;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+
+.legend-container {
+  margin-left: 30px;
+  /* display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1; agar kontainer legenda dapat mengisi sisa ruang */
+}
+
 .tidak-lengkap{
   width: 120px;
   height: 60px;
@@ -1345,6 +1410,14 @@
   margin-left: 15px;
   margin-top: 10px;
 }
+
+.legend-ket-ds{
+  font-size: 15px;
+  font-family: "inter";
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
 .popup {
   display: block;
   position: absolute;
@@ -1404,6 +1477,11 @@
   margin-left: 600px;
 }
 
+.center-text {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
 
 .center-table tr {
   width: 100%;

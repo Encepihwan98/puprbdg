@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import BoxCard from "../../components/BoxCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown,  faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartStacked from "../../components/ChartStacked";
 //import ChartStackedVertikal from "../../components/ChartStackedVertikal";
@@ -33,6 +33,7 @@ const FixDashboard = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showPopupPotensiYear, setShowPopupPotensiYear] = useState(false);
   const [showPopupPermohonan1, setShowPopupPermohonan1] = useState(false);
+  const [showPopupLegenda, setShowPopupLegenda] = useState(false);
   const [showPopupPTSP, setShowPopupPTSP] = useState(false);
   const [showPopupTerverifikasi, setShowPopupTerverifikasi] = useState(false);
   const [showPopupBelumverifikasi, setShowPopupBelumverifikasi] =
@@ -140,6 +141,12 @@ const FixDashboard = () => {
     setShowPopupPermohonan1(true);
   };
 
+  const handleMouseEnterLegenda = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setPopupPosition({ top: rect.bottom, left: rect.left });
+    setShowPopupLegenda(true);
+  };
+
   const handleMouseLeave = () => {
     setShowPopup(false);
   };
@@ -176,6 +183,10 @@ const FixDashboard = () => {
     setShowPopupPermohonan1(false);
   };
 
+  const handleMouseLeaveLegenda = () => {
+    setShowPopupLegenda(false);
+  };
+
   const handleMouseLeavePTSP = () => {
     setShowPopupPTSP(false);
   };
@@ -187,7 +198,7 @@ const FixDashboard = () => {
     navigate(url);
   };
 
-  const openDialog = () => {
+  const openDialog = () => { 
     setIsDialogOpen(true);
   };
 
@@ -262,6 +273,9 @@ const FixDashboard = () => {
         let total_berkas_now = datas[3][10];
         let total_berkas_now_perc = parseInt(datas[3][12]);
         let total_berkas_this_year_rp = datas[3][11];
+        let total_berkas_this_year_rp_int = parseInt(
+          total_berkas_this_year_rp.replace(/\./g, "")
+        );
         let deviasi_target_potensi_rp = datas[4][11];
         let deviasi_target_potensi_perc = parseInt(datas[4][12]);
         let berkas_aktual_belum_terverifikasi = datas[29][10];
@@ -290,6 +304,9 @@ const FixDashboard = () => {
         let berkas_terbit_pbg = datas[15][10];
         let berkas_terbit_pbg_perc = parseInt(datas[15][12]);
         let berkas_terbit_pbg_rp = datas[15][11];
+        let berkas_terbit_pbg_rp_int = parseInt(
+          berkas_terbit_pbg_rp.replace(/\./g, "")
+        );
         let proses_penerbitan = datas[16][10];
         let proses_penerbitan_perc = parseInt(datas[16][13]);
         let proses_penerbitan_rp = datas[16][11];
@@ -326,6 +343,7 @@ const FixDashboard = () => {
             berkas_aktual_belum_terverifikasi_perc,
           berkas_aktual_belum_terverifikasi_rp:
             berkas_aktual_belum_terverifikasi_rp,
+            berkas_terbit_pbg_rp_int: berkas_terbit_pbg_rp_int,
           potensi_besar: potensi_besar,
           potensi_besar_perc: potensi_besar_perc,
           potensi_besar_rp: potensi_besar_rp,
@@ -360,6 +378,7 @@ const FixDashboard = () => {
           terproses_di_dputr_rp2: terproses_di_dputr_rp2,
           proses_penerbitan_rp1: proses_penerbitan_rp1,
           proses_penerbitan_rp2: proses_penerbitan_rp2,
+          total_berkas_this_year_rp_int:total_berkas_this_year_rp_int,
           percenVerif: (dataChartVerif / targetPAD) * 100,
         });
         setDataChartVerifChart([[dataChartVerif], [aktual_belum_varif]]);
@@ -687,8 +706,21 @@ const FixDashboard = () => {
                 onMouseLeave={handleMouseLeave}
                 // style={{ cursor: "pointer" }}
               >
-                <div className="ts-center mtp-10">
-                  <span className=" inter-25 fw-500">Berkas Terbit PBG:</span>
+                <div className="ts-center-lgd mtp-10">
+                  <span className="inter-25 mlf-70 legend-center ts-center fw-500">Berkas Terbit PBG:</span>
+                  <div className="legend-container">
+                    <div
+                      className="legend"
+                      onMouseEnter={handleMouseEnterLegenda}
+                      onMouseLeave={handleMouseLeaveLegenda}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <FontAwesomeIcon
+                      className="iconLegend"
+                      icon={faExclamationCircle}
+                    />
+                    </div>
+                  </div>
                 </div>
                 <div className="container-colom center">
                   <div className="card-luar bg-purple">
@@ -702,7 +734,31 @@ const FixDashboard = () => {
                     </Card>
                   </div>
                 </div>
-                <div className="mtp-25 mlf-28">
+                <div className="container-colom center mtp-10">
+                  <div  
+                   
+                    className="m-10 widht-100 bg-btt br-10"
+                  >
+                    {data && (
+                      <span className="inter-20 center-text">
+                        {Math.round((data.berkas_terbit_pbg_rp_int / data.dataChartVerif)*100)}%
+                      </span>
+                    )}{" "}
+                    
+                  </div>  
+                  
+                  <div 
+                   
+                    className="m-10 widht-100 bg-btl br-10"
+                  >
+                    {data && (
+                      <span className="inter-20 center-text">
+                        {Math.round((data.berkas_terbit_pbg_rp_int / data.total_berkas_this_year_rp_int)*100)}%
+                      </span>
+                    )}{" "}
+                  </div> 
+                </div>
+                <div className="mtp-15 mlf-28">
                   <div className="fs-30 fw-500">Realisasi : </div>
                   {data && (
                     <span className="bg-blue inter-30 br-10 mtp-10 pd-10 fw-500">
@@ -733,6 +789,38 @@ const FixDashboard = () => {
                     </div>
                   </div>
                 )}
+
+                {showPopupLegenda && (
+                  <div
+                  className="popupLegend"
+                  style={{
+                    position: "absolute",
+                    top: "480px",
+                    left: "800px",
+                  }}
+                >
+                  <div>
+                    <p className="notePopup">Note</p>
+                  </div>
+
+                  <div className="clm-12">
+                    <div className="container-colom">
+                      <div className="berkas-terbit-terverifikasi"></div>
+                      <div className="legend-ket-ds">
+                        <p>berkas terbit / berkas aktual terverifikasi</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="clm-12">
+                    <div className="container-colom">
+                      <div className="berkas-terbit-total"></div>                     
+                      <div className="legend-ket-ds">
+                        <p>berkas terbit / total berkas</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               </div>
 
               <div
