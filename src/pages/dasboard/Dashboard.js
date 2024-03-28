@@ -778,8 +778,8 @@ const FixDashboard = () => {
                     className="popup"
                     style={{
                       position: "absolute",
-                      top: popupPosition.top + "px",
-                      left: popupPosition.left + "px",
+                      top: "300px",
+                      left: "300px",
                     }}
                   >
                     <div>
