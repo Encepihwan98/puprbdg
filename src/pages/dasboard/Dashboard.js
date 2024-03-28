@@ -735,6 +735,16 @@ const FixDashboard = () => {
                   </div>
                 </div>
                 <div className="container-colom center mtp-10">
+                  <div                    
+                   className="m-10 widht-100 bg-btl br-10"
+                  >
+                   {data && (
+                     <span className="inter-20 center-text">
+                       {Math.round((data.berkas_terbit_pbg_rp_int / data.total_berkas_this_year_rp_int)*100)}%
+                     </span>
+                   )}{" "}
+                  </div> 
+
                   <div  
                    
                     className="m-10 widht-100 bg-btt br-10"
@@ -747,16 +757,7 @@ const FixDashboard = () => {
                     
                   </div>  
                   
-                  <div 
-                   
-                    className="m-10 widht-100 bg-btl br-10"
-                  >
-                    {data && (
-                      <span className="inter-20 center-text">
-                        {Math.round((data.berkas_terbit_pbg_rp_int / data.total_berkas_this_year_rp_int)*100)}%
-                      </span>
-                    )}{" "}
-                  </div> 
+                  
                 </div>
                 <div className="mtp-15 mlf-28">
                   <div className="fs-30 fw-500">Realisasi : </div>
